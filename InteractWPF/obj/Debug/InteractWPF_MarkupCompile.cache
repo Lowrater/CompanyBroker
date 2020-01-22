@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 I:\Visual studio projects\InteractWPF\InteractWPF\App.xaml
-3-588381960
+4943519743
 
-16634889036
+20-1599755541
 123-41702763
-View\Usercontrols\SidePanelControl.xaml;View\Windows\LoginWindow.xaml;View\Windows\MainWindow.xaml;
+View\Usercontrols\LogoutControl.xaml;View\Usercontrols\SidePanelControl.xaml;View\Windows\LoginWindow.xaml;View\Windows\MainWindow.xaml;
 
 False
 

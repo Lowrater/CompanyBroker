@@ -40,13 +40,19 @@ namespace InteractWPF.ViewModel
 
             //-- ViewModel registers
             SimpleIoc.Default.Register<LoginViewModel>();
+            SimpleIoc.Default.Register<LogoutViewModel>();
+            SimpleIoc.Default.Register<SidePanelViewModel>();
+            
+
         }
 
         //-- ViewModel definitions (made public to all XML's)
         // use the following in the XAML to get access to any viewmodel. etc. Login: DataContext="{Binding Login, Source={StaticResource Locator}}
         public LoginViewModel Login => ServiceLocator.Current.GetInstance<LoginViewModel>(Guid.NewGuid().ToString());
-         
-        
+        public LogoutViewModel Logout => ServiceLocator.Current.GetInstance<LogoutViewModel>(Guid.NewGuid().ToString());
+        public SidePanelViewModel Sidepanel => ServiceLocator.Current.GetInstance<SidePanelViewModel>(Guid.NewGuid().ToString());
+
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

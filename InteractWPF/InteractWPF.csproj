@@ -72,14 +72,24 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Interfaces\IViewService.cs" />
+    <Compile Include="Model\LogoutModel.cs" />
     <Compile Include="Services\ViewService.cs" />
+    <Compile Include="ViewModel\LogoutViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\SidePanelViewModel.cs" />
+    <Compile Include="View\Usercontrols\LogoutControl.xaml.cs">
+      <DependentUpon>LogoutControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Usercontrols\SidePanelControl.xaml.cs">
       <DependentUpon>SidePanelControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\Usercontrols\LogoutControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Usercontrols\SidePanelControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -8,6 +8,7 @@ namespace InteractWPF.Services
 {
     public class DataService : ViewModelBase, IDataService
     {
+
         public MsSQLUserInfo msSQLUserInfo { get; set; }
 
 

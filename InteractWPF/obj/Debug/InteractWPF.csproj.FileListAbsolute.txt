@@ -29,4 +29,6 @@ I:\Visual studio projects\InteractWPF\InteractWPF\obj\Debug\InteractWPF.csproj.G
 I:\Visual studio projects\InteractWPF\InteractWPF\obj\Debug\InteractWPF.csproj.CopyComplete
 I:\Visual studio projects\InteractWPF\InteractWPF\obj\Debug\InteractWPF.exe
 I:\Visual studio projects\InteractWPF\InteractWPF\obj\Debug\InteractWPF.pdb
+I:\Visual studio projects\InteractWPF\InteractWPF\obj\Debug\View\Usercontrols\LogoutControl.g.cs
+I:\Visual studio projects\InteractWPF\InteractWPF\obj\Debug\View\Usercontrols\LogoutControl.baml
 I:\Visual studio projects\InteractWPF\InteractWPF\obj\Debug\InteractWPF.csprojAssemblyReference.cache
