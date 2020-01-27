@@ -18,6 +18,6 @@
         <!-- content -->
         <TextBlock Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center" Text="{Binding currentDateTime}"></TextBlock>
         <Button Grid.Column="1">Profile</Button>
-        <Button Grid.Column="2">Logout</Button>
+        <Button Grid.Column="2" Command="{Binding LogoutCommand}">Logout</Button>
     </Grid>
 </UserControl>

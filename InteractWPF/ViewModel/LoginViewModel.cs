@@ -37,14 +37,16 @@ namespace InteractWPF.ViewModel
         /// </summary>
         private IDataService _dataService;
         private IViewService _viewService;
+        private IAppConfigService _appConfigService;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public LoginViewModel(IDataService dataService, IViewService viewService)
+        public LoginViewModel(IDataService dataService, IViewService viewService, IAppConfigService appConfigService)
         {
             this._dataService = dataService;
             this._viewService = viewService;
+            this._appConfigService = appConfigService;
         }
 
         //------------------------------------------------------------------------------------------------ ICommands
@@ -70,7 +72,7 @@ namespace InteractWPF.ViewModel
                 using (SqlConnection connection = new SqlConnection(appcConnectionString))
                 {
                     //-- sets up the sqlcommand and executing
-                    using (SqlCommand newQueryCommand = new SqlCommand($"{ConfigurationManager.AppSettings["SQL_VerifyUserName"]} '{UserName}'", connection))
+                    using (SqlCommand newQueryCommand = new SqlCommand($"{_appConfigService.SQL_VerifyUserName} '{UserName}'", connection))
                     {
                         try
                         {
@@ -101,11 +103,19 @@ namespace InteractWPF.ViewModel
                                 _viewService.CreateWindow(new MainWindow());
 
                                 //-- Hides LoginWindow
-                                Application.Current.MainWindow.Hide();
+                                foreach (Window window in Application.Current.Windows)
+                                {
+                                    if(window.Title.Equals("LoginWindow"))
+                                    {
+                                        window.Close();
+                                    }
+                                           
+                                }
+                                
                             }
                             else
                             {
-                                MessageBox.Show($"{ConfigurationManager.AppSettings["LoginWindow_UknownUserNameMSG"]}",
+                                MessageBox.Show($"{_appConfigService.MSG_UknownUserName}",
                                                "Interact login error",
                                               MessageBoxButton.OK,
                                               MessageBoxImage.Error);
@@ -116,7 +126,7 @@ namespace InteractWPF.ViewModel
                             //-- checks the exception type
                             if(exception is SqlException)
                             {
-                                MessageBox.Show($"{ConfigurationManager.AppSettings["LoginWindow_CannotConnectToServerMSG"]}",
+                                MessageBox.Show($"{_appConfigService.MSG_CannotConnectToServer}",
                                                 "Interact Server error",
                                                 MessageBoxButton.OK,
                                                 MessageBoxImage.Error);
@@ -135,7 +145,7 @@ namespace InteractWPF.ViewModel
             }
             else
             {
-                MessageBox.Show($"{ConfigurationManager.AppSettings["LoginWindow_FieldsCannotBeEmptyMSG"]}",
+                MessageBox.Show($"{_appConfigService.MSG_FieldsCannotBeEmpty}",
                           "Interact login error",
                          MessageBoxButton.OK,
                          MessageBoxImage.Error);             

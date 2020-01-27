@@ -8,11 +8,13 @@ using System.Windows;
 
 namespace InteractWPF.Interfaces
 {
+    /// <summary>
+    /// Contains all View manipulations and usage
+    /// </summary>
    public interface IViewService
     {
 
         //-- Windows
-
         void CreateWindow(Window window);
     }
 }

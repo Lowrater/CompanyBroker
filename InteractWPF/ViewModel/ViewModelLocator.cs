@@ -37,6 +37,7 @@ namespace InteractWPF.ViewModel
             //--  Services registers
             SimpleIoc.Default.Register<IDataService, DataService>();
             SimpleIoc.Default.Register<IViewService, ViewService>();
+            SimpleIoc.Default.Register<IAppConfigService, AppConfigService>();
 
             //-- ViewModel registers
             SimpleIoc.Default.Register<LoginViewModel>();

@@ -23,9 +23,10 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        
-        <!-- Objects -->
+
+        <!-- Buttons -->
         <Button Grid.Column="0" Grid.Row="0">Buttons</Button>
         <Button Grid.Column="0" Grid.Row="1">Calendar</Button>
         <Button Grid.Column="0" Grid.Row="2">Checkbox</Button>
@@ -37,5 +38,6 @@
         <Button Grid.Column="0" Grid.Row="8">Image</Button>
         <Button Grid.Column="0" Grid.Row="9">ListBox</Button>
         <Button Grid.Column="0" Grid.Row="10">TextBox</Button>
+
     </Grid>
 </UserControl>
