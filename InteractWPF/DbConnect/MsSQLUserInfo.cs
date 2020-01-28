@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace InteractWPF.DbConnect
 {
+    /// <summary>
+    /// Stores all relevant information about the user.
+    /// In progress.
+    /// </summary>
    public class MsSQLUserInfo
     {
         public string DBuserName { get; set; }
