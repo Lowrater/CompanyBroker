@@ -1,0 +1,42 @@
+﻿<Window x:Class="CompanyBroker.View.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:userControls="clr-namespace:CompanyBroker.View.Usercontrols"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="MainWindow" Height="450" Width="1000" MinWidth="1000" MinHeight="450" >
+    <Grid>
+        <!-- Grid definitions -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="100"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <!-- Bindings of usercontrols -->
+        <!-- SidePanel -->
+        <userControls:SidePanelControl Grid.Column="0" Grid.Row="1"></userControls:SidePanelControl>
+        <!-- Logout -->
+        <userControls:LogoutControl Grid.Column="0" Grid.Row="0"></userControls:LogoutControl>
+        <!-- BrokerOverivew of content-->
+        <userControls:BrokerOverviewControl Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4"></userControls:BrokerOverviewControl>
+        
+        <!-- Grid splitter between datagrid and sidepanel-->
+        <GridSplitter Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Width="5" VerticalAlignment="Stretch" HorizontalAlignment="Right" Background="LightGray" />
+        
+        <!-- Search content -->
+        <userControls:SearchBarControl Grid.Column="1" Grid.ColumnSpan="4"></userControls:SearchBarControl>
+        
+        <!--  Time stamp -->
+        <userControls:TimeControl Grid.Column="4" Grid.Row="2"></userControls:TimeControl>
+    </Grid>
+</Window>
