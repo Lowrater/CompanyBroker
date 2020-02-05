@@ -90,11 +90,14 @@
     <Compile Include="Addons\CustomElements\Custom_button.cs" />
     <Compile Include="Interfaces\IViewService.cs" />
     <Compile Include="Model\LogoutModel.cs" />
+    <Compile Include="Model\SidePanelTab1Model.cs" />
+    <Compile Include="Model\TimeModel.cs" />
     <Compile Include="Services\AppConfigService.cs" />
     <Compile Include="Interfaces\IAppConfigService.cs" />
     <Compile Include="Services\ViewService.cs" />
     <Compile Include="ViewModel\LogoutViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\SidePanelTab1ViewModel.cs" />
     <Compile Include="ViewModel\SidePanelViewModel.cs" />
     <Compile Include="ViewModel\TimeViewModel.cs" />
     <Compile Include="View\Usercontrols\BrokerOverviewControl.xaml.cs">

@@ -1,4 +1,5 @@
 ﻿using CompanyBroker.Interfaces;
+using CompanyBroker.Model;
 using GalaSoft.MvvmLight;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,9 @@ namespace CompanyBroker.ViewModel
 {
    public class TimeViewModel : ViewModelBase
     {
+        //-- Models
+        private TimeModel timeModel = new TimeModel();
+
         //-- Interfaces
         private IDataService _dataService;
 
@@ -22,7 +26,7 @@ namespace CompanyBroker.ViewModel
             _dataService = dataService;
 
             //-- Set's the date as first startup
-            _dataService.time = DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString();
+            currentDateTime = DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString();
 
             //--- Calling async method in contructor
             //--- Sets the date every secod as long as we are connected.
@@ -35,8 +39,8 @@ namespace CompanyBroker.ViewModel
         /// </summary>
         public string currentDateTime
         {
-            get => _dataService.time;
-            //set => Set(ref _dataService.time, value);
+            get => timeModel._time;
+            set => Set(ref timeModel._time, value);
         }
 
         /// <summary>
@@ -51,7 +55,7 @@ namespace CompanyBroker.ViewModel
                 //-- waits 30 seconds 
                 await Task.Delay(10000);
                 //-- sets the currentDateTime property 
-                _dataService.time = await Task.FromResult<string>(DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString());
+                currentDateTime = await Task.FromResult<string>(DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString());
             }
         }
     }

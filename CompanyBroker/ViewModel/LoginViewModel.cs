@@ -64,7 +64,6 @@ namespace CompanyBroker.ViewModel
             string loginResult;
             //-- Gets the connectionstring from app.Config of InteractDBS tag.
             var appcConnectionString = ConfigurationManager.ConnectionStrings["InteractDBS"].ConnectionString;
-
             //-- Verifys if the userName is empty or blank
             if (!string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(password.Password))
             {
@@ -108,10 +107,8 @@ namespace CompanyBroker.ViewModel
                                     if(window.Title.Equals("LoginWindow"))
                                     {
                                         window.Close();
-                                    }
-                                           
-                                }
-                                
+                                    }                                  
+                                }                              
                             }
                             else
                             {

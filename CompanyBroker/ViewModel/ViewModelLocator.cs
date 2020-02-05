@@ -44,6 +44,7 @@ namespace CompanyBroker.ViewModel
             SimpleIoc.Default.Register<LogoutViewModel>();
             SimpleIoc.Default.Register<SidePanelViewModel>();
             SimpleIoc.Default.Register<TimeViewModel>();
+            SimpleIoc.Default.Register<SidePanelTab1ViewModel>();
 
         }
 
@@ -52,9 +53,8 @@ namespace CompanyBroker.ViewModel
         public LoginViewModel Login => ServiceLocator.Current.GetInstance<LoginViewModel>(Guid.NewGuid().ToString());
         public LogoutViewModel Logout => ServiceLocator.Current.GetInstance<LogoutViewModel>(Guid.NewGuid().ToString());
         public SidePanelViewModel Sidepanel => ServiceLocator.Current.GetInstance<SidePanelViewModel>(Guid.NewGuid().ToString());
-
         public TimeViewModel Time => ServiceLocator.Current.GetInstance<TimeViewModel>(Guid.NewGuid().ToString());
-
+        public SidePanelTab1ViewModel SidePanelTab1 => ServiceLocator.Current.GetInstance<SidePanelTab1ViewModel>(Guid.NewGuid().ToString());
 
         public static void Cleanup()
         {

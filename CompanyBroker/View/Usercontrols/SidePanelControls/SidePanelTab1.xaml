@@ -4,8 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CompanyBroker.View.Usercontrols.SidePanelControls"
+             DataContext="{Binding SidePanelTab1,Source={StaticResource Locator}}"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="250">
+             d:DesignHeight="450" d:DesignWidth="300" MinWidth="300">
     <Grid>
         <!-- Grid definitions -->
         <Grid.ColumnDefinitions>
@@ -30,15 +31,114 @@
         <!-- Company list choice - Row 1 -->
         <Grid Grid.Column="0" Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"></ColumnDefinition>
+                <ColumnDefinition Width="80"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="10"></ColumnDefinition>
             </Grid.ColumnDefinitions>
+            <!-- Column 0 -->
             <Label Grid.Column="0"  VerticalAlignment="Center" HorizontalContentAlignment="Center">Company</Label>
-            <ListBox Grid.Column="1"></ListBox>
+            <!-- Column 1 -->
+            <ListBox Grid.Column="1" Height="25" ItemsSource="{Binding CompanyList}" SelectedItem="{Binding SelectedCompanyListItem}" ></ListBox>
         </Grid>
-       <!-- Content for Row 2 -->
-        <Grid Grid.Column="0" Grid.Row="2">
 
+        <!-- Company Choices to a list filtering type of label - row 2-->
+        <ScrollViewer Grid.Column="0" Grid.Row="2">
+            <ItemsControl ItemsSource="{Binding CompanyChoicesList}"></ItemsControl>
+        </ScrollViewer>
+        
+        <!-- Content for Row 3 -->
+        <!-- Resource list choice  -->
+        <Grid Grid.Column="0" Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="10"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <!-- Column 0 -->
+            <Label Grid.Column="0"  VerticalAlignment="Center" HorizontalContentAlignment="Center">Resource</Label>
+            <!-- Column 1 -->
+            <ListBox Grid.Column="1" Height="25" ItemsSource="{Binding ResourceList}" SelectedItem="{Binding SelectedResourceListItem}"></ListBox>
+        </Grid>
+
+
+        <!-- Resources Choices to a list filtering type of label - row 4-->
+        <ScrollViewer Grid.Column="0" Grid.Row="4">
+            <ItemsControl ItemsSource="{Binding ResourceChoicesList}"></ItemsControl>
+        </ScrollViewer>
+
+
+        <!-- Content for Row 5 -->
+        <!-- Resource list choice -->
+        <Grid Grid.Column="0" Grid.Row="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="10"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <!-- Column 0 -->
+            <Label Grid.Column="0"  VerticalAlignment="Center" HorizontalContentAlignment="Center">Date</Label>
+            <!-- Column 1 -->
+            <DatePicker Grid.Column="1" VerticalAlignment="Center" ></DatePicker>
+        </Grid>
+
+        <!-- Content for Row 6 -->
+        <!-- Resource list choice  -->
+        <Grid Grid.Column="0" Grid.Row="6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="10"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <!-- Column 0 -->
+            <Label Grid.Column="0"  VerticalAlignment="Center" HorizontalContentAlignment="Center">Expire date</Label>
+            <!-- Column 1 -->
+            <DatePicker Grid.Column="1"  VerticalAlignment="Center" ></DatePicker>
+        </Grid>
+        
+        <!-- Content for Row 7 -->
+        <!-- Partner checkbox-->
+        <Grid Grid.Column="0" Grid.Row="7">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="10"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <!-- Column 0 -->
+            <!-- Empty -->
+            <!-- Column 1 -->
+            <CheckBox Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalContentAlignment="Left" IsChecked="{Binding PartnersOnly}">Partner only</CheckBox>
+        </Grid>
+        
+        <!-- Content for Row 8 -->
+        <!-- Partner checkbox-->
+        <Grid Grid.Column="0" Grid.Row="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="10"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <!-- Column 0 -->
+            <!-- Empty -->
+            <!-- Column 1 -->
+            <CheckBox Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalContentAlignment="Left" IsChecked="{Binding BulkBuy}">Bulk</CheckBox>
+        </Grid>
+        
+        <!-- Content for Row 9 -->
+        <!-- Resource list choice  -->
+        <Grid Grid.Column="0" Grid.Row="9">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="10"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="10"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <!-- Column 0 -->
+            <Label Grid.Column="0"  VerticalAlignment="Center" HorizontalContentAlignment="Center">Price</Label>
+            <!-- Column 1 -->
+            <TextBox Grid.Column="1" Height="25" TextAlignment="Center" VerticalContentAlignment="Center"></TextBox>
+            <!-- Column 1 -->
+            <TextBox Grid.Column="3" Height="25" TextAlignment="Center" VerticalContentAlignment="Center"></TextBox>
         </Grid>
     </Grid>
 </UserControl>

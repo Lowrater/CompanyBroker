@@ -33,10 +33,10 @@ I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\CompanyBroker.ex
 I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\CompanyBroker.pdb
 I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\View\Usercontrols\BrokerOverviewControl.g.cs
 I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\View\Usercontrols\BrokerOverviewControl.baml
-I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\CompanyBroker.csprojAssemblyReference.cache
 I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\View\Usercontrols\SearchBarControl.g.cs
 I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\View\Usercontrols\SidePanelControls\SidePanelTab1.g.cs
 I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\View\Usercontrols\SearchBarControl.baml
 I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\View\Usercontrols\SidePanelControls\SidePanelTab1.baml
 I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\View\Usercontrols\TimeControl.g.cs
 I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\View\Usercontrols\TimeControl.baml
+I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\CompanyBroker.csprojAssemblyReference.cache

@@ -17,7 +17,7 @@
         
         <!-- Grid content -->
         <!-- Search field -->
-        <TextBox Grid.Column="0" Grid.ColumnSpan="3" TextAlignment="Center"></TextBox>
+        <TextBox Grid.Column="0" Grid.ColumnSpan="3" TextAlignment="Left" VerticalContentAlignment="Center"></TextBox>
         <!-- Search button -->
         <Button Grid.Column="3">Search</Button>
     </Grid>
