@@ -14,24 +14,12 @@ using GalaSoft.MvvmLight.Messaging;
 
 namespace CompanyBroker.ViewModel
 {
-    /// <summary>
-    /// This class contains properties that the main View can data bind to.
-    /// <para>
-    /// Use the <strong>mvvminpc</strong> snippet to add bindable properties to this ViewModel.
-    /// </para>
-    /// <para>
-    /// You can also use Blend to data bind with the tool's support.
-    /// </para>
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm
-    /// </para>
-    /// </summary>
     public class LoginViewModel : ViewModelBase
     {
         //------------------------------------------------------------------------------------------------ Models
         private LoginModel loginModel = new LoginModel();
 
-        //------------------------------------------------------------------------------------------------ Variables
+        //------------------------------------------------------------------------------------------------ Interfaces
         /// <summary>
         /// For constructor injection for the Service
         /// </summary>
@@ -40,6 +28,7 @@ namespace CompanyBroker.ViewModel
         private IAppConfigService _appConfigService;
         private IDBService _dBService;
 
+        //------------------------------------------------------------------------------------------------ Constructor
         /// <summary>
         /// Constructor
         /// </summary>
@@ -81,11 +70,10 @@ namespace CompanyBroker.ViewModel
             if (!string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(password.Password))
             {
                 //-- Trying loggin in the user account and returns an MsSqlUserInfo
-                _dataService.msSQLUserInfo = _dBService.ConnectToServer(password, UserName, _appConfigService.SQL_VerifyUserName, _appConfigService.MSG_CannotConnectToServer);
+                _dataService.msSQLUserInfo = _dBService.ConnectToServer(password, UserName, _appConfigService.MSG_CannotConnectToServer);
 
-                if (_dataService.msSQLUserInfo.DBuserName.Length != 0 && _dataService.msSQLUserInfo.IsConnected != false)
+                if (_dataService.msSQLUserInfo.IsConnected != false)
                 {
-
                     //-- Messages the user that they are logged in
                     MessageBox.Show("Logged in!",
                                     "Company Broker",
@@ -108,7 +96,7 @@ namespace CompanyBroker.ViewModel
                 else
                 {
                     MessageBox.Show($"{_appConfigService.MSG_UknownUserName}",
-                                   "Interact login error",
+                                   "Company Broker login error",
                                   MessageBoxButton.OK,
                                   MessageBoxImage.Error);
                 }
@@ -116,7 +104,7 @@ namespace CompanyBroker.ViewModel
             else
             {
                 MessageBox.Show($"{_appConfigService.MSG_FieldsCannotBeEmpty}",
-                          "Interact login error",
+                          "Company Broker login error",
                          MessageBoxButton.OK,
                          MessageBoxImage.Error);             
             }    

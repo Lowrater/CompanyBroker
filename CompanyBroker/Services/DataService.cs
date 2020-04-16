@@ -6,7 +6,7 @@ using CompanyBroker.ViewModel;
 
 namespace CompanyBroker.Services
 {
-    public class DataService : ViewModelBase, IDataService
+    public class DataService : IDataService
     {
 
         public MsSQLUserInfo msSQLUserInfo { get; set; }

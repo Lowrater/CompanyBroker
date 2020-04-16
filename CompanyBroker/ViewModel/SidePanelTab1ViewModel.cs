@@ -1,4 +1,5 @@
-﻿using CompanyBroker.Model;
+﻿using CompanyBroker.Interfaces;
+using CompanyBroker.Model;
 using GalaSoft.MvvmLight;
 using System;
 using System.Collections.Generic;
@@ -12,20 +13,26 @@ namespace CompanyBroker.ViewModel
 {
     public class SidePanelTab1ViewModel : ViewModelBase
     {
-        //-- Models
+        //-------------------------------------------------------------------------- Models
         private SidePanelTab1Model sidePanelTab1Model = new SidePanelTab1Model();
 
-        //-- Interfaces
-        
-        //-- Construcor
-        public SidePanelTab1ViewModel()
+        //-------------------------------------------------------------------------- Interfaces
+        private IDBService _dBService;
+        private IDataService _dataservice;
+        private IAppConfigService _appConfigService;
+        //-------------------------------------------------------------------------- Construcor
+        public SidePanelTab1ViewModel(IDBService dBService, IDataService dataservice, IAppConfigService appConfigService)
         {
+            this._dBService = dBService;
+            this._dataservice = dataservice;
+            this._appConfigService = appConfigService;
 
+            FetchCompanyList();
         }
 
 
-        //-- Properties
-        //-------------------------------------------------------------------------- Company List
+        //-------------------------------------------------------------------------- Properties
+        // Company List
         /// <summary>
         /// List containing all company names
         /// </summary>
@@ -42,7 +49,7 @@ namespace CompanyBroker.ViewModel
         /// <summary>
         /// List containing all Company choices added to the list for filtering.
         /// </summary>
-        public ObservableCollection<Label> CompanyChoicesList
+        public ObservableCollection<string> CompanyChoicesList
         {
             get => sidePanelTab1Model._companyChoicesList;
             set
@@ -68,7 +75,7 @@ namespace CompanyBroker.ViewModel
         /// <summary>
         /// List containing all resources types.
         /// </summary>
-        public ObservableCollection<Label> ResourceChoicesList
+        public ObservableCollection<string> ResourceChoicesList
         {
             get => sidePanelTab1Model._resourceChoicesList;
             set
@@ -101,7 +108,7 @@ namespace CompanyBroker.ViewModel
             }
         }
 
-        //--------------------------------------------------------------------- Check boces
+        //--------------------------------------------------------------------- Check boxes
 
         /// <summary>
         /// Bool
@@ -146,6 +153,14 @@ namespace CompanyBroker.ViewModel
         public void AddToResourceFilterList()
         {
 
+        }
+
+        /// <summary>
+        /// Sets the company list in the sidepanel
+        /// </summary>
+        public void FetchCompanyList()
+        {
+            CompanyList = _dBService.RequestCompanyList(_dataservice.msSQLUserInfo, _appConfigService.SQL_FetchCompanyList, _appConfigService.MSG_CannotConnectToServer);
         }
 
     }

@@ -9,7 +9,7 @@ namespace CompanyBroker.Services
     public class AppConfigService : IAppConfigService
     {
         //----------------------- SQL
-        public string SQL_VerifyUserName => ConfigurationManager.AppSettings["SQL_VerifyUserName"];
+        public string SQL_FetchCompanyList => ConfigurationManager.AppSettings["SQL_FetchCompanyList"];
 
         //----------------------- Messages
         public string MSG_UknownUserName => ConfigurationManager.AppSettings["LoginWindow_UknownUserNameMSG"];

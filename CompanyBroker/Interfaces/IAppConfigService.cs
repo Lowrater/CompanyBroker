@@ -5,9 +5,9 @@
     /// </summary>
     public interface IAppConfigService
     {
+        string SQL_FetchCompanyList { get; }
         string MSG_CannotConnectToServer { get; }
         string MSG_FieldsCannotBeEmpty { get; }
         string MSG_UknownUserName { get; }
-        string SQL_VerifyUserName { get; }
     }
 }

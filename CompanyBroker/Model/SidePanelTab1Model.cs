@@ -19,12 +19,12 @@ namespace CompanyBroker.Model
         public ref ObservableCollection<string> _resourceList => ref __resourceList;
 
         //- Choices of companys to filter with
-        private ObservableCollection<Label> __companyChoicesList;
-        public ref ObservableCollection<Label> _companyChoicesList => ref __companyChoicesList;
+        private ObservableCollection<string> __companyChoicesList;
+        public ref ObservableCollection<string> _companyChoicesList => ref __companyChoicesList;
 
         //-- choices of resource to choose from
-        private ObservableCollection<Label> __resourceChoicesList;
-        public ref ObservableCollection<Label> _resourceChoicesList => ref __resourceChoicesList;
+        private ObservableCollection<string> __resourceChoicesList;
+        public ref ObservableCollection<string> _resourceChoicesList => ref __resourceChoicesList;
 
         //-- Item choosen from the company list
         private string __selectedCompanyListItem;

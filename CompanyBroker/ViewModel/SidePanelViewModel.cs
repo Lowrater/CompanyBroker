@@ -20,7 +20,7 @@ namespace CompanyBroker.ViewModel
         //------------------------------------------------------------------------------------------------ ICommands
         public ICommand ShowCustomNameTagCommand => new RelayCommand<Custom_button>(ShowCustomNameTagBtn);
 
-
+        //------------------------------------------------------------------------------------------------ Constructor
         /// <summary>
         /// Constructor
         /// </summary>
