@@ -29,115 +29,88 @@ namespace CompanyBroker.ViewModel
     public class LoginViewModel : ViewModelBase
     {
         //------------------------------------------------------------------------------------------------ Models
-        LoginModel loginModel = new LoginModel();
+        private LoginModel loginModel = new LoginModel();
 
         //------------------------------------------------------------------------------------------------ Variables
         /// <summary>
-        /// For dependency injection for the DataService
+        /// For constructor injection for the Service
         /// </summary>
         private IDataService _dataService;
         private IViewService _viewService;
         private IAppConfigService _appConfigService;
+        private IDBService _dBService;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public LoginViewModel(IDataService dataService, IViewService viewService, IAppConfigService appConfigService)
+        public LoginViewModel(IDataService dataService, IViewService viewService, IAppConfigService appConfigService, IDBService dBService)
         {
             this._dataService = dataService;
             this._viewService = viewService;
             this._appConfigService = appConfigService;
+            this._dBService = dBService;
         }
 
         //------------------------------------------------------------------------------------------------ ICommands
         public ICommand LoginCommand => new RelayCommand<PasswordBox>(Login);
         public ICommand ExitCommand => new RelayCommand(Exit);
 
-        //------------------------------------------------------------------------------------------------ Functions
+        //------------------------------------------------------------------------------------------------  Properties
+        /// <summary>
+        /// UserName for login screen
+        /// Stores the value in loginModel and in the DataService MsSQLUserInfo
+        /// </summary>
+        public string UserName
+        {
+            get => loginModel._username;
+            set
+            {
+                Set(ref loginModel._username, value);
+            }
+        }
+
+
+        //------------------------------------------------------------------------------------------------ Methods
         /// <summary>
         /// Login function, which takes the Password field as parameter, and verifys login informations
         /// </summary>
         /// <param name="password"></param>
         private void Login(PasswordBox password)
         {
-            //-- internal variable to store the SQL result of the username
-            string loginResult;
-            //-- Gets the connectionstring from app.Config of InteractDBS tag.
-            var appcConnectionString = ConfigurationManager.ConnectionStrings["InteractDBS"].ConnectionString;
             //-- Verifys if the userName is empty or blank
             if (!string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(password.Password))
             {
-                //-- sets up the sqlconnection
-                using (SqlConnection connection = new SqlConnection(appcConnectionString))
+                //-- Trying loggin in the user account and returns an MsSqlUserInfo
+                _dataService.msSQLUserInfo = _dBService.ConnectToServer(password, UserName, _appConfigService.SQL_VerifyUserName, _appConfigService.MSG_CannotConnectToServer);
+
+                if (_dataService.msSQLUserInfo.DBuserName.Length != 0 && _dataService.msSQLUserInfo.IsConnected != false)
                 {
-                    //-- sets up the sqlcommand and executing
-                    using (SqlCommand newQueryCommand = new SqlCommand($"{_appConfigService.SQL_VerifyUserName} '{UserName}'", connection))
+
+                    //-- Messages the user that they are logged in
+                    MessageBox.Show("Logged in!",
+                                    "Company Broker",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Information);
+
+                    //-- Opens MainWindow via. new viewService interface
+                    _viewService.CreateWindow(new MainWindow());
+
+                    //-- Hides LoginWindow
+                    foreach (Window window in Application.Current.Windows)
                     {
-                        try
+                        //-- Searches for a window with the following LoginWindow to remove it so the user can use the MainWindow of the application
+                        if (window.Title.Equals("LoginWindow"))
                         {
-                            //-- opens the connections
-                            connection.Open();
-
-                            //-- reads the gets the return value from the SQL server to verify on
-                            loginResult = (string)newQueryCommand.ExecuteScalar();
-
-                            //-- Checks if the username exist
-                            //-- checks if the username is the same as the input 
-                            if(!string.IsNullOrEmpty(loginResult) && this.UserName == loginResult.Trim())
-                            {
-                                //-- Connection opened, saves the connectionstring in the global dataservices.
-                                _dataService.msSQLUserInfo = new MsSQLUserInfo
-                                {
-                                    DBuserName = this.UserName,
-                                    IsConnected = true
-                                };
-
-                                //-- Messages the user that they are logged in
-                                MessageBox.Show("Logged in!",
-                                                "Logged in message",
-                                                MessageBoxButton.OK,
-                                                MessageBoxImage.Information);
-
-                                //-- Opens MainWindow via. new viewService interface
-                                _viewService.CreateWindow(new MainWindow());
-
-                                //-- Hides LoginWindow
-                                foreach (Window window in Application.Current.Windows)
-                                {
-                                    if(window.Title.Equals("LoginWindow"))
-                                    {
-                                        window.Close();
-                                    }                                  
-                                }                              
-                            }
-                            else
-                            {
-                                MessageBox.Show($"{_appConfigService.MSG_UknownUserName}",
-                                               "Interact login error",
-                                              MessageBoxButton.OK,
-                                              MessageBoxImage.Error);
-                            }
+                            window.Close();
                         }
-                        catch (Exception exception)
-                        {    
-                            //-- checks the exception type
-                            if(exception is SqlException)
-                            {
-                                MessageBox.Show($"{_appConfigService.MSG_CannotConnectToServer}",
-                                                "Interact Server error",
-                                                MessageBoxButton.OK,
-                                                MessageBoxImage.Error);
-                            }
-                            else
-                            {
-                                //-- prints out software exception message
-                                MessageBox.Show($"{exception.Message.Substring(0,250)}",
-                                                "Interact Server error",
-                                                MessageBoxButton.OK,
-                                                MessageBoxImage.Error);
-                            }                        
-                        }                      
                     }
+                }
+                else
+                {
+                    MessageBox.Show($"{_appConfigService.MSG_UknownUserName}",
+                                   "Interact login error",
+                                  MessageBoxButton.OK,
+                                  MessageBoxImage.Error);
                 }
             }
             else
@@ -157,19 +130,7 @@ namespace CompanyBroker.ViewModel
             Application.Current.Shutdown();
         }
 
-        //------------------------------------------------------------------------------------------------ Element Bindings
-        /// <summary>
-        /// UserName for login screen
-        /// Stores the value in loginModel and in the DataService MsSQLUserInfo
-        /// </summary>
-        public string UserName
-        {
-            get => loginModel._username;
-            set
-            {
-                Set(ref loginModel._username, value);
-            }
-        }
+
 
     }
 }

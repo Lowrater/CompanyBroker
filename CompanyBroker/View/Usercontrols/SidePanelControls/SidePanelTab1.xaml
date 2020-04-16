@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:CompanyBroker.View.Usercontrols.SidePanelControls"
              DataContext="{Binding SidePanelTab1,Source={StaticResource Locator}}"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="300" MinWidth="300">
+             d:DesignHeight="450" d:DesignWidth="300" MinWidth="300" Background="White">
     <Grid>
         <!-- Grid definitions -->
         <Grid.ColumnDefinitions>

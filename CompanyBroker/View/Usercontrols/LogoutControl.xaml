@@ -12,10 +12,12 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         
         <!-- content -->
-        <Button Grid.Column="0">Firm</Button>
-        <Button Grid.Column="1" Command="{Binding LogoutCommand}">Logout</Button>
+        <Button Grid.Column="0">Account</Button>
+        <Button Grid.Column="1">Settings</Button>
+        <Button Grid.Column="2" Command="{Binding LogoutCommand}">Logout</Button>
     </Grid>
 </UserControl>

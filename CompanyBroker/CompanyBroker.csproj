@@ -94,6 +94,8 @@
     <Compile Include="Model\TimeModel.cs" />
     <Compile Include="Services\AppConfigService.cs" />
     <Compile Include="Interfaces\IAppConfigService.cs" />
+    <Compile Include="Services\DBService.cs" />
+    <Compile Include="Interfaces\IDBService.cs" />
     <Compile Include="Services\ViewService.cs" />
     <Compile Include="ViewModel\LogoutViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
