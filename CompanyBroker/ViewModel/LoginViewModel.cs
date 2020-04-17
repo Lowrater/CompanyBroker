@@ -70,7 +70,7 @@ namespace CompanyBroker.ViewModel
             if (!string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(password.Password))
             {
                 //-- Trying loggin in the user account and returns an MsSqlUserInfo
-                _dataService.msSQLUserInfo = _dBService.ConnectToServer(password, UserName, _appConfigService.MSG_CannotConnectToServer);
+                _dataService.msSQLUserInfo = _dBService.ConnectToServer(password, UserName, _appConfigService.MSG_CannotConnectToServer, _appConfigService.SQL_connectionString);
 
                 if (_dataService.msSQLUserInfo.IsConnected != false)
                 {

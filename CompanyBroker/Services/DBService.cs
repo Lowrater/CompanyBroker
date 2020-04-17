@@ -24,20 +24,18 @@ namespace CompanyBroker.Services
         /// <param name="SQL_VerifyUserName"></param>
         /// <param name="MSG_CannotConnectToServer"></param>
         /// <returns></returns>
-        public MsSQLUserInfo ConnectToServer(PasswordBox password, string UserName, string MSG_CannotConnectToServer)
+        public MsSQLUserInfo ConnectToServer(PasswordBox passwordBox, string UserName, string MSG_CannotConnectToServer, string SQL_connectionString)
         {
             MsSQLUserInfo msSQLUserInfo = new MsSQLUserInfo();
 
             //-- internal variable to store the SQL result of the username
             string loginResult;
-            //-- Gets the connectionstring from app.Config of InteractDBS tag.
-            var appcConnectionString = ConfigurationManager.ConnectionStrings["CompanyDBS"].ConnectionString;
 
             //-- sets up the sqlconnection
-            using (SqlConnection connection = new SqlConnection(appcConnectionString))
+            using (SqlConnection connection = new SqlConnection(SQL_connectionString))
             {
                 //-- sets up the sqlcommand and executing
-                using (SqlCommand newQueryCommand = new SqlCommand($"Select Username from CompanyAccounts where Username= '{UserName}' and Userpassword = '{password.Password}'", connection))
+                using (SqlCommand newQueryCommand = new SqlCommand($"Select Username from CompanyAccounts where Username= '{UserName}' and Userpassword = '{passwordBox.Password}'", connection))
                 {
                     try
                     {
@@ -54,11 +52,12 @@ namespace CompanyBroker.Services
                             //-- Connection opened, saves the connectionstring in the global dataservices.
                             msSQLUserInfo.DBuserName = UserName;
                             msSQLUserInfo.IsConnected = true;
-                            msSQLUserInfo.sqlconnection = connection;
+                            msSQLUserInfo.connectionstring = SQL_connectionString;
                         }
                     }
                     catch (Exception exception)
                     {
+
                         //-- checks the exception type
                         if (exception is SqlException)
                         {
@@ -76,10 +75,12 @@ namespace CompanyBroker.Services
                                             MessageBoxButton.OK,
                                             MessageBoxImage.Error);
                         }
+
                     }
                 }
             }
 
+          
 
             //-- Returns the informations depending on the login
             return msSQLUserInfo;
@@ -98,29 +99,37 @@ namespace CompanyBroker.Services
             //-- The content holder
             ObservableCollection<string> companyList = new ObservableCollection<string>();
 
-            //-- sets up the sqlconnection
-            using (msSQLUserInfo.sqlconnection)
+            using (SqlConnection connection = new SqlConnection(msSQLUserInfo.connectionstring))
             {
                 //-- sets up the sqlcommand and executing
-                using (SqlCommand newQueryCommand = new SqlCommand(fetchCompanyListCommand, msSQLUserInfo.sqlconnection))
+                using (SqlCommand newQueryCommand = new SqlCommand(fetchCompanyListCommand, connection))
                 {
                     try
                     {
                         //-- opens the connections
-                        if(msSQLUserInfo.sqlconnection != null && msSQLUserInfo.sqlconnection.State != ConnectionState.Open)
+                        if (connection != null && connection.State != ConnectionState.Open)
                         {
-                            msSQLUserInfo.sqlconnection.Open();
+                            //-- Opens the connection
+                            connection.Open();
 
                             //-- Executes the sql command
-
+                            SqlDataReader reader = newQueryCommand.ExecuteReader();
                             //-- Adds the company names to the list
+                            while (reader.Read())
+                            {
+                                companyList.Add(reader.GetString(0));
+                            }
 
                         }
                         else
                         {
                             //-- Executes the sql command
-
+                            SqlDataReader reader = newQueryCommand.ExecuteReader();
                             //-- Adds the company names to the list
+                            while (reader.Read())
+                            {
+                                companyList.Add(reader.GetString(0));
+                            }
                         }
                     }
                     catch (Exception exception)
@@ -145,10 +154,86 @@ namespace CompanyBroker.Services
                     }
                 }
             }
-
-
+          
+            
             //-- returns the companyList
             return companyList;
+        }
+
+
+        /// <summary>
+        /// Connects to the database, and fetches all the resources from the CompanyResources table into an ObservableCollection<string>
+        /// </summary>
+        /// <param name="msSQLUserInfo"></param>
+        /// <param name="fetchResourceListCommand"></param>
+        /// <param name="MSG_CannotConnectToServer"></param>
+        /// <returns></returns>
+        public ObservableCollection<string> RequestProductTypeList(MsSQLUserInfo msSQLUserInfo, string SQL_ProductTypeList, string MSG_CannotConnectToServer)
+        {
+            //-- The content holder
+            ObservableCollection<string> resourceList = new ObservableCollection<string>();
+
+            using (SqlConnection connection = new SqlConnection(msSQLUserInfo.connectionstring))
+            {
+                //-- sets up the sqlcommand and executing
+                using (SqlCommand newQueryCommand = new SqlCommand(SQL_ProductTypeList, connection))
+                {
+                    try
+                    {
+                        //-- opens the connections
+                        if (connection != null && connection.State != ConnectionState.Open)
+                        {
+                            //-- Opens the connection
+                            connection.Open();
+
+                            //-- Executes the sql command
+                            SqlDataReader reader = newQueryCommand.ExecuteReader();
+                            //-- Adds the company names to the list
+                            while (reader.Read())
+                            {
+                                resourceList.Add(reader.GetString(0));
+                            }
+
+                        }
+                        else
+                        {
+                            //-- Executes the sql command
+                            SqlDataReader reader = newQueryCommand.ExecuteReader();
+                            //-- Adds the company names to the list
+                            while (reader.Read())
+                            {
+                                resourceList.Add(reader.GetString(0));
+                            }
+                        }
+                    }
+                    catch (Exception exception)
+                    {
+                        //-- checks the exception type
+                        if (exception is SqlException)
+                        {
+                            MessageBox.Show($"{MSG_CannotConnectToServer}",
+                                            "Company broker Server error",
+                                            MessageBoxButton.OK,
+                                            MessageBoxImage.Error);
+
+                        }
+                        else
+                        {
+                            //-- prints out software exception message
+                            MessageBox.Show($"{exception.Message}",
+                                            "Company broker Server error",
+                                            MessageBoxButton.OK,
+                                            MessageBoxImage.Error);
+                        }
+                    }
+                }
+            }
+            
+            
+
+
+            //-- returns the resourceList
+            return resourceList;
         }
     }
 }

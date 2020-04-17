@@ -5,7 +5,12 @@
     /// </summary>
     public interface IAppConfigService
     {
+        //----------------------------------------- SQL commands
+        string SQL_connectionString { get; }
+        string SQL_ProductTypeList { get; }
         string SQL_FetchCompanyList { get; }
+
+        //----------------------------------------- Messages
         string MSG_CannotConnectToServer { get; }
         string MSG_FieldsCannotBeEmpty { get; }
         string MSG_UknownUserName { get; }

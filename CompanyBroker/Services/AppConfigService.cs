@@ -9,7 +9,10 @@ namespace CompanyBroker.Services
     public class AppConfigService : IAppConfigService
     {
         //----------------------- SQL
+        public string SQL_connectionString => ConfigurationManager.ConnectionStrings["CompanyDBS"].ConnectionString;
         public string SQL_FetchCompanyList => ConfigurationManager.AppSettings["SQL_FetchCompanyList"];
+
+        public string SQL_ProductTypeList => ConfigurationManager.AppSettings["SQL_ProductTypeList"]; 
 
         //----------------------- Messages
         public string MSG_UknownUserName => ConfigurationManager.AppSettings["LoginWindow_UknownUserNameMSG"];

@@ -35,7 +35,7 @@ namespace CompanyBroker.ViewModel
         public void LogOut()
         {
             //-- Resets the User informations
-            dataService.msSQLUserInfo = new MsSQLUserInfo { DBuserName = "", IsConnected = false, sqlconnection = null };
+            dataService.msSQLUserInfo = new MsSQLUserInfo();
 
             //-- Creates new Login window
             viewService.CreateWindow(new LoginWindow());

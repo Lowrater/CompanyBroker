@@ -15,6 +15,6 @@ namespace CompanyBroker.DbConnect
     {
         public string DBuserName { get; set; }
         public bool IsConnected { get; set; }
-        public SqlConnection sqlconnection { get; set; }
+        public string connectionstring { get; set; }
     }
 }

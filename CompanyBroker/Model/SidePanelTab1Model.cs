@@ -15,8 +15,8 @@ namespace CompanyBroker.Model
         public ref ObservableCollection<string>  _companyList => ref __companyList;
 
         //-- resource list
-        private ObservableCollection<string> __resourceList;
-        public ref ObservableCollection<string> _resourceList => ref __resourceList;
+        private ObservableCollection<string> __productTypeList;
+        public ref ObservableCollection<string> _productTypeList => ref __productTypeList;
 
         //- Choices of companys to filter with
         private ObservableCollection<string> __companyChoicesList;
@@ -31,8 +31,8 @@ namespace CompanyBroker.Model
         public ref string _selectedCompanyListItem => ref __selectedCompanyListItem;
 
         //-- Item choosen from the company list
-        private string __selectedResourceListItem;
-        public ref string _selectedResourceListItem => ref __selectedResourceListItem;
+        private string __selectedProductListItem;
+        public ref string _selectedProductListItem => ref __selectedProductListItem;
 
       
 

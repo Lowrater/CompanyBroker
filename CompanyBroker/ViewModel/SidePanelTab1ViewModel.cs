@@ -27,7 +27,10 @@ namespace CompanyBroker.ViewModel
             this._dataservice = dataservice;
             this._appConfigService = appConfigService;
 
+            //-- Fetches the companyList on startup
             FetchCompanyList();
+            //-- Fetches the ResourceList on startup
+            FetchResourceList();
         }
 
 
@@ -87,24 +90,24 @@ namespace CompanyBroker.ViewModel
         /// <summary>
         /// List containing all resources types.
         /// </summary>
-        public ObservableCollection<string> ResourceList
+        public ObservableCollection<string> ProductTypeList
         {
-            get => sidePanelTab1Model._resourceList;
+            get => sidePanelTab1Model._productTypeList;
             set
             {
-                Set(ref sidePanelTab1Model._resourceList, value);
+                Set(ref sidePanelTab1Model._productTypeList, value);
             }
         }
 
         /// <summary>
         /// Item choosen from the CompanyList
         /// </summary>
-        public string SelectedResourceListItem
+        public string SelectedProductListItem
         {
-            get => sidePanelTab1Model._selectedResourceListItem;
+            get => sidePanelTab1Model._selectedProductListItem;
             set
             {
-                Set(ref sidePanelTab1Model._selectedResourceListItem, value);
+                Set(ref sidePanelTab1Model._selectedProductListItem, value);
             }
         }
 
@@ -161,6 +164,11 @@ namespace CompanyBroker.ViewModel
         public void FetchCompanyList()
         {
             CompanyList = _dBService.RequestCompanyList(_dataservice.msSQLUserInfo, _appConfigService.SQL_FetchCompanyList, _appConfigService.MSG_CannotConnectToServer);
+        }
+
+        public void FetchResourceList()
+        {
+            ProductTypeList = _dBService.RequestProductTypeList(_dataservice.msSQLUserInfo, _appConfigService.SQL_ProductTypeList, _appConfigService.MSG_CannotConnectToServer);
         }
 
     }
