@@ -11,7 +11,7 @@ namespace CompanyBroker.Services
         //----------------------- SQL
         public string SQL_connectionString => ConfigurationManager.ConnectionStrings["CompanyDBS"].ConnectionString;
         public string SQL_FetchCompanyList => ConfigurationManager.AppSettings["SQL_FetchCompanyList"];
-
+        public string SQL_FetchCompanyIdList => ConfigurationManager.AppSettings["SQL_FetchCompanyIdList"];
         public string SQL_ProductTypeList => ConfigurationManager.AppSettings["SQL_ProductTypeList"]; 
 
         //----------------------- Messages

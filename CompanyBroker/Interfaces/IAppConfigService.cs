@@ -9,6 +9,7 @@
         string SQL_connectionString { get; }
         string SQL_ProductTypeList { get; }
         string SQL_FetchCompanyList { get; }
+        string SQL_FetchCompanyIdList { get; }
 
         //----------------------------------------- Messages
         string MSG_CannotConnectToServer { get; }

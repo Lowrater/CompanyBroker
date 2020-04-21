@@ -1,11 +1,10 @@
-﻿using CompanyBroker.Interfaces;
-using CompanyBroker.View.Windows;
+﻿using CompanyBroker.View.Windows;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 
 namespace CompanyBroker
@@ -14,7 +13,7 @@ namespace CompanyBroker
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
-    {      
+    {
         public App()
         {
 

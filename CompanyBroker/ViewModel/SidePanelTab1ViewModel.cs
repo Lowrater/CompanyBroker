@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -163,12 +164,22 @@ namespace CompanyBroker.ViewModel
         /// </summary>
         public void FetchCompanyList()
         {
-            CompanyList = _dBService.RequestCompanyList(_dataservice.msSQLUserInfo, _appConfigService.SQL_FetchCompanyList, _appConfigService.MSG_CannotConnectToServer);
+            using (var dbconnection = new SqlConnection(_appConfigService.SQL_connectionString))
+            {
+                CompanyList = _dBService.RequestCompanyList(dbconnection, _appConfigService.SQL_FetchCompanyList, _appConfigService.MSG_CannotConnectToServer);
+
+            }
         }
 
+        /// <summary>
+        /// Sets the resource list
+        /// </summary>
         public void FetchResourceList()
         {
-            ProductTypeList = _dBService.RequestProductTypeList(_dataservice.msSQLUserInfo, _appConfigService.SQL_ProductTypeList, _appConfigService.MSG_CannotConnectToServer);
+            using (var dbconnection = new SqlConnection(_appConfigService.SQL_connectionString))
+            {
+                ProductTypeList = _dBService.RequestProductTypeList(dbconnection, _appConfigService.SQL_ProductTypeList, _appConfigService.MSG_CannotConnectToServer);
+            }
         }
 
     }

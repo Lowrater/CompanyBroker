@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 I:\Visual studio projects\CompanyBroker\CompanyBroker\App.xaml
-8328221083
+92117389917
 
-33-1086779180
-1241087719153
-View\Usercontrols\BrokerOverviewControl.xaml;View\Usercontrols\LogoutControl.xaml;View\Usercontrols\SearchBarControl.xaml;View\Usercontrols\SidePanelControl.xaml;View\Usercontrols\SidePanelControls\SidePanelTab1.xaml;View\Usercontrols\TimeControl.xaml;View\Windows\LoginWindow.xaml;View\Windows\MainWindow.xaml;
+36-511397494
+1391434920397
+View\Usercontrols\BrokerOverviewControl.xaml;View\Usercontrols\LogoutControl.xaml;View\Usercontrols\SearchBarControl.xaml;View\Usercontrols\SidePanelControl.xaml;View\Usercontrols\SidePanelControls\SidePanelTab1.xaml;View\Usercontrols\TimeControl.xaml;View\Windows\CreateAccountWindow.xaml;View\Windows\LoginWindow.xaml;View\Windows\MainWindow.xaml;
 
 False
 

@@ -1,0 +1,62 @@
+﻿<Window x:Class="CompanyBroker.View.Windows.CreateAccountWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CompanyBroker.View.Windows"
+        DataContext="{Binding CreateAccount, Source={StaticResource Locator}}"
+        mc:Ignorable="d"
+        Title="CreateAccountWindow" Height="380" Width="450" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <!-- Grid definitions -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="35"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <!-- Grid content -->
+        <!-- Label - Row 0, colum 0 -->
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center">Company broker, Account creation</Label>
+         <!-- Left Labels  colum 0-->
+         <!-- Labels -->
+        <Label Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">New company?</Label>
+        <Label Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">Company name</Label>
+        <Label Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center">Account name</Label>
+        <Label Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center">Company</Label>
+        <Label Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center">Email</Label>
+        <Label Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Center">Password</Label>
+        
+        <!-- Left Labels colum 1-->
+        <!-- Top - If new company -->
+        <CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding NewCompanyBool}"></CheckBox>
+        <TextBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Text="{Binding CompanyName}"></TextBox>
+
+        <!-- The account itself -->
+        <TextBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Text="{Binding AccountName}"></TextBox>
+        <ComboBox Grid.Row="5" Grid.Column="1"  VerticalAlignment="Center" Text="{Binding CompanyList}" SelectedValue="{Binding CompanyChoice}"></ComboBox>
+        <TextBox Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" Text="{Binding AccountEmail}"></TextBox>
+        <PasswordBox Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" ></PasswordBox>
+        
+        <!-- Button creation -->
+        <Button Grid.Column="1" Grid.Row="9" VerticalAlignment="Center" Width="120">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+            Create</Button>
+    </Grid>
+</Window>

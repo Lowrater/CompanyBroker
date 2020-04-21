@@ -11,6 +11,7 @@ using System.Configuration;
 using CompanyBroker.DbConnect;
 using CompanyBroker.View.Windows;
 using GalaSoft.MvvmLight.Messaging;
+using NUnit.Framework;
 
 namespace CompanyBroker.ViewModel
 {
@@ -43,6 +44,7 @@ namespace CompanyBroker.ViewModel
         //------------------------------------------------------------------------------------------------ ICommands
         public ICommand LoginCommand => new RelayCommand<PasswordBox>(Login);
         public ICommand ExitCommand => new RelayCommand(Exit);
+        public ICommand CreateCommand => new RelayCommand(CreateAccount);
 
         //------------------------------------------------------------------------------------------------  Properties
         /// <summary>
@@ -69,37 +71,30 @@ namespace CompanyBroker.ViewModel
             //-- Verifys if the userName is empty or blank
             if (!string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(password.Password))
             {
-                //-- Trying loggin in the user account and returns an MsSqlUserInfo
-                _dataService.msSQLUserInfo = _dBService.ConnectToServer(password, UserName, _appConfigService.MSG_CannotConnectToServer, _appConfigService.SQL_connectionString);
-
-                if (_dataService.msSQLUserInfo.IsConnected != false)
+                using (var dbconnection = new SqlConnection(_appConfigService.SQL_connectionString))
                 {
-                    //-- Messages the user that they are logged in
-                    MessageBox.Show("Logged in!",
-                                    "Company Broker",
-                                    MessageBoxButton.OK,
-                                    MessageBoxImage.Information);
+                        //-- Asserst the condition is true, if false it throws an AssertException
+                        Assert.IsTrue(_dBService.VerifyLogin(dbconnection, UserName, password.Password));
+                    
+                        //-- Messages the user that they are logged in
+                        MessageBox.Show("Logged in!",
+                                        "Company Broker",
+                                        MessageBoxButton.OK,
+                                        MessageBoxImage.Information);
 
-                    //-- Opens MainWindow via. new viewService interface
-                    _viewService.CreateWindow(new MainWindow());
+                        //-- Opens MainWindow via. new viewService interface
+                        _viewService.CreateWindow(new MainWindow());
 
-                    //-- Hides LoginWindow
-                    foreach (Window window in Application.Current.Windows)
-                    {
-                        //-- Searches for a window with the following LoginWindow to remove it so the user can use the MainWindow of the application
-                        if (window.Title.Equals("LoginWindow"))
+                        //-- Closes LoginWindow
+                        foreach (Window window in Application.Current.Windows)
                         {
-                            window.Close();
+                            //-- Searches for a window with the following LoginWindow to remove it so the user can use the MainWindow of the application
+                            if (window.Title.Equals("LoginWindow"))
+                            {
+                                window.Close();
+                            }
                         }
-                    }
-                }
-                else
-                {
-                    MessageBox.Show($"{_appConfigService.MSG_UknownUserName}",
-                                   "Company Broker login error",
-                                  MessageBoxButton.OK,
-                                  MessageBoxImage.Error);
-                }
+                }              
             }
             else
             {
@@ -118,7 +113,14 @@ namespace CompanyBroker.ViewModel
             Application.Current.Shutdown();
         }
 
-
+        /// <summary>
+        /// Creates the 'Create account window' for the user
+        /// </summary>
+        public void CreateAccount()
+        {
+            //-- Opens CreateAccountWindow via. new viewService interface
+            _viewService.CreateWindow(new CreateAccountWindow());
+        }
 
     }
 }

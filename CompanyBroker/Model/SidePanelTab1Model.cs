@@ -11,19 +11,19 @@ namespace CompanyBroker.Model
     public class SidePanelTab1Model
     {
         //-- Company list
-        private ObservableCollection<string> __companyList;
+        private ObservableCollection<string> __companyList = new ObservableCollection<string>();
         public ref ObservableCollection<string>  _companyList => ref __companyList;
 
         //-- resource list
-        private ObservableCollection<string> __productTypeList;
+        private ObservableCollection<string> __productTypeList = new ObservableCollection<string>();
         public ref ObservableCollection<string> _productTypeList => ref __productTypeList;
 
         //- Choices of companys to filter with
-        private ObservableCollection<string> __companyChoicesList;
+        private ObservableCollection<string> __companyChoicesList = new ObservableCollection<string>();
         public ref ObservableCollection<string> _companyChoicesList => ref __companyChoicesList;
 
         //-- choices of resource to choose from
-        private ObservableCollection<string> __resourceChoicesList;
+        private ObservableCollection<string> __resourceChoicesList = new ObservableCollection<string>();
         public ref ObservableCollection<string> _resourceChoicesList => ref __resourceChoicesList;
 
         //-- Item choosen from the company list

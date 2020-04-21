@@ -55,12 +55,21 @@
                 </PasswordBox.InputBindings>
             </PasswordBox>
             <!-- Login button -->
-            <Button Grid.Column="2" Grid.Row="2" Height="20" Width="80" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=PassWordField}">
+            <Button Grid.Column="1" Grid.Row="2" Height="20" Width="80" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=PassWordField}">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="10"/>
                     </Style>
                 </Button.Resources> Login
+            </Button>
+            <!-- Exit button -->
+            <Button Grid.Column="2" Grid.Row="2" Height="20" Width="80" Command="{Binding CreateCommand}">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+                Create
             </Button>
             <!-- Exit button -->
             <Button Grid.Column="3" Grid.Row="2" Height="20" Width="80" Command="{Binding ExitCommand}">

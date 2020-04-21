@@ -1,15 +1,18 @@
 ﻿using CompanyBroker.DbConnect;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Windows.Controls;
 
 namespace CompanyBroker.Interfaces
 {
     public interface IDBService
     {
-        MsSQLUserInfo ConnectToServer(PasswordBox passwordBox, string UserName, string MSG_CannotConnectToServer, string SQL_connectionString);
+        bool VerifyLogin(IDbConnection dbConnection, string username, string password);
+        void CreateUser(IDbConnection dbConnection, int companyId, string username, string password, string Email);
+        void CreateCompany(IDbConnection dbConnection, string companyName, int balance, bool active);
 
-        ObservableCollection<string> RequestCompanyList(MsSQLUserInfo msSQLUserInfo, string fetchCompanyListCommand, string MSG_CannotConnectToServer);
+        ObservableCollection<string> RequestCompanyList(IDbConnection dbConnection, string fetchCompanyListCommand, string MSG_CannotConnectToServer);
 
-        ObservableCollection<string> RequestProductTypeList(MsSQLUserInfo msSQLUserInfo, string SQL_ProductTypeList, string MSG_CannotConnectToServer);
+        ObservableCollection<string> RequestProductTypeList(IDbConnection dbConnection, string SQL_ProductTypeList, string MSG_CannotConnectToServer);
     }
 }
