@@ -166,7 +166,7 @@ namespace CompanyBroker.ViewModel
         {
             using (var dbconnection = new SqlConnection(_appConfigService.SQL_connectionString))
             {
-                CompanyList = _dBService.RequestCompanyList(dbconnection, _appConfigService.SQL_FetchCompanyList, _appConfigService.MSG_CannotConnectToServer);
+                CompanyList = _dBService.RequestCompanyList(dbconnection, _appConfigService.SQL_FetchCompanyList, _appConfigService.MSG_CannotConnectToServer, false);
 
             }
         }

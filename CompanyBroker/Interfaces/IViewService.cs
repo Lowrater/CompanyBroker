@@ -16,5 +16,8 @@ namespace CompanyBroker.Interfaces
 
         //-- Windows
         void CreateWindow(Window window);
+
+        void CloseWindow(string windowTitle);
+
     }
 }

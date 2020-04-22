@@ -50,7 +50,7 @@ namespace CompanyBroker.ViewModel
         private async Task SetTime()
         {
             //-- While the user is active, update the timestamp
-            while (_dataService.msSQLUserInfo.IsConnected.Equals(true))
+            while (_dataService.isConnected.Equals(true))
             {
                 //-- waits 30 seconds 
                 await Task.Delay(10000);

@@ -210,7 +210,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DbConnect\MsSQLUserInfo.cs" />
     <Compile Include="Interfaces\IDataService.cs" />
     <Compile Include="Model\LoginModel.cs" />
     <Compile Include="Services\DataService.cs" />

@@ -1,5 +1,4 @@
-﻿using CompanyBroker.DbConnect;
-using CompanyBroker.View.Windows;
+﻿using CompanyBroker.View.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +12,7 @@ namespace CompanyBroker.Interfaces
     /// </summary>
    public interface IDataService
     {
-        MsSQLUserInfo msSQLUserInfo { get; set; }
+        bool isConnected { get; set; }
 
         string time { get; set; }
     }

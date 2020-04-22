@@ -42,16 +42,16 @@
         <!-- Left Labels colum 1-->
         <!-- Top - If new company -->
         <CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding NewCompanyBool}"></CheckBox>
-        <TextBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Text="{Binding CompanyName}"></TextBox>
+        <TextBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Text="{Binding CompanyName}" IsEnabled="{Binding CompanyNameBool}"></TextBox>
 
         <!-- The account itself -->
         <TextBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Text="{Binding AccountName}"></TextBox>
-        <ComboBox Grid.Row="5" Grid.Column="1"  VerticalAlignment="Center" Text="{Binding CompanyList}" SelectedValue="{Binding CompanyChoice}"></ComboBox>
+        <ComboBox Grid.Row="5" Grid.Column="1"  VerticalAlignment="Center" ItemsSource="{Binding CompanyList, Mode=TwoWay}" SelectedIndex="{Binding CompanyChoice, Mode=TwoWay}" IsEnabled="{Binding CompanyDropDownBool}"></ComboBox>
         <TextBox Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" Text="{Binding AccountEmail}"></TextBox>
-        <PasswordBox Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" ></PasswordBox>
+        <PasswordBox Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" x:Name="PassWordField"></PasswordBox>
         
         <!-- Button creation -->
-        <Button Grid.Column="1" Grid.Row="9" VerticalAlignment="Center" Width="120">
+        <Button Grid.Column="1" Grid.Row="9" VerticalAlignment="Center" Width="120" Command="{Binding CreateCommand}" CommandParameter="{Binding ElementName=PassWordField}">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10"/>

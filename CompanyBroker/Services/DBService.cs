@@ -1,5 +1,4 @@
-﻿using CompanyBroker.DbConnect;
-using CompanyBroker.Interfaces;
+﻿using CompanyBroker.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -60,60 +59,71 @@ namespace CompanyBroker.Services
         /// <param name="companyId"></param>
         /// <param name="username"></param>
         /// <param name="password"></param>
-        public void CreateUser(IDbConnection dbConnection, int companyId, string username, string password, string Email)
+        public void CreateUser(IDbConnection dbConnection, int companyId, string username, string password, string Email, string MSG_FieldsCannotBeEmpty)
         {
-            var salt = GenerateSalt(32);
-            var passwordHash = GetHash(password, salt);
 
-            using (var cmd = dbConnection.CreateCommand())
+            if(companyId > 0 && !string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password) && !string.IsNullOrEmpty(Email))
             {
-                //-- The command text
-                cmd.CommandText = "INSERT INTO CompanyAccounts (CompanyId, Username, Email, PasswordHash, PasswordSalt, Active) " +
-                                  "VALUES (@CompanyId, @Username, @Email, @PasswordHash, @PasswordSalt, @Active);";
+                var salt = GenerateSalt(32);
+                var passwordHash = GetHash(password, salt);
 
-                //-- All command parameters
-                var companyIdParam = cmd.CreateParameter();
-                companyIdParam.ParameterName = "@CompanyId";
-                companyIdParam.Value = companyId;
+                using (var cmd = dbConnection.CreateCommand())
+                {
+                    //-- The command text
+                    cmd.CommandText = "INSERT INTO CompanyAccounts (CompanyId, Username, Email, PasswordHash, PasswordSalt, Active) " +
+                                      "VALUES (@CompanyId, @Username, @Email, @PasswordHash, @PasswordSalt, @Active);";
 
-                var usernameParam = cmd.CreateParameter();
-                usernameParam.ParameterName = "@Username";
-                usernameParam.Value = username;
+                    //-- All command parameters
+                    var companyIdParam = cmd.CreateParameter();
+                    companyIdParam.ParameterName = "@CompanyId";
+                    companyIdParam.Value = companyId;
 
-                var emailParam = cmd.CreateParameter();
-                emailParam.ParameterName = "@Email";
-                emailParam.Value = Email;
+                    var usernameParam = cmd.CreateParameter();
+                    usernameParam.ParameterName = "@Username";
+                    usernameParam.Value = username;
 
-                var passwordHashParam = cmd.CreateParameter();
-                passwordHashParam.ParameterName = "@PasswordHash";
-                passwordHashParam.Value = passwordHash;
-                passwordHashParam.DbType = DbType.Binary;
-                passwordHashParam.Size = 32;
+                    var emailParam = cmd.CreateParameter();
+                    emailParam.ParameterName = "@Email";
+                    emailParam.Value = Email;
 
-                var passwordSaltParam = cmd.CreateParameter();
-                passwordSaltParam.ParameterName = "@PasswordSalt";
-                passwordSaltParam.Value = salt;
-                passwordHashParam.DbType = DbType.Binary;
-                passwordHashParam.Size = 32;
+                    var passwordHashParam = cmd.CreateParameter();
+                    passwordHashParam.ParameterName = "@PasswordHash";
+                    passwordHashParam.Value = passwordHash;
+                    passwordHashParam.DbType = DbType.Binary;
+                    passwordHashParam.Size = 32;
 
-                var activeParam = cmd.CreateParameter();
-                activeParam.ParameterName = "@Active";
-                activeParam.Value = true;
+                    var passwordSaltParam = cmd.CreateParameter();
+                    passwordSaltParam.ParameterName = "@PasswordSalt";
+                    passwordSaltParam.Value = salt;
+                    passwordHashParam.DbType = DbType.Binary;
+                    passwordHashParam.Size = 32;
 
-                //-- Adding the parameters
-                cmd.Parameters.Add(companyIdParam);
-                cmd.Parameters.Add(usernameParam);
-                cmd.Parameters.Add(emailParam);
-                cmd.Parameters.Add(passwordHashParam);
-                cmd.Parameters.Add(passwordSaltParam);
-                cmd.Parameters.Add(activeParam);
+                    var activeParam = cmd.CreateParameter();
+                    activeParam.ParameterName = "@Active";
+                    activeParam.Value = true;
 
-                //-- Opening the connectiong
-                if (dbConnection.State != ConnectionState.Open)
-                    dbConnection.Open();
+                    //-- Adding the parameters
+                    cmd.Parameters.Add(companyIdParam);
+                    cmd.Parameters.Add(usernameParam);
+                    cmd.Parameters.Add(emailParam);
+                    cmd.Parameters.Add(passwordHashParam);
+                    cmd.Parameters.Add(passwordSaltParam);
+                    cmd.Parameters.Add(activeParam);
 
-                //-- Executes the query with no return
-                cmd.ExecuteNonQuery();
+                    //-- Opening the connectiong
+                    if (dbConnection.State != ConnectionState.Open)
+                        dbConnection.Open();
+
+                    //-- Executes the query with no return
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            else
+            {
+                MessageBox.Show($"{MSG_FieldsCannotBeEmpty}",
+                 "Company broker error message",
+                 MessageBoxButton.OK,
+                 MessageBoxImage.Error);
             }
         }
 
@@ -122,39 +132,49 @@ namespace CompanyBroker.Services
         /// Is from education course
         /// </summary>
         /// <param name="dbConnection"></param>
-        public void CreateCompany(IDbConnection dbConnection, string companyName, int balance, bool active)
+        public void CreateCompany(IDbConnection dbConnection, string companyName, int balance, bool active, string MSG_FieldsCannotBeEmpty)
         {
-            using (var cmd = dbConnection.CreateCommand())
+            if(!string.IsNullOrEmpty(companyName) && balance > 0 && active != false)
             {
-                //-- The command text
-                cmd.CommandText = "INSERT INTO Companies (CompanyName, CompanyBalance, Active) " +
-                                  "VALUES (@CompanyName, @CompanyBalance, @Active);";
+                using (var cmd = dbConnection.CreateCommand())
+                {
+                    //-- The command text
+                    cmd.CommandText = "INSERT INTO Companies (CompanyName, CompanyBalance, Active) " +
+                                      "VALUES (@CompanyName, @CompanyBalance, @Active);";
 
-                //-- All command parameters
-                var companyNameParam = cmd.CreateParameter();
-                companyNameParam.ParameterName = "@CompanyName";
-                companyNameParam.Value = companyName;
+                    //-- All command parameters
+                    var companyNameParam = cmd.CreateParameter();
+                    companyNameParam.ParameterName = "@CompanyName";
+                    companyNameParam.Value = companyName;
 
-                var companyBalanceParam = cmd.CreateParameter();
-                companyBalanceParam.ParameterName = "@CompanyBalance";
-                companyBalanceParam.Value = balance;
-                companyBalanceParam.DbType = DbType.Int32;
+                    var companyBalanceParam = cmd.CreateParameter();
+                    companyBalanceParam.ParameterName = "@CompanyBalance";
+                    companyBalanceParam.Value = balance;
+                    companyBalanceParam.DbType = DbType.Int32;
 
-                var activeParam = cmd.CreateParameter();
-                activeParam.ParameterName = "@Active";
-                activeParam.Value = active;
+                    var activeParam = cmd.CreateParameter();
+                    activeParam.ParameterName = "@Active";
+                    activeParam.Value = active;
 
-                //-- Adding the parameters
-                cmd.Parameters.Add(companyNameParam);
-                cmd.Parameters.Add(companyBalanceParam);
-                cmd.Parameters.Add(activeParam);
+                    //-- Adding the parameters
+                    cmd.Parameters.Add(companyNameParam);
+                    cmd.Parameters.Add(companyBalanceParam);
+                    cmd.Parameters.Add(activeParam);
 
-                //-- Opening the connectiong
-                if (dbConnection.State != ConnectionState.Open)
-                    dbConnection.Open();
+                    //-- Opening the connectiong
+                    if (dbConnection.State != ConnectionState.Open)
+                        dbConnection.Open();
 
-                //-- Executes the query with no return
-                cmd.ExecuteNonQuery();
+                    //-- Executes the query with no return
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            else
+            {
+                MessageBox.Show($"{MSG_FieldsCannotBeEmpty}",
+                 "Company broker error message",
+                 MessageBoxButton.OK,
+                 MessageBoxImage.Error);
             }
         }
 
@@ -170,23 +190,32 @@ namespace CompanyBroker.Services
         {
             using (var cmd = dbConnection.CreateCommand())
             {
+                //-- The command text
                 cmd.CommandText = "SELECT PasswordHash, PasswordSalt " +
                                   "FROM CompanyAccounts " +
                                   "WHERE Username = @Username";
 
+                //-- All command parameters
                 var usernameParam = cmd.CreateParameter();
                 usernameParam.ParameterName = "@Username";
                 usernameParam.Value = username;
 
+                //-- Adding the parameters
                 cmd.Parameters.Add(usernameParam);
 
+                //-- Opening the connectiong
                 if (dbConnection.State != ConnectionState.Open)
+                {
                     dbConnection.Open();
+                }
 
+                //-- Executing the command
                 using (var rdr = cmd.ExecuteReader(CommandBehavior.SingleRow))
                 {
+                    //-- reads the result in a loop
                     while (rdr.Read())
                     {
+                        //-- sets the contents
                         var passwordHashOrdinal = rdr.GetOrdinal("PasswordHash");
                         var passwordSaltOrdinal = rdr.GetOrdinal("PasswordSalt");
 
@@ -212,10 +241,11 @@ namespace CompanyBroker.Services
         /// <param name="fetchCompanyListCommand"></param>
         /// <param name="MSG_CannotConnectToServer"></param>
         /// <returns></returns>
-        public ObservableCollection<string> RequestCompanyList(IDbConnection dbConnection, string fetchCompanyListCommand, string MSG_CannotConnectToServer)
+        public ObservableCollection<string> RequestCompanyList(IDbConnection dbConnection, string fetchCompanyListCommand, string MSG_CannotConnectToServer, bool withId)
         {
             //-- The content holder
             var companyList = new ObservableCollection<string>();
+            companyList.Add("");
 
             try
             {
@@ -228,34 +258,39 @@ namespace CompanyBroker.Services
                     //-- opens the connections
                     //-- connection != null && connection.State != ConnectionState.Open
                     //-- connection?.State != ConnectionState.Open
-                    if (dbConnection != null && dbConnection?.State != ConnectionState.Open)
+                    if (dbConnection != null && dbConnection.State != ConnectionState.Open)
                         {
                             //-- Opens the connection
-                            dbConnection?.Open();
-                            //-- Executes the command
-                            using (var reader = SQLCommand?.ExecuteReader())
-                            {
-                            //-- Fetches the content
-                                while (reader.Read())
-                                {
-                                //-- Adds the content to the list
-                                    companyList.Add(reader?.GetString(0));
-                                }
-                            }
+                            dbConnection.Open();
                         }
-                        else
+
+                    //-- Checks wether or not we need the ID parameter with us
+                    if (withId.Equals(true))
+                    {
+                        //-- Executes the command
+                        using (var reader = SQLCommand.ExecuteReader())
                         {
-                            //-- Executes the command
-                            using (var reader = SQLCommand?.ExecuteReader())
+                            //-- Fetches the content
+                            while (reader.Read())
                             {
-                                //-- Fetches the content
-                                while (reader.Read())
-                                {
-                                    //-- Adds the content to the list
-                                    companyList.Add(reader?.GetString(0));
-                                }
+                                //-- Adds the content to the list
+                                companyList.Add(Convert.ToString(reader.GetInt32(0) + " " + reader.GetString(1)));
                             }
                         }
+                    }
+                    else
+                    {
+                        //-- Executes the command
+                        using (var reader = SQLCommand.ExecuteReader())
+                        {
+                            //-- Fetches the content
+                            while (reader.Read())
+                            {
+                                //-- Adds the content to the list
+                                companyList.Add(reader.GetString(0));
+                            }
+                        }
+                    }
                 }
             }
             catch (Exception exception)
@@ -305,32 +340,32 @@ namespace CompanyBroker.Services
                     //-- opens the connections
                     //-- connection != null && connection.State != ConnectionState.Open
                     //-- connection?.State != ConnectionState.Open
-                    if (dbConnection != null && dbConnection?.State != ConnectionState.Open)
+                    if (dbConnection != null && dbConnection.State != ConnectionState.Open)
                     {
                         //-- Opens the connection
-                        dbConnection?.Open();
+                        dbConnection.Open();
 
                         //-- Executes the command
-                        using (var reader = SQLCommand?.ExecuteReader())
+                        using (var reader = SQLCommand.ExecuteReader())
                         {
                             //-- Fetches the content
                             while (reader.Read())
                             {
                                 //-- Adds the content to the list
-                                resourceList.Add(reader?.GetString(0));
+                                resourceList.Add(reader.GetString(0));
                             }
                         }
                     }
                     else
                     {
                         //-- Executes the command
-                        using (var reader = SQLCommand?.ExecuteReader())
+                        using (var reader = SQLCommand.ExecuteReader())
                         {
                             //-- Fetches the content
                             while (reader.Read())
                             {
                                 //-- Adds the content to the list
-                                resourceList.Add(reader?.GetString(0));
+                                resourceList.Add(reader.GetString(0));
                             }
                         }
                     }

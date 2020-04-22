@@ -21,5 +21,22 @@ namespace CompanyBroker.Services
         {
             window.Show();
         }
+
+        /// <summary>
+        /// Closes all windows with the following window title name.
+        /// </summary>
+        /// <param name="windowTitle"></param>
+        public void CloseWindow(string windowTitle)
+        {
+            //-- Closes the CreateAccountWindow window
+            foreach (Window window in Application.Current.Windows)
+            {
+                //-- Searches for a window with the following CreateAccountWindow to remove it
+                if (window.Title.Equals(windowTitle))
+                {
+                    window.Close();
+                }
+            }
+        }
     }
 }

@@ -8,7 +8,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Configuration;
-using CompanyBroker.DbConnect;
 using CompanyBroker.View.Windows;
 using GalaSoft.MvvmLight.Messaging;
 using NUnit.Framework;
@@ -82,18 +81,12 @@ namespace CompanyBroker.ViewModel
                                         MessageBoxButton.OK,
                                         MessageBoxImage.Information);
 
-                        //-- Opens MainWindow via. new viewService interface
-                        _viewService.CreateWindow(new MainWindow());
-
-                        //-- Closes LoginWindow
-                        foreach (Window window in Application.Current.Windows)
-                        {
-                            //-- Searches for a window with the following LoginWindow to remove it so the user can use the MainWindow of the application
-                            if (window.Title.Equals("LoginWindow"))
-                            {
-                                window.Close();
-                            }
-                        }
+                    //-- Sets the active state to true
+                    _dataService.isConnected = true;
+                    //-- Opens MainWindow via. new viewService interface
+                    _viewService.CreateWindow(new MainWindow());
+                    //-- Closes LoginWindow
+                    _viewService.CloseWindow("LoginWindow");
                 }              
             }
             else

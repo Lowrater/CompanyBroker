@@ -1,6 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using CompanyBroker.DbConnect;
 using CompanyBroker.Interfaces;
 using CompanyBroker.View.Windows;
 using System.Windows;
@@ -14,18 +13,18 @@ namespace CompanyBroker.ViewModel
         public ICommand LogoutCommand => new RelayCommand(LogOut);
 
         //------------------------------------------------------------------------------------------------ Interfaces
-        private IDataService dataService;
-        private IViewService viewService;
+        private IDataService _dataService;
+        private IViewService _viewService;
 
 
         //------------------------------------------------------------------------------------------------ Constructor
         /// <summary>
         /// COnstructor
         /// </summary>
-        public LogoutViewModel(IDataService _dataService, IViewService _viewService)
+        public LogoutViewModel(IDataService __dataService, IViewService __viewService)
         {
-            this.dataService = _dataService;
-            this.viewService = _viewService;
+            this._dataService = __dataService;
+            this._viewService = __viewService;
         }
 
         //------------------------------------------------------------------------------------------------ Methods
@@ -35,10 +34,10 @@ namespace CompanyBroker.ViewModel
         public void LogOut()
         {
             //-- Resets the User informations
-            dataService.msSQLUserInfo = new MsSQLUserInfo();
+            _dataService.isConnected = false;
 
             //-- Creates new Login window
-            viewService.CreateWindow(new LoginWindow());
+            _viewService.CreateWindow(new LoginWindow());
 
             //-- Closes the Main window application window.
             foreach (Window window in Application.Current.Windows)

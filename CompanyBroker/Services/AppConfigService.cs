@@ -17,7 +17,7 @@ namespace CompanyBroker.Services
         //----------------------- Messages
         public string MSG_UknownUserName => ConfigurationManager.AppSettings["LoginWindow_UknownUserNameMSG"];
         public string MSG_CannotConnectToServer => ConfigurationManager.AppSettings["LoginWindow_CannotConnectToServerMSG"];
-        public string MSG_FieldsCannotBeEmpty => ConfigurationManager.AppSettings["LoginWindow_FieldsCannotBeEmptyMSG"];
+        public string MSG_FieldsCannotBeEmpty => ConfigurationManager.AppSettings["AllFields_FieldsCannotBeEmptyMSG"];
 
         //----------------------- Headers
     }
