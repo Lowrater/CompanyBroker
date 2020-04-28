@@ -39,6 +39,7 @@ namespace CompanyBroker.ViewModel
             SimpleIoc.Default.Register<IViewService, ViewService>();
             SimpleIoc.Default.Register<IAppConfigService, AppConfigService>();
             SimpleIoc.Default.Register<IDBService, DBService>();
+            SimpleIoc.Default.Register<IContentService, ContentService>();
 
 
             //-- ViewModel registers
@@ -48,6 +49,7 @@ namespace CompanyBroker.ViewModel
             SimpleIoc.Default.Register<TimeViewModel>();
             SimpleIoc.Default.Register<SidePanelTab1ViewModel>();
             SimpleIoc.Default.Register<CreateAccountViewModel>();
+            SimpleIoc.Default.Register<BrokerOverviewViewModel>();
 
         }
 
@@ -58,8 +60,8 @@ namespace CompanyBroker.ViewModel
         public SidePanelViewModel Sidepanel => ServiceLocator.Current.GetInstance<SidePanelViewModel>(Guid.NewGuid().ToString());
         public TimeViewModel Time => ServiceLocator.Current.GetInstance<TimeViewModel>(Guid.NewGuid().ToString());
         public SidePanelTab1ViewModel SidePanelTab1 => ServiceLocator.Current.GetInstance<SidePanelTab1ViewModel>(Guid.NewGuid().ToString());
-
         public CreateAccountViewModel CreateAccount => ServiceLocator.Current.GetInstance<CreateAccountViewModel>(Guid.NewGuid().ToString());
+        public BrokerOverviewViewModel BrokerOverview => ServiceLocator.Current.GetInstance<BrokerOverviewViewModel>(Guid.NewGuid().ToString());
 
         public static void Cleanup()
         {

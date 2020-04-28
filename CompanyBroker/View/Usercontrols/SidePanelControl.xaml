@@ -18,10 +18,15 @@
 
         <!-- Grid content -->
         <TabControl>
-            <!-- Filter panel 1-->
+            <!--  panel 1-->
             <TabItem Header="Filter panel 1">
                 <!-- Reference to SidePanelControls for SidePanelTab1-->
                 <userControls:SidePanelTab1></userControls:SidePanelTab1>
+            </TabItem>
+            <!--  panel 2-->
+            <TabItem Header="Add listing">
+                <!-- Reference to SidePanelControls for SidePanelTab2-->
+
             </TabItem>
         </TabControl>
 

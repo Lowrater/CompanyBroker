@@ -23,8 +23,21 @@ namespace CompanyBroker.Model
         public ref ObservableCollection<string> _companyChoicesList => ref __companyChoicesList;
 
         //-- choices of resource to choose from
-        private ObservableCollection<string> __resourceChoicesList = new ObservableCollection<string>();
-        public ref ObservableCollection<string> _resourceChoicesList => ref __resourceChoicesList;
+        private ObservableCollection<string> __productTypeChoicesList = new ObservableCollection<string>();
+        public ref ObservableCollection<string> _productTypeChoicesList => ref __productTypeChoicesList;
+
+
+        //-- choices of resource to choose from
+        private ObservableCollection<string> __productNameChoicesList = new ObservableCollection<string>();
+        public ref ObservableCollection<string> _productNameChoicesList => ref __productNameChoicesList;
+
+
+        private ObservableCollection<string> __productNameList = new ObservableCollection<string>();
+        public ref ObservableCollection<string> _productNameList => ref __productNameList;
+
+        
+
+
 
         //-- Item choosen from the company list
         private string __selectedCompanyListItem;
@@ -34,7 +47,12 @@ namespace CompanyBroker.Model
         private string __selectedProductListItem;
         public ref string _selectedProductListItem => ref __selectedProductListItem;
 
-      
+        private string __selectedProductNameListItem;
+        public ref string _selectedProductNameListItem => ref __selectedProductNameListItem;
+        
+
+        private int __removeListIndex;
+        public ref int _removeListIndex => ref __removeListIndex;
 
         //-- partners only check box
         private bool __partnersOnly;

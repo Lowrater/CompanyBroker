@@ -135,18 +135,21 @@
     </ApplicationDefinition>
     <Compile Include="Addons\CustomElements\Custom_button.cs" />
     <Compile Include="Interfaces\IViewService.cs" />
+    <Compile Include="Model\BrokerOverviewModel.cs" />
     <Compile Include="Model\CreateAccountModel.cs" />
     <Compile Include="Model\LogoutModel.cs" />
     <Compile Include="Model\SidePanelTab1Model.cs" />
     <Compile Include="Model\TimeModel.cs" />
     <Compile Include="Services\AppConfigService.cs" />
     <Compile Include="Interfaces\IAppConfigService.cs" />
+    <Compile Include="Services\ContentService.cs" />
     <Compile Include="Services\DBService.cs" />
     <Compile Include="Interfaces\IDBService.cs" />
+    <Compile Include="Interfaces\IContentService.cs" />
     <Compile Include="Services\ViewService.cs" />
+    <Compile Include="ViewModel\BrokerOverviewViewModel.cs" />
     <Compile Include="ViewModel\CreateAccountViewModel.cs" />
     <Compile Include="ViewModel\LogoutViewModel.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\SidePanelTab1ViewModel.cs" />
     <Compile Include="ViewModel\SidePanelViewModel.cs" />
     <Compile Include="ViewModel\TimeViewModel.cs" />

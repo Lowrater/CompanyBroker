@@ -70,24 +70,48 @@ namespace CompanyBroker.ViewModel
             //-- Verifys if the userName is empty or blank
             if (!string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(password.Password))
             {
-                using (var dbconnection = new SqlConnection(_appConfigService.SQL_connectionString))
+                try
                 {
-                        //-- Asserst the condition is true, if false it throws an AssertException
+                    using (var dbconnection = new SqlConnection(_appConfigService.SQL_connectionString))
+                    {
+
                         Assert.IsTrue(_dBService.VerifyLogin(dbconnection, UserName, password.Password));
-                    
+
                         //-- Messages the user that they are logged in
                         MessageBox.Show("Logged in!",
                                         "Company Broker",
                                         MessageBoxButton.OK,
                                         MessageBoxImage.Information);
 
-                    //-- Sets the active state to true
-                    _dataService.isConnected = true;
-                    //-- Opens MainWindow via. new viewService interface
-                    _viewService.CreateWindow(new MainWindow());
-                    //-- Closes LoginWindow
-                    _viewService.CloseWindow("LoginWindow");
-                }              
+                        //-- Sets the active state to true
+                        _dataService.isConnected = true;
+                        //-- Opens MainWindow via. new viewService interface
+                        _viewService.CreateWindow(new MainWindow());
+                        //-- Closes LoginWindow
+                        _viewService.CloseWindow("LoginWindow");
+                    }
+                }
+                catch (Exception exception)
+                {
+
+                    //-- checks the exception type
+                    if (exception is AssertionException)
+                    {
+                        MessageBox.Show($"{_appConfigService.MSG_UknownUserName}",
+                                        "Company broker Server error",
+                                        MessageBoxButton.OK,
+                                        MessageBoxImage.Error);
+                    }
+                    else
+                    {
+                        //-- prints out software exception message
+                        MessageBox.Show($"{exception.Message}",
+                                        "Company broker Server error",
+                                        MessageBoxButton.OK,
+                                        MessageBoxImage.Error);
+                    }
+                }
+                
             }
             else
             {

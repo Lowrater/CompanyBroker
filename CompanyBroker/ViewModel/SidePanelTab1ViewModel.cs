@@ -1,6 +1,7 @@
 ﻿using CompanyBroker.Interfaces;
 using CompanyBroker.Model;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace CompanyBroker.ViewModel
 {
@@ -21,12 +23,18 @@ namespace CompanyBroker.ViewModel
         private IDBService _dBService;
         private IDataService _dataservice;
         private IAppConfigService _appConfigService;
+        private IContentService _contentService;
+
+        //-------------------------------------------------------------------------- Icommands
+        public ICommand ResetComand => new RelayCommand(ResetSidePanel);
+
         //-------------------------------------------------------------------------- Construcor
-        public SidePanelTab1ViewModel(IDBService dBService, IDataService dataservice, IAppConfigService appConfigService)
+        public SidePanelTab1ViewModel(IDBService __dBService, IDataService __dataservice, IAppConfigService __appConfigService, IContentService __contentService)
         {
-            this._dBService = dBService;
-            this._dataservice = dataservice;
-            this._appConfigService = appConfigService;
+            this._dBService = __dBService;
+            this._dataservice = __dataservice;
+            this._appConfigService = __appConfigService;
+            this._contentService = __contentService;
 
             //-- Fetches the companyList on startup
             FetchCompanyList();
@@ -64,32 +72,19 @@ namespace CompanyBroker.ViewModel
 
 
         /// <summary>
-        /// Item choosen from the CompanyList
+        /// List containing all Product types. etc. electronic 
         /// </summary>
-        public string SelectedCompanyListItem
+        public ObservableCollection<string> ProductTypeChoicesList
         {
-            get => sidePanelTab1Model._selectedCompanyListItem;
+            get => sidePanelTab1Model._productTypeChoicesList;
             set
             {
-                Set(ref sidePanelTab1Model._selectedCompanyListItem, value);
-            }
-        }
-
-        //-------------------------------------------------------------------------- resources List
-        /// <summary>
-        /// List containing all resources types.
-        /// </summary>
-        public ObservableCollection<string> ResourceChoicesList
-        {
-            get => sidePanelTab1Model._resourceChoicesList;
-            set
-            {
-                Set(ref sidePanelTab1Model._resourceChoicesList, value);
+                Set(ref sidePanelTab1Model._productTypeChoicesList, value);
             }
         }
 
         /// <summary>
-        /// List containing all resources types.
+        // List containing all Product Types choices added to the list for filtering.
         /// </summary>
         public ObservableCollection<string> ProductTypeList
         {
@@ -101,7 +96,49 @@ namespace CompanyBroker.ViewModel
         }
 
         /// <summary>
+        /// List containing all product names existing depending om the product type selection
+        /// Uses a query to fill this list
+        /// </summary>
+        public ObservableCollection<string> ProductNameList
+        {
+            get => sidePanelTab1Model._productNameList;
+            set
+            {
+                Set(ref sidePanelTab1Model._productNameList, value);
+            }
+        }
+
+
+        /// <summary>
+        /// List containing all product names choosen, from ProductNameList
+        /// </summary>
+        public ObservableCollection<string> ProductNameChoicesList
+        {
+            get => sidePanelTab1Model._productNameChoicesList;
+            set
+            {
+                Set(ref sidePanelTab1Model._productNameChoicesList, value);
+            }
+        }
+
+        
+
+        /// <summary>
         /// Item choosen from the CompanyList
+        /// </summary>
+        public string SelectedCompanyListItem
+        {
+            get => sidePanelTab1Model._selectedCompanyListItem;
+            set
+            {
+                Set(ref sidePanelTab1Model._selectedCompanyListItem, value);
+                //-- Adds the selected item from the CompanyList to the CompanyChoicesList for filtering in SQL
+                _contentService.AddSelectedListItem(CompanyChoicesList, value);
+           }
+        }
+
+        /// <summary>
+        /// Item choosen from the ProductList
         /// </summary>
         public string SelectedProductListItem
         {
@@ -109,10 +146,29 @@ namespace CompanyBroker.ViewModel
             set
             {
                 Set(ref sidePanelTab1Model._selectedProductListItem, value);
+                //-- Adds the selected item from the ProductNameList to the ProductTypeChoicesList for filtering in SQL
+                _contentService.AddSelectedListItem(ProductTypeChoicesList, value);
+                //-- Updates the ProductNameList based on the content in ProductTypeChoicesList list
+                FetchProductNameList();
             }
         }
 
-        //--------------------------------------------------------------------- Check boxes
+
+        /// <summary>
+        /// Item choosen from the ProductNameList
+        /// </summary>
+        public string SelectedProductNameListItem
+        {
+            get => sidePanelTab1Model._selectedProductNameListItem;
+            set
+            {
+                Set(ref sidePanelTab1Model._selectedProductNameListItem, value);
+                //-- Adds the selected item from the ProductNameList to the ProductNameChoicesList for filtering in SQL
+                _contentService.AddSelectedListItem(ProductNameChoicesList, value);
+            }
+        }
+
+        //--------------------------------------------------------------------- Check boxes - START
 
         /// <summary>
         /// Bool
@@ -140,24 +196,52 @@ namespace CompanyBroker.ViewModel
             }
         }
 
+        //--------------------------------------------------------------------- Check boxes - END
 
+        /// <summary>
+        /// Used to remove an selected index on SelectedIndex on ProductTypeChoicesList
+        /// </summary>
+        public int RemoveProductTypeChoicesIndex
+        {
+            get => sidePanelTab1Model._removeListIndex;
+            set
+            {
+                Set(ref sidePanelTab1Model._removeListIndex, value);
+                ////-- Removes the element at the index selected
+                _contentService.RemoveSelectedListIndex(ProductTypeChoicesList, value);
+            }
+        }
+
+        /// <summary>
+        /// Used to remove an selected index on SelectedIndex on ProductTypeChoicesList
+        /// </summary>
+        public int RemoveCompanyChoicesIndex
+        {
+            get => sidePanelTab1Model._removeListIndex;
+            set
+            {
+                Set(ref sidePanelTab1Model._removeListIndex, value);
+                ////-- Removes the element at the index selected
+                _contentService.RemoveSelectedListIndex(CompanyChoicesList, value);
+            }
+        }
+
+        /// <summary>
+        /// Used to remove an selected index on SelectedIndex on ProductTypeChoicesList
+        /// </summary>
+        public int SelectedProductNameChoiceIndex
+        {
+            get => sidePanelTab1Model._removeListIndex;
+            set
+            {
+                Set(ref sidePanelTab1Model._removeListIndex, value);
+                ////-- Removes the element at the index selected
+                _contentService.RemoveSelectedListIndex(ProductNameChoicesList, value);
+            }
+        }
+        
 
         //---------------------------------------------------------------- Methods
-        /// <summary>
-        /// Adds item to CompanyChoicesList type of Label
-        /// </summary>
-        public void AddToCompanyFilterList()
-        {
-
-        }
-
-        /// <summary>
-        /// Adds item to ResourceChoicesList type of Label
-        /// </summary>
-        public void AddToResourceFilterList()
-        {
-
-        }
 
         /// <summary>
         /// Sets the company list in the sidepanel
@@ -167,7 +251,6 @@ namespace CompanyBroker.ViewModel
             using (var dbconnection = new SqlConnection(_appConfigService.SQL_connectionString))
             {
                 CompanyList = _dBService.RequestCompanyList(dbconnection, _appConfigService.SQL_FetchCompanyList, _appConfigService.MSG_CannotConnectToServer, false);
-
             }
         }
 
@@ -178,8 +261,43 @@ namespace CompanyBroker.ViewModel
         {
             using (var dbconnection = new SqlConnection(_appConfigService.SQL_connectionString))
             {
-                ProductTypeList = _dBService.RequestProductTypeList(dbconnection, _appConfigService.SQL_ProductTypeList, _appConfigService.MSG_CannotConnectToServer);
+                ProductTypeList = _dBService.RequestDBSList(dbconnection, _appConfigService.SQL_ProductTypeList, _appConfigService.MSG_CannotConnectToServer);
             }
+        }
+
+        /// <summary>
+        /// Sets the productname list
+        /// </summary>
+        public void FetchProductNameList()
+        {
+            //-- creates the connectiong, and fetches the content
+            using (var dbconnection = new SqlConnection(_appConfigService.SQL_connectionString))
+            {
+                string staticCommand = _appConfigService.SQL_FetchSpecificProductNames + _contentService.SQLContentParameterAppends(ProductTypeChoicesList);
+               
+                ProductNameList = _dBService.RequestDBSList(dbconnection, staticCommand, _appConfigService.MSG_CannotConnectToServer);
+            }
+        }
+
+        /// <summary>
+        /// Resets everything in the sidePanel
+        /// </summary>
+        public void ResetSidePanel()
+        {
+            PartnersOnly = false;
+            BulkBuy = false;
+            ProductNameList = new ObservableCollection<string>();
+            ProductTypeList = new ObservableCollection<string>();
+            CompanyList = new ObservableCollection<string>();
+            ProductNameChoicesList = new ObservableCollection<string>();
+            CompanyChoicesList = new ObservableCollection<string>();
+            ProductTypeChoicesList = new ObservableCollection<string>();
+
+            //-- Price here
+            //-- Date here
+            //-- Expire date here
+
+
         }
 
     }

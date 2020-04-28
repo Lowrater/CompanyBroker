@@ -25,6 +25,8 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <!-- Text information - Row 0 -->
         <Label Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalContentAlignment="Center">Filter overview</Label>
@@ -41,11 +43,21 @@
             <ComboBox Grid.Column="1" Height="25" ItemsSource="{Binding CompanyList}" SelectedItem="{Binding SelectedCompanyListItem}" ></ComboBox>
         </Grid>
 
-        <!-- Company Choices to a list filtering type of label - row 2-->
-        <ScrollViewer Grid.Column="0" Grid.Row="2">
-            <ItemsControl ItemsSource="{Binding CompanyChoicesList}"></ItemsControl>
-        </ScrollViewer>
-        
+        <!-- Resources Choices to a list filtering type of label - row 2-->
+        <Grid Grid.Column="0" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="85"></ColumnDefinition>
+                <ColumnDefinition Width="22*"></ColumnDefinition>
+                <ColumnDefinition Width="183*"/>
+                <ColumnDefinition Width="10"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <!-- Column 0 -->
+            <Label Grid.Column="0"  VerticalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,4,0,3">-</Label>
+            <!-- Column 1 -->
+            <ComboBox Grid.Column="1" Height="25" ItemsSource="{Binding CompanyChoicesList}" SelectedIndex="{Binding RemoveCompanyChoicesIndex}" Grid.ColumnSpan="2" Margin="0,4"></ComboBox>
+        </Grid>
+
+
         <!-- Content for Row 3 -->
         <!-- Resource list choice  -->
         <Grid Grid.Column="0" Grid.Row="3">
@@ -62,9 +74,18 @@
 
 
         <!-- Resources Choices to a list filtering type of label - row 4-->
-        <ScrollViewer Grid.Column="0" Grid.Row="4">
-            <ItemsControl ItemsSource="{Binding ResourceChoicesList}"></ItemsControl>
-        </ScrollViewer>
+        <Grid Grid.Column="0" Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="85"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="10"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <!-- Column 0 -->
+            <Label Grid.Column="0"  VerticalAlignment="Center" HorizontalContentAlignment="Center">-</Label>
+            <!-- Column 1 -->
+            <ComboBox Grid.Column="1" Height="25" ItemsSource="{Binding ProductTypeChoicesList}" SelectedIndex="{Binding RemoveProductTypeChoicesIndex}"></ComboBox>
+        </Grid>
+
 
 
         <!-- Content for Row 3 -->
@@ -81,11 +102,19 @@
             <ComboBox Grid.Column="1" Height="25" ItemsSource="{Binding ProductNameList}" SelectedItem="{Binding SelectedProductNameListItem}"></ComboBox>
         </Grid>
 
-
-        <!-- Resources Choices to a list filtering type of label - row 4-->
-        <ScrollViewer Grid.Column="0" Grid.Row="6">
-            <ItemsControl ItemsSource="{Binding ProductNameChoicesList}"></ItemsControl>
-        </ScrollViewer>
+        <!-- Content for Row 6 -->
+        <!-- Resource list choice  -->
+        <Grid Grid.Column="0" Grid.Row="6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="85"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="10"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <!-- Column 0 -->
+            <Label Grid.Column="0"  VerticalAlignment="Center" HorizontalContentAlignment="Center">-</Label>
+            <!-- Column 1 -->
+            <ComboBox Grid.Column="1" Height="25" ItemsSource="{Binding ProductNameChoicesList}" SelectedIndex="{Binding SelectedProductNameChoiceIndex}"></ComboBox>
+        </Grid>
 
 
 
@@ -119,7 +148,7 @@
             <!-- Column 1 -->
             <DatePicker Grid.Column="1"  VerticalAlignment="Center" ></DatePicker>
         </Grid>
-        
+
         <!-- Content for Row 7 -->
         <!-- Partner checkbox-->
         <Grid Grid.Column="0" Grid.Row="9">
@@ -133,7 +162,7 @@
             <!-- Column 1 -->
             <CheckBox Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalContentAlignment="Left" IsChecked="{Binding PartnersOnly}">Partner only</CheckBox>
         </Grid>
-        
+
         <!-- Content for Row 8 -->
         <!-- Partner checkbox-->
         <Grid Grid.Column="0" Grid.Row="10">
@@ -147,8 +176,8 @@
             <!-- Column 1 -->
             <CheckBox Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalContentAlignment="Left" IsChecked="{Binding BulkBuy}">Bulk</CheckBox>
         </Grid>
-        
-        <!-- Content for Row 9 -->
+
+        <!-- Content for Row 11 -->
         <!-- Resource list choice  -->
         <Grid Grid.Column="0" Grid.Row="11">
             <Grid.ColumnDefinitions>
@@ -165,5 +194,8 @@
             <!-- Column 1 -->
             <TextBox Grid.Column="3" Height="25" TextAlignment="Center" VerticalContentAlignment="Center"></TextBox>
         </Grid>
+
+        <!-- Content for Row 12 -->
+        <Button Grid.Column="0" Grid.Row="13" Command="{Binding ResetComand}">Reset</Button>
     </Grid>
 </UserControl>

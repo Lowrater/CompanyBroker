@@ -10,6 +10,9 @@
         string SQL_ProductTypeList { get; }
         string SQL_FetchCompanyList { get; }
         string SQL_FetchCompanyIdList { get; }
+        string SQL_FetchAllResources { get; }
+
+        string SQL_FetchSpecificProductNames { get; }
 
         //----------------------------------------- Messages
         string MSG_CannotConnectToServer { get; }

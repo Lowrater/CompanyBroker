@@ -188,48 +188,48 @@ namespace CompanyBroker.Services
         /// <returns></returns>
         public bool VerifyLogin(IDbConnection dbConnection, string username, string password)
         {
-            using (var cmd = dbConnection.CreateCommand())
-            {
-                //-- The command text
-                cmd.CommandText = "SELECT PasswordHash, PasswordSalt " +
-                                  "FROM CompanyAccounts " +
-                                  "WHERE Username = @Username";
-
-                //-- All command parameters
-                var usernameParam = cmd.CreateParameter();
-                usernameParam.ParameterName = "@Username";
-                usernameParam.Value = username;
-
-                //-- Adding the parameters
-                cmd.Parameters.Add(usernameParam);
-
-                //-- Opening the connectiong
-                if (dbConnection.State != ConnectionState.Open)
+                using (var cmd = dbConnection.CreateCommand())
                 {
-                    dbConnection.Open();
-                }
+                    //-- The command text
+                    cmd.CommandText = "SELECT PasswordHash, PasswordSalt " +
+                                      "FROM CompanyAccounts " +
+                                      "WHERE Username = @Username";
 
-                //-- Executing the command
-                using (var rdr = cmd.ExecuteReader(CommandBehavior.SingleRow))
-                {
-                    //-- reads the result in a loop
-                    while (rdr.Read())
+                    //-- All command parameters
+                    var usernameParam = cmd.CreateParameter();
+                    usernameParam.ParameterName = "@Username";
+                    usernameParam.Value = username;
+
+                    //-- Adding the parameters
+                    cmd.Parameters.Add(usernameParam);
+
+                    //-- Opening the connectiong
+                    if (dbConnection.State != ConnectionState.Open)
                     {
-                        //-- sets the contents
-                        var passwordHashOrdinal = rdr.GetOrdinal("PasswordHash");
-                        var passwordSaltOrdinal = rdr.GetOrdinal("PasswordSalt");
+                        dbConnection.Open();
+                    }
 
-                        var passwordHash = rdr.IsDBNull(passwordHashOrdinal) ? null : new byte[rdr.GetBytes(passwordHashOrdinal, 0, null, 0, 0)];
-                        rdr.GetBytes(passwordHashOrdinal, 0, passwordHash, 0, passwordHash.Length);
+                    //-- Executing the command
+                    using (var rdr = cmd.ExecuteReader(CommandBehavior.SingleRow))
+                    {
+                        //-- reads the result in a loop
+                        while (rdr.Read())
+                        {
+                            //-- sets the contents
+                            var passwordHashOrdinal = rdr.GetOrdinal("PasswordHash");
+                            var passwordSaltOrdinal = rdr.GetOrdinal("PasswordSalt");
 
-                        var passwordSalt = rdr.IsDBNull(passwordSaltOrdinal) ? null : new byte[rdr.GetBytes(passwordSaltOrdinal, 0, null, 0, 0)];
-                        rdr.GetBytes(passwordSaltOrdinal, 0, passwordSalt, 0, passwordSalt.Length);
+                            var passwordHash = rdr.IsDBNull(passwordHashOrdinal) ? null : new byte[rdr.GetBytes(passwordHashOrdinal, 0, null, 0, 0)];
+                            rdr.GetBytes(passwordHashOrdinal, 0, passwordHash, 0, passwordHash.Length);
 
-                        return GetHash(password, passwordSalt).SequenceEqual(passwordHash);
+                            var passwordSalt = rdr.IsDBNull(passwordSaltOrdinal) ? null : new byte[rdr.GetBytes(passwordSaltOrdinal, 0, null, 0, 0)];
+                            rdr.GetBytes(passwordSaltOrdinal, 0, passwordSalt, 0, passwordSalt.Length);
+
+                            //-- checks wether or not they are equal to the passwordhash when generated. Returns an bool
+                            return GetHash(password, passwordSalt).SequenceEqual(passwordHash);
+                        }
                     }
                 }
-            }
-
             return false;
         }
 
@@ -324,7 +324,7 @@ namespace CompanyBroker.Services
         /// <param name="fetchResourceListCommand"></param>
         /// <param name="MSG_CannotConnectToServer"></param>
         /// <returns></returns>
-        public ObservableCollection<string> RequestProductTypeList(IDbConnection dbConnection, string SQL_ProductTypeList, string MSG_CannotConnectToServer)
+        public ObservableCollection<string> RequestDBSList(IDbConnection dbConnection, string SQL_List, string MSG_CannotConnectToServer)
         {
             //-- The content holder
             var resourceList = new ObservableCollection<string>();
@@ -335,7 +335,7 @@ namespace CompanyBroker.Services
                 using (var SQLCommand = dbConnection.CreateCommand())
                 {
                     //-- Creates the SQL command
-                    SQLCommand.CommandText = SQL_ProductTypeList;
+                    SQLCommand.CommandText = SQL_List;
 
                     //-- opens the connections
                     //-- connection != null && connection.State != ConnectionState.Open
@@ -351,8 +351,11 @@ namespace CompanyBroker.Services
                             //-- Fetches the content
                             while (reader.Read())
                             {
-                                //-- Adds the content to the list
-                                resourceList.Add(reader.GetString(0));
+                                if (!resourceList.Contains(reader.GetString(0)))
+                                {
+                                    //-- Adds the content to the list
+                                    resourceList.Add(reader.GetString(0));
+                                }
                             }
                         }
                     }
@@ -364,8 +367,11 @@ namespace CompanyBroker.Services
                             //-- Fetches the content
                             while (reader.Read())
                             {
-                                //-- Adds the content to the list
-                                resourceList.Add(reader.GetString(0));
+                                if (!resourceList.Contains(reader.GetString(0)))
+                                {
+                                    //-- Adds the content to the list
+                                    resourceList.Add(reader.GetString(0));
+                                }
                             }
                         }
                     }
@@ -395,6 +401,154 @@ namespace CompanyBroker.Services
 
             //-- returns the resourceList
             return resourceList;
+        }
+
+
+        /// <summary>
+        /// Overload 1 method to RequestDBSList for a specific column, with multiple types from stringbuilders
+        /// </summary>
+        /// <param name="dbConnection"></param>
+        /// <param name="SQL_ListString"></param>
+        /// <param name="SQL_parameter"></param>
+        /// <param name="ParameterName"></param>
+        /// <param name="MSG_CannotConnectToServer"></param>
+        /// <returns></returns>
+        public ObservableCollection<string> RequestDBSList(IDbConnection dbConnection, string SQL_Command, string ParameterValue, string MSG_CannotConnectToServer)
+        {
+            //-- The content holder
+            var resourceList = new ObservableCollection<string>();
+
+            try
+            {
+                //-- sets up the sqlcommand and executing
+                using (var SQLCommand = dbConnection.CreateCommand())
+                {
+                    //-- Creates the SQL command
+                    SQLCommand.CommandText = SQL_Command;
+                    //-- All command parameters
+                    var productNameList = SQLCommand.CreateParameter();
+                    productNameList.ParameterName = "@Parameters";
+                    productNameList.Value = ParameterValue;
+
+                    //-- Adding the parameters
+                    SQLCommand.Parameters.Add(productNameList);
+
+                    //-- opens the connections
+                    //-- connection != null && connection.State != ConnectionState.Open
+                    //-- connection?.State != ConnectionState.Open
+                    if (dbConnection != null && dbConnection.State != ConnectionState.Open)
+                    {
+                        //-- Opens the connection
+                        dbConnection.Open();
+
+                        //-- Executes the command
+                        using (var reader = SQLCommand.ExecuteReader())
+                        {
+                            //-- Fetches the content
+                            while (reader.Read())
+                            {
+                                if(!resourceList.Contains(reader.GetString(0)))
+                                {
+                                    //-- Adds the content to the list
+                                    resourceList.Add(reader.GetString(0));
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //-- Executes the command
+                        using (var reader = SQLCommand.ExecuteReader())
+                        {
+                            //-- Fetches the content
+                            while (reader.Read())
+                            {
+                                if (!resourceList.Contains(reader.GetString(0)))
+                                {
+                                    //-- Adds the content to the list
+                                    resourceList.Add(reader.GetString(0));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                //-- checks the exception type
+                if (exception is SqlException)
+                {
+                    MessageBox.Show($"{MSG_CannotConnectToServer}",
+                                    "Company broker Server error",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Error);
+
+                }
+                else
+                {
+                    //-- prints out software exception message
+                    MessageBox.Show($"{exception.Message}",
+                                    "Company broker Server error",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Error);
+                }
+            }
+
+
+            //-- returns the resourceList
+            return resourceList;
+        }
+
+
+
+
+
+
+
+
+        /// <summary>
+        /// Executes an command to the database, and returns a table with it's content
+        /// </summary>
+        /// <returns></returns>
+        public DataTable ExecuteQuery(IDbConnection dbConnection, string queryCommand)
+        {
+            var table = new DataTable();
+         
+            try
+            {
+                //-- sets up the sqlcommand and executing
+                using (var SQLCommand = dbConnection.CreateCommand())
+                {
+                    //-- Creates the SQL command
+                    SQLCommand.CommandText = queryCommand;
+
+                    //-- opens the connections
+                    //-- connection != null && connection.State != ConnectionState.Open
+                    //-- connection?.State != ConnectionState.Open
+                    if (dbConnection != null && dbConnection.State != ConnectionState.Open)
+                    {
+                        //-- Opens the connection
+                        dbConnection.Open();
+                        //-- Executes the command and fills the table.
+                        table.Load(SQLCommand.ExecuteReader());
+                    }
+                    else
+                    {
+                        //-- Executes the command and fills the table.
+                        table.Load(SQLCommand.ExecuteReader());
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                //-- prints out software exception message
+                MessageBox.Show($"{exception.Message}",
+                                "Company broker Server error",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error);
+            }
+
+            return table;
         }
     }
 }
