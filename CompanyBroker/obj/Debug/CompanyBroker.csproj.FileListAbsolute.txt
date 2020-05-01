@@ -71,3 +71,4 @@ I:\Visual studio projects\CompanyBroker\CompanyBroker\bin\Debug\nunit.framework.
 I:\Visual studio projects\CompanyBroker\CompanyBroker\bin\Debug\nunit.framework.pdb
 I:\Visual studio projects\CompanyBroker\CompanyBroker\bin\Debug\nunit.framework.xml
 I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\View\Windows\CreateAccountWindow.baml
+I:\Visual studio projects\CompanyBroker\CompanyBroker\bin\Debug\TTRider.IDbConnection-Async.dll

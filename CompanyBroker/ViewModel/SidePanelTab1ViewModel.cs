@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace CompanyBroker.ViewModel
 {
@@ -36,10 +37,11 @@ namespace CompanyBroker.ViewModel
             this._appConfigService = __appConfigService;
             this._contentService = __contentService;
 
-            //-- Fetches the companyList on startup
-            FetchCompanyList();
-            //-- Fetches the ResourceList on startup
-            FetchResourceList();
+            //-- Fetches the companyList on startup by async incase the task takes time, to not lock the user
+            new Action(async () => CompanyList = await FetchCompanyList())();
+            //-- Fetches the ResourceList on startup by async incase the task takes time, to not lock the user
+            new Action(async () => ProductTypeList = await FetchProductTypeList())();
+
         }
 
 
@@ -149,7 +151,8 @@ namespace CompanyBroker.ViewModel
                 //-- Adds the selected item from the ProductNameList to the ProductTypeChoicesList for filtering in SQL
                 _contentService.AddSelectedListItem(ProductTypeChoicesList, value);
                 //-- Updates the ProductNameList based on the content in ProductTypeChoicesList list
-                FetchProductNameList();
+                new Action(async () => ProductNameList = await FetchProductNameList())();
+               
             }
         }
 
@@ -201,12 +204,12 @@ namespace CompanyBroker.ViewModel
         /// <summary>
         /// Used to remove an selected index on SelectedIndex on ProductTypeChoicesList
         /// </summary>
-        public int RemoveProductTypeChoicesIndex
+        public string RemoveProductTypeChoicesIndex
         {
-            get => sidePanelTab1Model._removeListIndex;
+            get => sidePanelTab1Model._removeListItem;
             set
             {
-                Set(ref sidePanelTab1Model._removeListIndex, value);
+                Set(ref sidePanelTab1Model._removeListItem, value);
                 ////-- Removes the element at the index selected
                 _contentService.RemoveSelectedListIndex(ProductTypeChoicesList, value);
             }
@@ -215,12 +218,12 @@ namespace CompanyBroker.ViewModel
         /// <summary>
         /// Used to remove an selected index on SelectedIndex on ProductTypeChoicesList
         /// </summary>
-        public int RemoveCompanyChoicesIndex
+        public string RemoveCompanyChoicesIndex
         {
-            get => sidePanelTab1Model._removeListIndex;
+            get => sidePanelTab1Model._removeListItem;
             set
             {
-                Set(ref sidePanelTab1Model._removeListIndex, value);
+                Set(ref sidePanelTab1Model._removeListItem, value);
                 ////-- Removes the element at the index selected
                 _contentService.RemoveSelectedListIndex(CompanyChoicesList, value);
             }
@@ -229,12 +232,12 @@ namespace CompanyBroker.ViewModel
         /// <summary>
         /// Used to remove an selected index on SelectedIndex on ProductTypeChoicesList
         /// </summary>
-        public int SelectedProductNameChoiceIndex
+        public string SelectedProductNameChoiceIndex
         {
-            get => sidePanelTab1Model._removeListIndex;
+            get => sidePanelTab1Model._removeListItem;
             set
             {
-                Set(ref sidePanelTab1Model._removeListIndex, value);
+                Set(ref sidePanelTab1Model._removeListItem, value);
                 ////-- Removes the element at the index selected
                 _contentService.RemoveSelectedListIndex(ProductNameChoicesList, value);
             }
@@ -246,36 +249,35 @@ namespace CompanyBroker.ViewModel
         /// <summary>
         /// Sets the company list in the sidepanel
         /// </summary>
-        public void FetchCompanyList()
+        public async Task<ObservableCollection<string>> FetchCompanyList()
         {
             using (var dbconnection = new SqlConnection(_appConfigService.SQL_connectionString))
             {
-                CompanyList = _dBService.RequestCompanyList(dbconnection, _appConfigService.SQL_FetchCompanyList, _appConfigService.MSG_CannotConnectToServer, false);
+                return await _dBService.RequestCompanyList(dbconnection, _appConfigService.SQL_FetchCompanyList, _appConfigService.MSG_CannotConnectToServer, false);
             }
         }
 
         /// <summary>
         /// Sets the resource list
         /// </summary>
-        public void FetchResourceList()
+        public async Task<ObservableCollection<string>> FetchProductTypeList()
         {
             using (var dbconnection = new SqlConnection(_appConfigService.SQL_connectionString))
             {
-                ProductTypeList = _dBService.RequestDBSList(dbconnection, _appConfigService.SQL_ProductTypeList, _appConfigService.MSG_CannotConnectToServer);
+                return await _dBService.RequestDBSList(dbconnection, _appConfigService.SQL_ProductTypeList, _appConfigService.MSG_CannotConnectToServer);
             }
         }
 
         /// <summary>
         /// Sets the productname list
         /// </summary>
-        public void FetchProductNameList()
+        public async Task<ObservableCollection<string>> FetchProductNameList()
         {
             //-- creates the connectiong, and fetches the content
             using (var dbconnection = new SqlConnection(_appConfigService.SQL_connectionString))
             {
                 string staticCommand = _appConfigService.SQL_FetchSpecificProductNames + _contentService.SQLContentParameterAppends(ProductTypeChoicesList);
-               
-                ProductNameList = _dBService.RequestDBSList(dbconnection, staticCommand, _appConfigService.MSG_CannotConnectToServer);
+                return await _dBService.RequestDBSList(dbconnection, staticCommand, _appConfigService.MSG_CannotConnectToServer);
             }
         }
 

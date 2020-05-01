@@ -9,6 +9,6 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <!-- Datagrid containing a table -->
-        <DataGrid ItemsSource="{Binding MainTable}"></DataGrid>
+        <DataGrid ItemsSource="{Binding MainTable}" CanUserAddRows="False" IsReadOnly="true" ></DataGrid>
     </Grid>
 </UserControl>

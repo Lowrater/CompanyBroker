@@ -6,6 +6,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -37,8 +38,8 @@ namespace CompanyBroker.ViewModel
             this._viewService = __viewService;
 
             //-- Sets the companyList so the user can choose it.
-            SetCompanylist();
-
+            new Action(async () => CompanyList = await SetCompanylist())();
+ 
             //-- Sets the default value to true
             CompanyDropDownBool = true;
         }
@@ -104,11 +105,11 @@ namespace CompanyBroker.ViewModel
         /// <summary>
         /// Sets the companyList
         /// </summary>
-        public void SetCompanylist()
+        public async Task<ObservableCollection<string>> SetCompanylist()
         {
             using (var dbconnection = new SqlConnection(_appConfigService.SQL_connectionString))
             {
-                CompanyList = _iDBService.RequestCompanyList(dbconnection, _appConfigService.SQL_FetchCompanyIdList, _appConfigService.MSG_CannotConnectToServer, true);
+                return await _iDBService.RequestCompanyList(dbconnection, _appConfigService.SQL_FetchCompanyIdList, _appConfigService.MSG_CannotConnectToServer, true);
             }
         }
 

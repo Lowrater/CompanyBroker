@@ -27,7 +27,7 @@ namespace CompanyBroker.ViewModel
         private IAppConfigService _appConfigService;
         private IContentService _contentService;
         //---------------------------------------------------------------- ICommands
-        public ICommand ExecuteQueryCommand => new RelayCommand(FillDataTable);
+        public ICommand ExecuteQueryCommand => new RelayCommand(async () =>  MainTable = await FillDataTable());
 
         //---------------------------------------------------------------- Constructor
         public BrokerOverviewViewModel(IDBService __dBService, IDataService __dataservice, IAppConfigService __appConfigService, IContentService __contentService)
@@ -36,7 +36,6 @@ namespace CompanyBroker.ViewModel
             this._dataservice = __dataservice;
             this._appConfigService = __appConfigService;
             this._contentService = __contentService;
-
         }
         //---------------------------------------------------------------- Properties
 
@@ -53,11 +52,11 @@ namespace CompanyBroker.ViewModel
         /// <summary>
         /// Fills the table for the user, depending on the filters provided from the user in the SidePanelTab1ViewModel
         /// </summary>
-        public void FillDataTable()
+        public async Task<DataTable> FillDataTable()
         {
             using (var dbconnection = new SqlConnection(_appConfigService.SQL_connectionString))
             {
-                MainTable = _dBService.ExecuteQuery(dbconnection,"select * from CompanyResources");
+                return await _dBService.ExecuteQuery(dbconnection,"select * from CompanyResources");
             }
         }
     }

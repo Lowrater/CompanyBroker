@@ -54,7 +54,7 @@
             <!-- Column 0 -->
             <Label Grid.Column="0"  VerticalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,4,0,3">-</Label>
             <!-- Column 1 -->
-            <ComboBox Grid.Column="1" Height="25" ItemsSource="{Binding CompanyChoicesList}" SelectedIndex="{Binding RemoveCompanyChoicesIndex}" Grid.ColumnSpan="2" Margin="0,4"></ComboBox>
+            <ComboBox Grid.Column="1" Height="25" ItemsSource="{Binding CompanyChoicesList}" SelectedItem="{Binding RemoveCompanyChoicesIndex}" Grid.ColumnSpan="2" Margin="0,4"></ComboBox>
         </Grid>
 
 
@@ -83,7 +83,7 @@
             <!-- Column 0 -->
             <Label Grid.Column="0"  VerticalAlignment="Center" HorizontalContentAlignment="Center">-</Label>
             <!-- Column 1 -->
-            <ComboBox Grid.Column="1" Height="25" ItemsSource="{Binding ProductTypeChoicesList}" SelectedIndex="{Binding RemoveProductTypeChoicesIndex}"></ComboBox>
+            <ComboBox Grid.Column="1" Height="25" ItemsSource="{Binding ProductTypeChoicesList}" SelectedItem="{Binding RemoveProductTypeChoicesIndex}"></ComboBox>
         </Grid>
 
 
@@ -113,7 +113,7 @@
             <!-- Column 0 -->
             <Label Grid.Column="0"  VerticalAlignment="Center" HorizontalContentAlignment="Center">-</Label>
             <!-- Column 1 -->
-            <ComboBox Grid.Column="1" Height="25" ItemsSource="{Binding ProductNameChoicesList}" SelectedIndex="{Binding SelectedProductNameChoiceIndex}"></ComboBox>
+            <ComboBox Grid.Column="1" Height="25" ItemsSource="{Binding ProductNameChoicesList}" SelectedItem="{Binding SelectedProductNameChoiceIndex}"></ComboBox>
         </Grid>
 
 

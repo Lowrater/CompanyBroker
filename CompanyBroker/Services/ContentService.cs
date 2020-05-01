@@ -14,11 +14,11 @@ namespace CompanyBroker.Services
         /// Removes the element of the list and returns it
         /// </summary>
         /// <param name="list"></param>
-        /// <param name="index"></param>
+        /// <param name="item"></param>
         /// <returns></returns>
-        public void RemoveSelectedListIndex(ObservableCollection<string> list, int index)
+        public void RemoveSelectedListIndex(ObservableCollection<string> list, string item)
         {
-            list.RemoveAt(index);
+            list.Remove(item);
             //return list;
         }
 

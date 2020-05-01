@@ -51,8 +51,8 @@ namespace CompanyBroker.Model
         public ref string _selectedProductNameListItem => ref __selectedProductNameListItem;
         
 
-        private int __removeListIndex;
-        public ref int _removeListIndex => ref __removeListIndex;
+        private string __removeListItem;
+        public ref string _removeListItem => ref __removeListItem;
 
         //-- partners only check box
         private bool __partnersOnly;

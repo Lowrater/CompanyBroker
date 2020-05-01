@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -237,17 +238,18 @@ namespace CompanyBroker.Services
         /// <summary>
         /// Connects to the database, and fetches all the companies from the Companies table into an ObservableCollection<string>
         /// </summary>
-        /// <param name="msSQLUserInfo"></param>
+        /// <param name="dbConnection"></param>
         /// <param name="fetchCompanyListCommand"></param>
         /// <param name="MSG_CannotConnectToServer"></param>
+        /// <param name="withId"></param>
+        /// IDBConnection-ASync = https://github.com/ttrider/IDbConnection-Async 
         /// <returns></returns>
-        public ObservableCollection<string> RequestCompanyList(IDbConnection dbConnection, string fetchCompanyListCommand, string MSG_CannotConnectToServer, bool withId)
+        public async Task<ObservableCollection<string>> RequestCompanyList(IDbConnection dbConnection, string fetchCompanyListCommand, string MSG_CannotConnectToServer, bool withId)
         {
             //-- The content holder
             var companyList = new ObservableCollection<string>();
-            companyList.Add("");
 
-            try
+           try
             {
                 //-- sets up the sqlcommand and executing
                 using (var SQLCommand = dbConnection.CreateCommand())
@@ -261,17 +263,17 @@ namespace CompanyBroker.Services
                     if (dbConnection != null && dbConnection.State != ConnectionState.Open)
                         {
                             //-- Opens the connection
-                            dbConnection.Open();
+                            await dbConnection.OpenAsync();
                         }
 
                     //-- Checks wether or not we need the ID parameter with us
                     if (withId.Equals(true))
                     {
-                        //-- Executes the command
-                        using (var reader = SQLCommand.ExecuteReader())
+                          //-- Executes the command
+                        using (var reader = await SQLCommand.ExecuteReaderAsync())
                         {
                             //-- Fetches the content
-                            while (reader.Read())
+                            while (await reader.ReadAsync())
                             {
                                 //-- Adds the content to the list
                                 companyList.Add(Convert.ToString(reader.GetInt32(0) + " " + reader.GetString(1)));
@@ -281,13 +283,13 @@ namespace CompanyBroker.Services
                     else
                     {
                         //-- Executes the command
-                        using (var reader = SQLCommand.ExecuteReader())
+                        using (var reader = await SQLCommand.ExecuteReaderAsync())
                         {
                             //-- Fetches the content
-                            while (reader.Read())
+                            while (await reader.ReadAsync())
                             {
                                 //-- Adds the content to the list
-                                companyList.Add(reader.GetString(0));
+                                companyList.Add(Convert.ToString(reader.GetString(0)));
                             }
                         }
                     }
@@ -312,8 +314,9 @@ namespace CompanyBroker.Services
                                     MessageBoxImage.Error);
                 }
             }
-            //-- returns the companyList
-            return companyList;
+
+                //-- returns the companyList
+                return companyList;
         }
 
 
@@ -324,7 +327,7 @@ namespace CompanyBroker.Services
         /// <param name="fetchResourceListCommand"></param>
         /// <param name="MSG_CannotConnectToServer"></param>
         /// <returns></returns>
-        public ObservableCollection<string> RequestDBSList(IDbConnection dbConnection, string SQL_List, string MSG_CannotConnectToServer)
+        public async Task<ObservableCollection<string>> RequestDBSList(IDbConnection dbConnection, string SQL_List, string MSG_CannotConnectToServer)
         {
             //-- The content holder
             var resourceList = new ObservableCollection<string>();
@@ -343,13 +346,13 @@ namespace CompanyBroker.Services
                     if (dbConnection != null && dbConnection.State != ConnectionState.Open)
                     {
                         //-- Opens the connection
-                        dbConnection.Open();
+                       await  dbConnection.OpenAsync();
 
                         //-- Executes the command
-                        using (var reader = SQLCommand.ExecuteReader())
+                        using (var reader = await SQLCommand.ExecuteReaderAsync())
                         {
                             //-- Fetches the content
-                            while (reader.Read())
+                            while (await reader.ReadAsync())
                             {
                                 if (!resourceList.Contains(reader.GetString(0)))
                                 {
@@ -361,11 +364,11 @@ namespace CompanyBroker.Services
                     }
                     else
                     {
-                        //-- Executes the command
-                        using (var reader = SQLCommand.ExecuteReader())
+                        //-- Fetches the content
+                        using (var reader = await SQLCommand.ExecuteReaderAsync())
                         {
                             //-- Fetches the content
-                            while (reader.Read())
+                            while (await reader.ReadAsync())
                             {
                                 if (!resourceList.Contains(reader.GetString(0)))
                                 {
@@ -413,7 +416,7 @@ namespace CompanyBroker.Services
         /// <param name="ParameterName"></param>
         /// <param name="MSG_CannotConnectToServer"></param>
         /// <returns></returns>
-        public ObservableCollection<string> RequestDBSList(IDbConnection dbConnection, string SQL_Command, string ParameterValue, string MSG_CannotConnectToServer)
+        public async Task<ObservableCollection<string>> RequestDBSList(IDbConnection dbConnection, string SQL_Command, string ParameterValue, string MSG_CannotConnectToServer)
         {
             //-- The content holder
             var resourceList = new ObservableCollection<string>();
@@ -439,13 +442,13 @@ namespace CompanyBroker.Services
                     if (dbConnection != null && dbConnection.State != ConnectionState.Open)
                     {
                         //-- Opens the connection
-                        dbConnection.Open();
+                       await dbConnection.OpenAsync();
 
                         //-- Executes the command
-                        using (var reader = SQLCommand.ExecuteReader())
+                        using (var reader = await SQLCommand.ExecuteReaderAsync())
                         {
                             //-- Fetches the content
-                            while (reader.Read())
+                            while (await reader.ReadAsync())
                             {
                                 if(!resourceList.Contains(reader.GetString(0)))
                                 {
@@ -458,10 +461,10 @@ namespace CompanyBroker.Services
                     else
                     {
                         //-- Executes the command
-                        using (var reader = SQLCommand.ExecuteReader())
+                        using (var reader = await SQLCommand.ExecuteReaderAsync())
                         {
                             //-- Fetches the content
-                            while (reader.Read())
+                            while (await reader.ReadAsync())
                             {
                                 if (!resourceList.Contains(reader.GetString(0)))
                                 {
@@ -510,7 +513,7 @@ namespace CompanyBroker.Services
         /// Executes an command to the database, and returns a table with it's content
         /// </summary>
         /// <returns></returns>
-        public DataTable ExecuteQuery(IDbConnection dbConnection, string queryCommand)
+        public async Task<DataTable> ExecuteQuery(IDbConnection dbConnection, string queryCommand)
         {
             var table = new DataTable();
          
@@ -528,14 +531,14 @@ namespace CompanyBroker.Services
                     if (dbConnection != null && dbConnection.State != ConnectionState.Open)
                     {
                         //-- Opens the connection
-                        dbConnection.Open();
+                        await dbConnection.OpenAsync();
                         //-- Executes the command and fills the table.
-                        table.Load(SQLCommand.ExecuteReader());
+                        table.Load(await SQLCommand.ExecuteReaderAsync());
                     }
                     else
                     {
                         //-- Executes the command and fills the table.
-                        table.Load(SQLCommand.ExecuteReader());
+                        table.Load(await SQLCommand.ExecuteReaderAsync());
                     }
                 }
             }
