@@ -1,15 +1,13 @@
 ﻿using CompanyBroker.Interfaces;
 using CompanyBroker.Model;
+using CompanyBroker_API_Helper;
+using CompanyBroker_API_Helper.Models;
+using CompanyBroker_API_Helper.Processers;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,15 +22,14 @@ namespace CompanyBroker.ViewModel
         //---------------------------------- Interfaces
         private IAppConfigService _appConfigService;
         private IDataService _dataService;
-        private IDBService _iDBService;
         private IViewService _viewService;
+
         //---------------------------------- ICommands
-        public ICommand CreateCommand => new RelayCommand<PasswordBox>(CreateAccount);
+        public ICommand CreateCommand => new RelayCommand<PasswordBox>(async (PasswordBox) => await CreateAccount(PasswordBox.Password));
 
         //---------------------------------- Constructor
-        public CreateAccountViewModel(IDBService __iDBService, IDataService __dataService, IAppConfigService __appConfigService, IViewService __viewService)
+        public CreateAccountViewModel(IDataService __dataService, IAppConfigService __appConfigService, IViewService __viewService)
         {
-            this._iDBService = __iDBService;
             this._dataService = __dataService;
             this._appConfigService = __appConfigService;
             this._viewService = __viewService;
@@ -45,6 +42,7 @@ namespace CompanyBroker.ViewModel
         }
         //---------------------------------- Properties
 
+        private bool accountCreations { get; set; }
         /// <summary>
         /// Sets the states wheter or not the user creates a new business to the system or creates an account to an existing company
         /// </summary>
@@ -103,41 +101,121 @@ namespace CompanyBroker.ViewModel
 
         //---------------------------------- Methods
         /// <summary>
-        /// Sets the companyList
+        /// Sets the companyList through the WebAPI
         /// </summary>
         public async Task<ObservableCollection<string>> SetCompanylist()
         {
-            using (var dbconnection = new SqlConnection(_appConfigService.SQL_connectionString))
+            //-- Creates a new list with strings
+            var companyList = new ObservableCollection<string>();
+
+            try
             {
-                return await _iDBService.RequestCompanyList(dbconnection, _appConfigService.SQL_FetchCompanyIdList, _appConfigService.MSG_CannotConnectToServer, true);
+                //-- Fetches all the company data
+                var list = await new CompanyProcesser().GetAllCompanies();
+                //-- Add an empty to have the correct choosing of index
+                companyList.Add("");
+
+                //-- loops through the list and adds only the name of the data.
+                foreach (CompanyModel company in list)
+                {
+                    companyList.Add(company.Name);
+                }
+
             }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString().Substring(0,252), "Company broker message", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            //-- returns the list
+            return companyList;
         }
 
         /// <summary>
         /// Creates the account 
         /// </summary>
-        public void CreateAccount(PasswordBox passwordBox)
+        public async Task CreateAccount(string password)
         {
-            using (var dbconnection = new SqlConnection(_appConfigService.SQL_connectionString))
+            //-- Result response of the request to create an account to the database
+            bool httpResultCreationResponse = false;
+
+            //-- Creates the account
+            var account = new CreateAccountAPIModel
+            {
+                CompanyId = CompanyChoice,
+                Username = AccountName,
+                Email = AccountEmail,
+                Password = password,
+                Active = true
+            };
+
+            try
             {
                 if (NewCompanyBool.Equals(true))
                 {
-                    //-- Creates the company
-                    _iDBService.CreateCompany(dbconnection, CompanyName, 0, NewCompanyBool, _appConfigService.MSG_FieldsCannotBeEmpty);
-                    //-- Creates the account
-                    _iDBService.CreateUser(dbconnection, CompanyChoice, AccountName, passwordBox.Password, AccountEmail, _appConfigService.MSG_FieldsCannotBeEmpty);
-                    //-- Displays message
-                    MessageBox.Show($"Account {AccountName} created for {CompanyName}!", "Company broker  message", MessageBoxButton.OK, MessageBoxImage.Error);
+                    if(!string.IsNullOrEmpty(CompanyName))
+                    {
+                        //-- Creates the company
+                        var company = new CreateCompanyAPIModel
+                        {
+                            CompanyName = CompanyName
+                        };
+
+                        //-- sends the company for creation
+                        httpResultCreationResponse = await new CompanyProcesser().CreateCompany(company);
+
+                        //-- Fetches the company created by companyName
+                        var companyObject = await new CompanyProcesser().GetCompany(company.CompanyName);
+                        //-- sets the account companyID
+                        account.CompanyId = companyObject.Id;
+
+                        //-- Sends the account for creation
+                        httpResultCreationResponse = await new AccountProcessor().CreateAccount(account);
+
+                        //-- checks wheter or not it was successfull
+                        if (httpResultCreationResponse == true)
+                        {
+                            //-- Displays message
+                            MessageBox.Show($"Account {AccountName} created for {CompanyName}!", "Company broker  message", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                            //-- Closes the CreateAccountWindow window
+                            _viewService.CloseWindow("CreateAccountWindow");
+                        }
+                        else
+                        {
+                            //-- Displays message
+                            MessageBox.Show($"Account {AccountName} and {CompanyName} not created! Please verify your connection, or contact the support team", "Company broker  message", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Company name must be filled", "Company broker  message", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
                 else
                 {
-                    //-- Creates the account
-                    _iDBService.CreateUser(dbconnection, CompanyChoice, AccountName, passwordBox.Password, AccountEmail, _appConfigService.MSG_FieldsCannotBeEmpty);
-                    //-- Displays message
-                    MessageBox.Show($"Account {AccountName} created!", "Company broker  message", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //-- Sends the account
+                    httpResultCreationResponse = await new AccountProcessor().CreateAccount(account);
+
+                    if (httpResultCreationResponse == true)
+                    {
+                        //-- Displays message
+                        MessageBox.Show($"Account {AccountName} created!", "Company broker  message", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                        //-- Closes the CreateAccountWindow window
+                        _viewService.CloseWindow("CreateAccountWindow");
+                    }
+                    else
+                    {
+                        //-- Displays message
+                        MessageBox.Show($"Account {AccountName} not created! Please verify your connection, or contact the support team", "Company broker  message", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+
                 }
-                    //-- Closes the CreateAccountWindow window
-                    _viewService.CloseWindow("CreateAccountWindow");
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString().Substring(252), "Company broker  message", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

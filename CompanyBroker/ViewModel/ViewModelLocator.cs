@@ -38,7 +38,6 @@ namespace CompanyBroker.ViewModel
             SimpleIoc.Default.Register<IDataService, DataService>();
             SimpleIoc.Default.Register<IViewService, ViewService>();
             SimpleIoc.Default.Register<IAppConfigService, AppConfigService>();
-            SimpleIoc.Default.Register<IDBService, DBService>();
             SimpleIoc.Default.Register<IContentService, ContentService>();
 
 

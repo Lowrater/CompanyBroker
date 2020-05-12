@@ -1,0 +1,10 @@
+I:\Visual studio projects\CompanyBroker\CompanyBroker_API_Helper\bin\Debug\CompanyBroker_API_Helper.dll
+I:\Visual studio projects\CompanyBroker\CompanyBroker_API_Helper\bin\Debug\CompanyBroker_API_Helper.pdb
+I:\Visual studio projects\CompanyBroker\CompanyBroker_API_Helper\bin\Debug\Newtonsoft.Json.dll
+I:\Visual studio projects\CompanyBroker\CompanyBroker_API_Helper\bin\Debug\System.Net.Http.Formatting.dll
+I:\Visual studio projects\CompanyBroker\CompanyBroker_API_Helper\bin\Debug\Newtonsoft.Json.xml
+I:\Visual studio projects\CompanyBroker\CompanyBroker_API_Helper\bin\Debug\System.Net.Http.Formatting.xml
+I:\Visual studio projects\CompanyBroker\CompanyBroker_API_Helper\obj\Debug\CompanyBroker_API_Helper.csprojAssemblyReference.cache
+I:\Visual studio projects\CompanyBroker\CompanyBroker_API_Helper\obj\Debug\CompanyBroker_API_Helper.csproj.CopyComplete
+I:\Visual studio projects\CompanyBroker\CompanyBroker_API_Helper\obj\Debug\CompanyBroker_API_Helper.dll
+I:\Visual studio projects\CompanyBroker\CompanyBroker_API_Helper\obj\Debug\CompanyBroker_API_Helper.pdb

@@ -1,17 +1,14 @@
 ﻿using CompanyBroker.Interfaces;
 using CompanyBroker.Model;
+using CompanyBroker_API_Helper.Models;
+using CompanyBroker_API_Helper.Processers;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace CompanyBroker.ViewModel
 {
@@ -21,7 +18,6 @@ namespace CompanyBroker.ViewModel
         private SidePanelTab1Model sidePanelTab1Model = new SidePanelTab1Model();
 
         //-------------------------------------------------------------------------- Interfaces
-        private IDBService _dBService;
         private IDataService _dataservice;
         private IAppConfigService _appConfigService;
         private IContentService _contentService;
@@ -30,9 +26,8 @@ namespace CompanyBroker.ViewModel
         public ICommand ResetComand => new RelayCommand(ResetSidePanel);
 
         //-------------------------------------------------------------------------- Construcor
-        public SidePanelTab1ViewModel(IDBService __dBService, IDataService __dataservice, IAppConfigService __appConfigService, IContentService __contentService)
+        public SidePanelTab1ViewModel(IDataService __dataservice, IAppConfigService __appConfigService, IContentService __contentService)
         {
-            this._dBService = __dBService;
             this._dataservice = __dataservice;
             this._appConfigService = __appConfigService;
             this._contentService = __contentService;
@@ -242,7 +237,7 @@ namespace CompanyBroker.ViewModel
                 _contentService.RemoveSelectedListIndex(ProductNameChoicesList, value);
             }
         }
-        
+
 
         //---------------------------------------------------------------- Methods
 
@@ -251,10 +246,17 @@ namespace CompanyBroker.ViewModel
         /// </summary>
         public async Task<ObservableCollection<string>> FetchCompanyList()
         {
-            using (var dbconnection = new SqlConnection(_appConfigService.SQL_connectionString))
+            //-- Creates a new list with strings
+            var companyList = new ObservableCollection<string>();
+            //-- Fetches all the company data
+            var list = await new CompanyProcesser().GetAllCompanies();
+            //-- loops through the list and adds only the name of the data.
+            foreach (CompanyModel company in list)
             {
-                return await _dBService.RequestCompanyList(dbconnection, _appConfigService.SQL_FetchCompanyList, _appConfigService.MSG_CannotConnectToServer, false);
+                companyList.Add(company.Name);
             }
+            //-- returns the list
+            return companyList;
         }
 
         /// <summary>
@@ -262,10 +264,7 @@ namespace CompanyBroker.ViewModel
         /// </summary>
         public async Task<ObservableCollection<string>> FetchProductTypeList()
         {
-            using (var dbconnection = new SqlConnection(_appConfigService.SQL_connectionString))
-            {
-                return await _dBService.RequestDBSList(dbconnection, _appConfigService.SQL_ProductTypeList, _appConfigService.MSG_CannotConnectToServer);
-            }
+            return null;
         }
 
         /// <summary>
@@ -273,12 +272,8 @@ namespace CompanyBroker.ViewModel
         /// </summary>
         public async Task<ObservableCollection<string>> FetchProductNameList()
         {
-            //-- creates the connectiong, and fetches the content
-            using (var dbconnection = new SqlConnection(_appConfigService.SQL_connectionString))
-            {
-                string staticCommand = _appConfigService.SQL_FetchSpecificProductNames + _contentService.SQLContentParameterAppends(ProductTypeChoicesList);
-                return await _dBService.RequestDBSList(dbconnection, staticCommand, _appConfigService.MSG_CannotConnectToServer);
-            }
+            return null;
+
         }
 
         /// <summary>

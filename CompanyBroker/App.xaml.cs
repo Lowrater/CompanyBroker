@@ -1,4 +1,5 @@
 ﻿using CompanyBroker.View.Windows;
+using CompanyBroker_API_Helper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,7 +17,8 @@ namespace CompanyBroker
     {
         public App()
         {
-
+            //-- Reference to the CompanyBroker_API_Helper class libary and setups the client
+            APIHelper.InitializeApiClient();
         }
     }
 }

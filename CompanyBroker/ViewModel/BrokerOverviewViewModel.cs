@@ -22,7 +22,6 @@ namespace CompanyBroker.ViewModel
         //---------------------------------------------------------------- Model
        private BrokerOverviewModel brokerOverviewModel = new BrokerOverviewModel();
         //---------------------------------------------------------------- Interfaces
-        private IDBService _dBService;
         private IDataService _dataservice;
         private IAppConfigService _appConfigService;
         private IContentService _contentService;
@@ -30,9 +29,8 @@ namespace CompanyBroker.ViewModel
         public ICommand ExecuteQueryCommand => new RelayCommand(async () =>  MainTable = await FillDataTable());
 
         //---------------------------------------------------------------- Constructor
-        public BrokerOverviewViewModel(IDBService __dBService, IDataService __dataservice, IAppConfigService __appConfigService, IContentService __contentService)
+        public BrokerOverviewViewModel(IDataService __dataservice, IAppConfigService __appConfigService, IContentService __contentService)
         {
-            this._dBService = __dBService;
             this._dataservice = __dataservice;
             this._appConfigService = __appConfigService;
             this._contentService = __contentService;
@@ -54,10 +52,8 @@ namespace CompanyBroker.ViewModel
         /// </summary>
         public async Task<DataTable> FillDataTable()
         {
-            using (var dbconnection = new SqlConnection(_appConfigService.SQL_connectionString))
-            {
-                return await _dBService.ExecuteQuery(dbconnection,"select * from CompanyResources");
-            }
+            return null;
+
         }
     }
 }

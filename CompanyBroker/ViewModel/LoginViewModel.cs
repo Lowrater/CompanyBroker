@@ -3,14 +3,14 @@ using GalaSoft.MvvmLight.Command;
 using CompanyBroker.Interfaces;
 using CompanyBroker.Model;
 using System;
-using System.Data.SqlClient;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Configuration;
 using CompanyBroker.View.Windows;
-using GalaSoft.MvvmLight.Messaging;
 using NUnit.Framework;
+using System.Threading.Tasks;
+using CompanyBroker_API_Helper;
+using CompanyBroker_API_Helper.Models;
 
 namespace CompanyBroker.ViewModel
 {
@@ -26,22 +26,20 @@ namespace CompanyBroker.ViewModel
         private IDataService _dataService;
         private IViewService _viewService;
         private IAppConfigService _appConfigService;
-        private IDBService _dBService;
 
         //------------------------------------------------------------------------------------------------ Constructor
         /// <summary>
         /// Constructor
         /// </summary>
-        public LoginViewModel(IDataService dataService, IViewService viewService, IAppConfigService appConfigService, IDBService dBService)
+        public LoginViewModel(IDataService dataService, IViewService viewService, IAppConfigService appConfigService)
         {
             this._dataService = dataService;
             this._viewService = viewService;
             this._appConfigService = appConfigService;
-            this._dBService = dBService;
         }
 
         //------------------------------------------------------------------------------------------------ ICommands
-        public ICommand LoginCommand => new RelayCommand<PasswordBox>(Login);
+        public ICommand LoginCommand => new RelayCommand<PasswordBox>(async (PasswordBox) => await Login(PasswordBox.Password));
         public ICommand ExitCommand => new RelayCommand(Exit);
         public ICommand CreateCommand => new RelayCommand(CreateAccount);
 
@@ -65,18 +63,26 @@ namespace CompanyBroker.ViewModel
         /// Login function, which takes the Password field as parameter, and verifys login informations
         /// </summary>
         /// <param name="password"></param>
-        private void Login(PasswordBox password)
+        private async Task Login(string password)
         {
             //-- Verifys if the userName is empty or blank
-            if (!string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(password.Password))
+            if (!string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(password))
             {
                 try
                 {
-                    using (var dbconnection = new SqlConnection(_appConfigService.SQL_connectionString))
+                    //-- creates the new model of an login request
+                    var account = new LoginAPIModel
                     {
+                        Username = UserName,
+                        Password = password
+                    };
 
-                        Assert.IsTrue(_dBService.VerifyLogin(dbconnection, UserName, password.Password));
+                    //-- Verifys login 
+                    bool result = await new AccountProcessor().VerifyAccount(account);
 
+                    //-- verifys the results
+                    if(result != false)
+                    {
                         //-- Messages the user that they are logged in
                         MessageBox.Show("Logged in!",
                                         "Company Broker",
@@ -89,6 +95,13 @@ namespace CompanyBroker.ViewModel
                         _viewService.CreateWindow(new MainWindow());
                         //-- Closes LoginWindow
                         _viewService.CloseWindow("LoginWindow");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"{_appConfigService.MSG_UknownUserName}",
+                                        "Company broker Server error",
+                                        MessageBoxButton.OK,
+                                        MessageBoxImage.Error);
                     }
                 }
                 catch (Exception exception)
@@ -111,7 +124,6 @@ namespace CompanyBroker.ViewModel
                                         MessageBoxImage.Error);
                     }
                 }
-                
             }
             else
             {
