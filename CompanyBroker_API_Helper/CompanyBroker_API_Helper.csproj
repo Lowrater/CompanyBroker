@@ -53,12 +53,14 @@
     <Compile Include="Models\CreateCompanyAPIModel.cs" />
     <Compile Include="Models\LoginAPIModel.cs" />
     <Compile Include="Models\ResourceModel.cs" />
+    <Compile Include="Models\ResourcesModel.cs" />
     <Compile Include="Processers\AccountProcesser.cs" />
     <Compile Include="Helpers\APIHelper.cs" />
     <Compile Include="Processers\CompanyProcesser.cs" />
     <Compile Include="Processers\LoginProcesser.cs" />
+    <Compile Include="Processers\ResourcesProcesser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Processers\TableProcessor.cs" />
+    <Compile Include="Processers\TableProcesser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

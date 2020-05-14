@@ -253,7 +253,7 @@ namespace CompanyBroker.ViewModel
             //-- loops through the list and adds only the name of the data.
             foreach (CompanyModel company in list)
             {
-                companyList.Add(company.Name);
+                companyList.Add(company.Id + " " + company.Name);
             }
             //-- returns the list
             return companyList;
@@ -264,16 +264,15 @@ namespace CompanyBroker.ViewModel
         /// </summary>
         public async Task<ObservableCollection<string>> FetchProductTypeList()
         {
-            return null;
+            return await new ResourcesProcesser().GetAllProductTypes();
         }
 
         /// <summary>
-        /// Sets the productname list
+        /// Sets the productname list based on the choosen product type. Uses ProductTypeChoicesList
         /// </summary>
         public async Task<ObservableCollection<string>> FetchProductNameList()
         {
-            return null;
-
+            return await new ResourcesProcesser().GetAllProductNamesByType(ProductTypeChoicesList);
         }
 
         /// <summary>

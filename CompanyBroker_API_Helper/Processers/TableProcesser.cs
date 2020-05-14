@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CompanyBroker_API_Helper
 {
-    public class TableProcessor
+    public class TableProcesser
     {
     }
 }
