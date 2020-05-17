@@ -6,7 +6,7 @@
         xmlns:userControls="clr-namespace:CompanyBroker.View.Usercontrols"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="MainWindow" Height="650" Width="1000" MinWidth="1000" MinHeight="650" >
+        Title="MainWindow" Height="650" Width="1000" MinWidth="1000" MinHeight="650" ResizeMode="NoResize">
     <Grid>
         <!-- Grid definitions -->
         <Grid.ColumnDefinitions>
@@ -28,13 +28,11 @@
         <!-- Logout -->
         <userControls:LogoutControl Grid.Column="0" Grid.Row="0"></userControls:LogoutControl>
         <!-- BrokerOverivew of content-->
-        <userControls:BrokerOverviewControl Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4"></userControls:BrokerOverviewControl>
+        <userControls:BrokerOverviewControl Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="4"></userControls:BrokerOverviewControl>
         
         <!-- Grid splitter between datagrid and sidepanel-->
         <GridSplitter Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Width="5" VerticalAlignment="Stretch" HorizontalAlignment="Right" Background="LightGray" />
         
-        <!-- Search content -->
-        <userControls:SearchBarControl Grid.Column="1" Grid.ColumnSpan="4"></userControls:SearchBarControl>
         
         <!--  Time stamp -->
         <userControls:TimeControl Grid.Column="4" Grid.Row="2"></userControls:TimeControl>

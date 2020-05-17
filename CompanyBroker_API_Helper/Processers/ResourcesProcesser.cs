@@ -61,7 +61,6 @@ namespace CompanyBroker_API_Helper.Processers
         }
 
 
-
         /// <summary>
         /// Fetches all product names by type
         /// </summary>
@@ -86,34 +85,6 @@ namespace CompanyBroker_API_Helper.Processers
                 }
             }
         }
-
-
-
-
-        ///// <summary>
-        ///// Fetches all product types
-        ///// </summary>
-        ///// <param name="productType"></param>
-        ///// <returns></returns>
-        //public async Task<ObservableCollection<string>> GetProductType(ObservableCollection<string> productTypes)
-        //{
-        //    var url = $"http://localhost:50133/api/Resources/" + $"{productType}";
-
-        //    using (HttpResponseMessage response = await APIHelper.ApiClient.GetAsync(url))
-        //    {
-        //        //-- verifys the response
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            //-- returns the content
-        //            return await response.Content.ReadAsAsync<ObservableCollection<string>>();
-        //        }
-        //        else
-        //        {
-        //            //-- Throws an exception if it's not successful
-        //            throw new Exception(response.ReasonPhrase);
-        //        }
-        //    }
-        //}
 
 
     }

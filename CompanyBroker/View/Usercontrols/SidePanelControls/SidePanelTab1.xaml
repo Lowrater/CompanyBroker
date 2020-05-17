@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CompanyBroker.View.Usercontrols.SidePanelControls"
-             DataContext="{Binding SidePanelTab1,Source={StaticResource Locator}}"
+             DataContext="{Binding SidePanelTab1, Source={StaticResource Locator}}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="300" MinWidth="300" Background="White">
     <Grid>

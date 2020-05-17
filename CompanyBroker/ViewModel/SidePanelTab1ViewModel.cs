@@ -107,7 +107,7 @@ namespace CompanyBroker.ViewModel
 
 
         /// <summary>
-        /// List containing all product names choosen, from ProductNameList
+        /// List containing all product names choosen, from ProductTypeList
         /// </summary>
         public ObservableCollection<string> ProductNameChoicesList
         {
@@ -117,8 +117,6 @@ namespace CompanyBroker.ViewModel
                 Set(ref sidePanelTab1Model._productNameChoicesList, value);
             }
         }
-
-        
 
         /// <summary>
         /// Item choosen from the CompanyList
@@ -235,9 +233,10 @@ namespace CompanyBroker.ViewModel
                 Set(ref sidePanelTab1Model._removeListItem, value);
                 ////-- Removes the element at the index selected
                 _contentService.RemoveSelectedListIndex(ProductNameChoicesList, value);
+                //-- Updates the ProductNameList based on the content in ProductTypeChoicesList list
+                new Action(async () => ProductNameList = await FetchProductNameList())();
             }
         }
-
 
         //---------------------------------------------------------------- Methods
 
@@ -275,6 +274,21 @@ namespace CompanyBroker.ViewModel
             return await new ResourcesProcesser().GetAllProductNamesByType(ProductTypeChoicesList);
         }
 
+
+        /// <summary>
+        /// Sets the list collection in the DataService, to provide data for the Search Engine in BrokerOverViewModel for API calls
+        /// </summary>
+        public void SetListCollection()
+        {
+            _dataservice.ListCollection = new CollectionListModel
+            {
+                CompanyChoices = CompanyChoicesList,
+                ProductTypeChoices = ProductTypeChoicesList,
+                ProductNameChoicesList = ProductNameChoicesList
+            };
+
+        }
+
         /// <summary>
         /// Resets everything in the sidePanel
         /// </summary>
@@ -283,8 +297,6 @@ namespace CompanyBroker.ViewModel
             PartnersOnly = false;
             BulkBuy = false;
             ProductNameList = new ObservableCollection<string>();
-            ProductTypeList = new ObservableCollection<string>();
-            CompanyList = new ObservableCollection<string>();
             ProductNameChoicesList = new ObservableCollection<string>();
             CompanyChoicesList = new ObservableCollection<string>();
             ProductTypeChoicesList = new ObservableCollection<string>();

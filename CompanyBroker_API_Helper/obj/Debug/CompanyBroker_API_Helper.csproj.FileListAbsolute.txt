@@ -1,3 +1,4 @@
+I:\Visual studio projects\CompanyBroker\CompanyBroker_API_Helper\bin\Debug\CompanyBroker_API_Helper.dll.config
 I:\Visual studio projects\CompanyBroker\CompanyBroker_API_Helper\bin\Debug\CompanyBroker_API_Helper.dll
 I:\Visual studio projects\CompanyBroker\CompanyBroker_API_Helper\bin\Debug\CompanyBroker_API_Helper.pdb
 I:\Visual studio projects\CompanyBroker\CompanyBroker_API_Helper\bin\Debug\Newtonsoft.Json.dll
