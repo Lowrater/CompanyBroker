@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\AccountModel.cs" />
+    <Compile Include="Models\CollectionListModel.cs" />
     <Compile Include="Models\CompanyModel.cs" />
     <Compile Include="Models\CreateAccountAPIModel.cs" />
     <Compile Include="Models\CreateCompanyAPIModel.cs" />

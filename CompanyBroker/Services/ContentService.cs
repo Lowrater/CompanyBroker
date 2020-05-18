@@ -1,4 +1,7 @@
-﻿using CompanyBroker.Interfaces;
+﻿using CompanyBroker.Addons.Extensions;
+using CompanyBroker.Interfaces;
+using CompanyBroker.Model;
+using CompanyBroker_API_Helper.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -37,27 +40,5 @@ namespace CompanyBroker.Services
             }
         }
 
-        /// <summary>
-        /// Appends all items from an list, into a string
-        /// </summary>
-        /// <param name="list"></param>
-        /// <returns></returns>
-        public string SQLContentParameterAppends(ObservableCollection<string> list)
-        {
-            //-- string to append all choosen product types
-            var stringContentParameters = new StringBuilder();
-
-            //-- Adds the choosen product types to the string builder.
-            foreach (var item in list)
-            {
-                stringContentParameters.Append($"'{item}'" + ", ");
-            }
-
-            //-- Combiens everything together
-            string newCommand = "( " + stringContentParameters.ToString().Remove(stringContentParameters.ToString().Length - 2).ToString() + ")";
-
-            //-- returns the result
-            return newCommand;
-        }
     }
 }

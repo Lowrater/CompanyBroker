@@ -69,6 +69,18 @@ namespace CompanyBroker.ViewModel
 
 
         /// <summary>
+        // List containing all Product Types choices added to the list for filtering.
+        /// </summary>
+        public ObservableCollection<string> ProductTypeList
+        {
+            get => sidePanelTab1Model._productTypeList;
+            set
+            {
+                Set(ref sidePanelTab1Model._productTypeList, value);
+            }
+        }
+
+        /// <summary>
         /// List containing all Product types. etc. electronic 
         /// </summary>
         public ObservableCollection<string> ProductTypeChoicesList
@@ -80,17 +92,7 @@ namespace CompanyBroker.ViewModel
             }
         }
 
-        /// <summary>
-        // List containing all Product Types choices added to the list for filtering.
-        /// </summary>
-        public ObservableCollection<string> ProductTypeList
-        {
-            get => sidePanelTab1Model._productTypeList;
-            set
-            {
-                Set(ref sidePanelTab1Model._productTypeList, value);
-            }
-        }
+
 
         /// <summary>
         /// List containing all product names existing depending om the product type selection
@@ -118,6 +120,7 @@ namespace CompanyBroker.ViewModel
             }
         }
 
+        //-------------------------------------------------------------------- Selected items
         /// <summary>
         /// Item choosen from the CompanyList
         /// </summary>
@@ -129,7 +132,9 @@ namespace CompanyBroker.ViewModel
                 Set(ref sidePanelTab1Model._selectedCompanyListItem, value);
                 //-- Adds the selected item from the CompanyList to the CompanyChoicesList for filtering in SQL
                 _contentService.AddSelectedListItem(CompanyChoicesList, value);
-           }
+                //-- Sets the collection list
+                SetListCollection();
+            }
         }
 
         /// <summary>
@@ -145,7 +150,9 @@ namespace CompanyBroker.ViewModel
                 _contentService.AddSelectedListItem(ProductTypeChoicesList, value);
                 //-- Updates the ProductNameList based on the content in ProductTypeChoicesList list
                 new Action(async () => ProductNameList = await FetchProductNameList())();
-               
+                //-- Sets the collection list
+                SetListCollection();
+
             }
         }
 
@@ -161,6 +168,8 @@ namespace CompanyBroker.ViewModel
                 Set(ref sidePanelTab1Model._selectedProductNameListItem, value);
                 //-- Adds the selected item from the ProductNameList to the ProductNameChoicesList for filtering in SQL
                 _contentService.AddSelectedListItem(ProductNameChoicesList, value);
+                //-- Sets the collection list
+                SetListCollection();
             }
         }
 
@@ -205,6 +214,9 @@ namespace CompanyBroker.ViewModel
                 Set(ref sidePanelTab1Model._removeListItem, value);
                 ////-- Removes the element at the index selected
                 _contentService.RemoveSelectedListIndex(ProductTypeChoicesList, value);
+                //-- Sets the collection list
+                SetListCollection();
+
             }
         }
 
@@ -219,13 +231,16 @@ namespace CompanyBroker.ViewModel
                 Set(ref sidePanelTab1Model._removeListItem, value);
                 ////-- Removes the element at the index selected
                 _contentService.RemoveSelectedListIndex(CompanyChoicesList, value);
+                //-- Sets the collection list
+                SetListCollection();
+
             }
         }
 
         /// <summary>
         /// Used to remove an selected index on SelectedIndex on ProductTypeChoicesList
         /// </summary>
-        public string SelectedProductNameChoiceIndex
+        public string RemoveProductNameChoiceIndex
         {
             get => sidePanelTab1Model._removeListItem;
             set
@@ -235,6 +250,8 @@ namespace CompanyBroker.ViewModel
                 _contentService.RemoveSelectedListIndex(ProductNameChoicesList, value);
                 //-- Updates the ProductNameList based on the content in ProductTypeChoicesList list
                 new Action(async () => ProductNameList = await FetchProductNameList())();
+                //-- Sets the collection list
+                SetListCollection();
             }
         }
 
@@ -277,14 +294,16 @@ namespace CompanyBroker.ViewModel
 
         /// <summary>
         /// Sets the list collection in the DataService, to provide data for the Search Engine in BrokerOverViewModel for API calls
+        /// Is being called every time one of the choices lists has been updated.
         /// </summary>
         public void SetListCollection()
         {
+            
             _dataservice.ListCollection = new CollectionListModel
             {
                 CompanyChoices = CompanyChoicesList,
                 ProductTypeChoices = ProductTypeChoicesList,
-                ProductNameChoicesList = ProductNameChoicesList
+                ProductNameChoices = ProductNameChoicesList
             };
 
         }

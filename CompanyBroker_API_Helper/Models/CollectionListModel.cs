@@ -5,15 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CompanyBroker.Model
+namespace CompanyBroker_API_Helper.Models
 {
     public class CollectionListModel
     {
         public ObservableCollection<string> CompanyChoices { get; set; }
         public ObservableCollection<string> ProductTypeChoices { get; set; }
-
-        public ObservableCollection<string> ProductNameChoicesList { get; set; }
-        
-
+        public ObservableCollection<string> ProductNameChoices { get; set; }
     }
 }

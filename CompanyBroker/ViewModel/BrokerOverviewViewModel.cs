@@ -1,19 +1,11 @@
-﻿using CompanyBroker.Addons.Extensions;
-using CompanyBroker.Interfaces;
+﻿using CompanyBroker.Interfaces;
 using CompanyBroker.Model;
 using CompanyBroker_API_Helper.Models;
 using CompanyBroker_API_Helper.Processers;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace CompanyBroker.ViewModel
@@ -65,15 +57,33 @@ namespace CompanyBroker.ViewModel
         /// </summary>
         public async Task FillDataTable()
         {
-            //-- Checks if the listcollection is empty and the search field.
+
             if (_dataservice.ListCollection == null && string.IsNullOrEmpty(SearchField))
             {
-                //-- Fetches all resources without filter
-                MainRersourceList = await new ResourcesProcesser().GetAllResources();
+                MainRersourceList = await new ResourcesProcesser().GetAllResources(); 
+            }
+            else if (_dataservice.ListCollection != null && string.IsNullOrEmpty(SearchField))
+            {
+                MainRersourceList = await new ResourcesProcesser().GetResourcesByListFilters(_dataservice.ListCollection);
+            }
+            else if (_dataservice.ListCollection != null && !string.IsNullOrEmpty(SearchField))
+            {
+                //MainRersourceList =
 
             }
+            else if (_dataservice.ListCollection == null && !string.IsNullOrEmpty(SearchField))
+            {
+                //MainRersourceList =
+
+            }
+            else
+            {
+                MainRersourceList = new ObservableCollection<ResourcesModel>();
+            }
+
 
         }
 
     }
+    
 }

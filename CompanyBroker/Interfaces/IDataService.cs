@@ -1,5 +1,6 @@
 ﻿using CompanyBroker.Model;
 using CompanyBroker.View.Windows;
+using CompanyBroker_API_Helper.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

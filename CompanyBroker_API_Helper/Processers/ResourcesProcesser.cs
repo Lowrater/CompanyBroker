@@ -37,6 +37,29 @@ namespace CompanyBroker_API_Helper.Processers
             }
         }
 
+        /// <summary>
+        /// Fetches all resources based on the collectionListModel lists
+        /// </summary>
+        /// <param name="collectionListModel"></param>
+        /// <returns></returns>
+        public async Task<ObservableCollection<ResourcesModel>> GetResourcesByListFilters(CollectionListModel collectionListModel)
+        {
+            var url = $"http://localhost:50133/api/GetResourcesByListFilters";
+
+            using (HttpResponseMessage response = await APIHelper.ApiClient.PostAsJsonAsync(url, collectionListModel))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadAsAsync<ObservableCollection<ResourcesModel>>();
+                }
+                else
+                {
+                    //-- Throws an exception if it's not successful
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
+        }
+
 
         /// <summary>
         /// Fetches all product types

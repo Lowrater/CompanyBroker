@@ -5,6 +5,7 @@ using CompanyBroker.ViewModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using CompanyBroker.Model;
+using CompanyBroker_API_Helper.Models;
 
 namespace CompanyBroker.Services
 {

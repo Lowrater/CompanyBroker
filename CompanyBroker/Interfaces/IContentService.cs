@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using CompanyBroker.Model;
+using CompanyBroker_API_Helper.Models;
+using System.Collections.ObjectModel;
 
 namespace CompanyBroker.Interfaces
 {
@@ -14,6 +16,5 @@ namespace CompanyBroker.Interfaces
 
         void AddSelectedListItem(ObservableCollection<string> list, string item);
 
-        string SQLContentParameterAppends(ObservableCollection<string> list);
     }
 }

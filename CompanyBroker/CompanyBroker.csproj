@@ -142,10 +142,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Addons\CustomElements\Custom_button.cs" />
-    <Compile Include="Addons\Extensions\ListExtensions.cs" />
+    <Compile Include="Addons\Extensions\StringExtensions.cs" />
     <Compile Include="Interfaces\IViewService.cs" />
     <Compile Include="Model\BrokerOverviewModel.cs" />
-    <Compile Include="Model\CollectionListModel.cs" />
     <Compile Include="Model\CreateAccountModel.cs" />
     <Compile Include="Model\LogoutModel.cs" />
     <Compile Include="Model\SidePanelTab1Model.cs" />
