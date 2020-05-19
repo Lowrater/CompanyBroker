@@ -30,8 +30,7 @@ namespace CompanyBroker_API_Helper.Processers
                 }
                 else
                 {
-                    //-- Throws an exception if it's not successful
-                    throw new Exception(response.ReasonPhrase);
+                    return new ObservableCollection<CompanyModel>();
                 }
             }
         }
@@ -62,14 +61,13 @@ namespace CompanyBroker_API_Helper.Processers
                     }
                     else
                     {
-                        //-- Throws an exception if it's not successful
-                        throw new Exception(response.ReasonPhrase);
+                        return new CompanyModel();
                     }
                 }
             }
             else
             {
-                return null;
+                return new CompanyModel();
             }
         }
 
@@ -98,14 +96,13 @@ namespace CompanyBroker_API_Helper.Processers
                     }
                     else
                     {
-                        //-- Throws an exception if it's not successful
-                        throw new Exception(response.ReasonPhrase);
+                        return new CompanyModel();
                     }
                 }
             }
             else
             {
-                return null;
+                return new CompanyModel();
             }
         }
 

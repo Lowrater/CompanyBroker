@@ -5,6 +5,7 @@ using CompanyBroker_API_Helper.Processers;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
 using System.Threading.Tasks;

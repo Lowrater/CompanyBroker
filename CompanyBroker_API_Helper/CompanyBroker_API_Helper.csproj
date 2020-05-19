@@ -58,10 +58,8 @@
     <Compile Include="Processers\AccountProcesser.cs" />
     <Compile Include="Helpers\APIHelper.cs" />
     <Compile Include="Processers\CompanyProcesser.cs" />
-    <Compile Include="Processers\LoginProcesser.cs" />
     <Compile Include="Processers\ResourcesProcesser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Processers\TableProcesser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

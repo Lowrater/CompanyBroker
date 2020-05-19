@@ -31,15 +31,14 @@ namespace CompanyBroker_API_Helper.Processers
                 }
                 else
                 {
-                    //-- Throws an exception if it's not successful
-                    throw new Exception(response.ReasonPhrase);
+                    return new ObservableCollection<ResourcesModel>();
                 }
             }
         }
 
 
         /// <summary>
-        /// 
+        /// returns list of resources based on a searched word
         /// </summary>
         /// <param name="searchWord"></param>
         /// <returns></returns>
@@ -55,8 +54,7 @@ namespace CompanyBroker_API_Helper.Processers
                 }
                 else
                 {
-                    //-- Throws an exception if it's not successful
-                    throw new Exception(response.ReasonPhrase);
+                    return new ObservableCollection<ResourcesModel>();
                 }
             }
         }
@@ -79,8 +77,7 @@ namespace CompanyBroker_API_Helper.Processers
                 }
                 else
                 {
-                    //-- Throws an exception if it's not successful
-                    throw new Exception(response.ReasonPhrase);
+                    return new ObservableCollection<ResourcesModel>();
                 }
             }
         }
@@ -102,8 +99,7 @@ namespace CompanyBroker_API_Helper.Processers
                 }
                 else
                 {
-                    //-- Throws an exception if it's not successful
-                    throw new Exception(response.ReasonPhrase);
+                    return new ObservableCollection<string>();
                 }
             }
         }
@@ -128,8 +124,7 @@ namespace CompanyBroker_API_Helper.Processers
                 }
                 else
                 {
-                    //-- Throws an exception if it's not successful
-                    throw new Exception(response.ReasonPhrase);
+                    return new ObservableCollection<string>();
                 }
             }
         }
