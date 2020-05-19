@@ -15,7 +15,7 @@ namespace CompanyBroker.Interfaces
     /// </summary>
    public interface IDataService
     {
-        CollectionListModel ListCollection { get; set; }
+        CollectionFilterModel FilterCollection { get; set; }
         bool isConnected { get; set; }
 
         string time { get; set; }

@@ -37,16 +37,41 @@ namespace CompanyBroker_API_Helper.Processers
             }
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="searchWord"></param>
+        /// <returns></returns>
+        public async Task<ObservableCollection<ResourcesModel>> GetResourcesBySearch(string searchWord)
+        {
+            var url = $"http://localhost:50133/api/Resources?searchWord="+ searchWord;
+
+            using (HttpResponseMessage response = await APIHelper.ApiClient.GetAsync(url))
+            {
+                if(response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadAsAsync<ObservableCollection<ResourcesModel>>();
+                }
+                else
+                {
+                    //-- Throws an exception if it's not successful
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
+        }
+
+
         /// <summary>
         /// Fetches all resources based on the collectionListModel lists
         /// </summary>
-        /// <param name="collectionListModel"></param>
+        /// <param name="collectionFilterModel"></param>
         /// <returns></returns>
-        public async Task<ObservableCollection<ResourcesModel>> GetResourcesByListFilters(CollectionListModel collectionListModel)
+        public async Task<ObservableCollection<ResourcesModel>> GetResourcesByListFilters(CollectionFilterModel collectionFilterModel)
         {
             var url = $"http://localhost:50133/api/GetResourcesByListFilters";
 
-            using (HttpResponseMessage response = await APIHelper.ApiClient.PostAsJsonAsync(url, collectionListModel))
+            using (HttpResponseMessage response = await APIHelper.ApiClient.PostAsJsonAsync(url, collectionFilterModel))
             {
                 if (response.IsSuccessStatusCode)
                 {

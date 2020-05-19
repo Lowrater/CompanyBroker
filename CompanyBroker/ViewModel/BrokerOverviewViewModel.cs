@@ -25,7 +25,7 @@ namespace CompanyBroker.ViewModel
         private IContentService _contentService;
 
         //---------------------------------------------------------------- ICommands
-        public ICommand ExecuteQueryCommand => new RelayCommand(async () => await FillDataTable());
+        public ICommand ExecuteQueryCommand => new RelayCommand(async () => await FillTable());
 
         //---------------------------------------------------------------- Constructor
         public BrokerOverviewViewModel(IDataService __dataservice, IAppConfigService __appConfigService, IContentService __contentService)
@@ -48,42 +48,39 @@ namespace CompanyBroker.ViewModel
         public string SearchField
         {
             get => brokerOverviewModel._searchField;
-            set => Set(ref brokerOverviewModel._searchField, value);
+            set
+            {
+                Set(ref brokerOverviewModel._searchField, value);
+            }
         }
 
         //---------------------------------------------------------------- Methods
         /// <summary>
         /// Fills the table for the user, depending on the filters provided from the user in the SidePanelTab1ViewModel
         /// </summary>
-        public async Task FillDataTable()
+        public async Task FillTable()
         {
 
-            if (_dataservice.ListCollection == null && string.IsNullOrEmpty(SearchField))
+            if (_dataservice.FilterCollection == null && string.IsNullOrEmpty(SearchField))
             {
                 MainRersourceList = await new ResourcesProcesser().GetAllResources(); 
             }
-            else if (_dataservice.ListCollection != null && string.IsNullOrEmpty(SearchField))
+            else if (_dataservice.FilterCollection != null && string.IsNullOrEmpty(SearchField))
             {
-                MainRersourceList = await new ResourcesProcesser().GetResourcesByListFilters(_dataservice.ListCollection);
+                MainRersourceList = await new ResourcesProcesser().GetResourcesByListFilters(_dataservice.FilterCollection);
             }
-            else if (_dataservice.ListCollection != null && !string.IsNullOrEmpty(SearchField))
+            else if (_dataservice.FilterCollection != null && !string.IsNullOrEmpty(SearchField))
             {
-                //MainRersourceList =
-
+                //-- Sets the searchWord
+                _dataservice.FilterCollection.SearchWord = SearchField;
+                MainRersourceList = await new ResourcesProcesser().GetResourcesByListFilters(_dataservice.FilterCollection);
+                SearchField = "";
             }
-            else if (_dataservice.ListCollection == null && !string.IsNullOrEmpty(SearchField))
+            else if (_dataservice.FilterCollection == null && !string.IsNullOrEmpty(SearchField))
             {
-                //MainRersourceList =
-
+                MainRersourceList = await new ResourcesProcesser().GetResourcesBySearch(SearchField);
             }
-            else
-            {
-                MainRersourceList = new ObservableCollection<ResourcesModel>();
-            }
-
-
         }
-
     }
     
 }

@@ -299,11 +299,11 @@ namespace CompanyBroker.ViewModel
         public void SetListCollection()
         {
             
-            _dataservice.ListCollection = new CollectionListModel
+            _dataservice.FilterCollection = new CollectionFilterModel
             {
                 CompanyChoices = CompanyChoicesList,
                 ProductTypeChoices = ProductTypeChoicesList,
-                ProductNameChoices = ProductNameChoicesList
+                ProductNameChoices = ProductNameChoicesList,               
             };
 
         }

@@ -14,7 +14,7 @@ namespace CompanyBroker.Services
     /// </summary>
     public class DataService : IDataService
     {
-        public CollectionListModel ListCollection { get; set; }
+        public CollectionFilterModel FilterCollection { get; set; }
         public bool isConnected { get; set; }
 
         public string time { get; set; }
