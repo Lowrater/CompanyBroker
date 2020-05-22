@@ -5,6 +5,7 @@ using CompanyBroker_API_Helper.Processers;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
@@ -23,6 +24,7 @@ namespace CompanyBroker.ViewModel
         private IAppConfigService _appConfigService;
         private IContentService _contentService;
 
+
         //-------------------------------------------------------------------------- Icommands
         public ICommand ResetComand => new RelayCommand(ResetSidePanel);
 
@@ -34,32 +36,31 @@ namespace CompanyBroker.ViewModel
             this._contentService = __contentService;
 
             //-- Fetches the companyList on startup by async incase the task takes time, to not lock the user
-            new Action(async () => CompanyList = await FetchCompanyList())();
+            //new Action(async () => CompanyList = await FetchCompanyList())();
+            new Action(async () => Companies = await FetchCompaniesList())();
             //-- Fetches the ResourceList on startup by async incase the task takes time, to not lock the user
             new Action(async () => ProductTypeList = await FetchProductTypeList())();
-
         }
 
 
-        //-------------------------------------------------------------------------- Properties
-        // Company List
-        /// <summary>
-        /// List containing all company names
-        /// </summary>
-        public ObservableCollection<string> CompanyList
+        ////-------------------------------------------------------------------------- Properties
+        //// Company List
+        ///// <summary>
+        ///// List containing all company names
+        ///// </summary>
+        public ObservableCollection<CompanyModel> Companies
+        {
+            get => sidePanelTab1Model._companyList;
+            set
             {
-                get => sidePanelTab1Model._companyList;
-                set
-                {
-                    Set(ref sidePanelTab1Model._companyList, value);
-                }
-           }
-
+                Set(ref sidePanelTab1Model._companyList, value);
+            }
+        }
 
         /// <summary>
-        /// List containing all Company choices added to the list for filtering.
+        /// List containing all Company choices (For user perspective)
         /// </summary>
-        public ObservableCollection<string> CompanyChoicesList
+        public ObservableCollection<CompanyModel> CompanyChoicesList
         {
             get => sidePanelTab1Model._companyChoicesList;
             set
@@ -67,7 +68,6 @@ namespace CompanyBroker.ViewModel
                 Set(ref sidePanelTab1Model._companyChoicesList, value);
             }
         }
-
 
         /// <summary>
         // List containing all Product Types choices added to the list for filtering.
@@ -123,16 +123,29 @@ namespace CompanyBroker.ViewModel
 
         //-------------------------------------------------------------------- Selected items
         /// <summary>
-        /// Item choosen from the CompanyList
+        /// Selected value for Companies and CompanyChoicesList
         /// </summary>
-        public string SelectedCompanyListItem
+        public CompanyModel SelectedCompany
         {
-            get => sidePanelTab1Model._selectedCompanyListItem;
+            get => sidePanelTab1Model._selectedCompany;
             set
             {
-                Set(ref sidePanelTab1Model._selectedCompanyListItem, value);
-                //-- Adds the selected item from the CompanyList to the CompanyChoicesList for filtering in SQL
-                _contentService.AddSelectedListItem(CompanyChoicesList, value);
+                Set(ref sidePanelTab1Model._selectedCompany, value);
+                //-- Updates the CompanyChoicesList
+                CompanyChoicesList.Add(value);
+                //-- Sets the collection list
+                SetListCollection();
+            }
+        }
+
+        public CompanyModel SelectedCompanyChoices
+        {
+            get => sidePanelTab1Model._selectedCompanyChoices;
+            set
+            {
+                Set(ref sidePanelTab1Model._selectedCompanyChoices, value);
+                //-- Updates the CompanyChoicesList
+                CompanyChoicesList.Remove(value);
                 //-- Sets the collection list
                 SetListCollection();
             }
@@ -148,12 +161,11 @@ namespace CompanyBroker.ViewModel
             {
                 Set(ref sidePanelTab1Model._selectedProductListItem, value);
                 //-- Adds the selected item from the ProductNameList to the ProductTypeChoicesList for filtering in SQL
-                _contentService.AddSelectedListItem(ProductTypeChoicesList, value);
+                ProductTypeChoicesList.Add(value);
                 //-- Updates the ProductNameList based on the content in ProductTypeChoicesList list
                 new Action(async () => ProductNameList = await FetchProductNameList())();
                 //-- Sets the collection list
                 SetListCollection();
-
             }
         }
 
@@ -202,6 +214,24 @@ namespace CompanyBroker.ViewModel
             }
         }
 
+        /// <summary>
+        /// Lowest price filter
+        /// </summary>
+        public decimal LowestPrice
+        {
+            get => sidePanelTab1Model._lowestPrice;
+            set => Set(ref sidePanelTab1Model._lowestPrice, value);
+        }
+
+        /// <summary>
+        /// Highest price filter
+        /// </summary>
+        public decimal HigestPrice
+        {
+            get => sidePanelTab1Model._higestPrice;
+            set => Set(ref sidePanelTab1Model._higestPrice, value);
+        }
+
         //--------------------------------------------------------------------- Check boxes - END
 
         /// <summary>
@@ -214,7 +244,7 @@ namespace CompanyBroker.ViewModel
             {
                 Set(ref sidePanelTab1Model._removeListItem, value);
                 ////-- Removes the element at the index selected
-                _contentService.RemoveSelectedListIndex(ProductTypeChoicesList, value);
+                ProductTypeChoicesList.Remove(value);
                 //-- Sets the collection list
                 SetListCollection();
 
@@ -231,7 +261,7 @@ namespace CompanyBroker.ViewModel
             {
                 Set(ref sidePanelTab1Model._removeListItem, value);
                 ////-- Removes the element at the index selected
-                _contentService.RemoveSelectedListIndex(CompanyChoicesList, value);
+                //_contentService.RemoveSelectedListIndex(CompanyChoicesList, value);
                 //-- Sets the collection list
                 SetListCollection();
 
@@ -248,7 +278,7 @@ namespace CompanyBroker.ViewModel
             {
                 Set(ref sidePanelTab1Model._removeListItem, value);
                 ////-- Removes the element at the index selected
-                _contentService.RemoveSelectedListIndex(ProductNameChoicesList, value);
+                ProductNameChoicesList.Remove(value);
                 //-- Updates the ProductNameList based on the content in ProductTypeChoicesList list
                 new Action(async () => ProductNameList = await FetchProductNameList())();
                 //-- Sets the collection list
@@ -261,19 +291,10 @@ namespace CompanyBroker.ViewModel
         /// <summary>
         /// Sets the company list in the sidepanel
         /// </summary>
-        public async Task<ObservableCollection<string>> FetchCompanyList()
+        public async Task<ObservableCollection<CompanyModel>> FetchCompaniesList()
         {
-            //-- Creates a new list with strings
-            var companyList = new ObservableCollection<string>();
             //-- Fetches all the company data
-            var list = await new CompanyProcesser().GetAllCompanies();
-            //-- loops through the list and adds only the name of the data.
-            foreach (CompanyModel company in list)
-            {
-                companyList.Add(company.Id + " " + company.Name);
-            }
-            //-- returns the list
-            return companyList;
+            return await new CompanyProcesser().GetAllCompanies();
         }
 
         /// <summary>
@@ -299,12 +320,14 @@ namespace CompanyBroker.ViewModel
         /// </summary>
         public void SetListCollection()
         {
-            
+
             _dataservice.FilterCollection = new CollectionFilterModel
             {
-                CompanyChoices = CompanyChoicesList,
-                ProductTypeChoices = ProductTypeChoicesList,
-                ProductNameChoices = ProductNameChoicesList,               
+                CompanyChoices = CompanyChoicesList.Select(c => c.Id).ToArray(),
+                ProductTypeChoices = ProductTypeChoicesList.ToArray(),
+                ProductNameChoices = ProductNameChoicesList.ToArray(),
+                LowestPrice = LowestPrice,
+                HigestPrice = HigestPrice
             };
 
         }
@@ -318,15 +341,13 @@ namespace CompanyBroker.ViewModel
             BulkBuy = false;
             ProductNameList = new ObservableCollection<string>();
             ProductNameChoicesList = new ObservableCollection<string>();
-            CompanyChoicesList = new ObservableCollection<string>();
+            CompanyChoicesList = new ObservableCollection<CompanyModel>();
             ProductTypeChoicesList = new ObservableCollection<string>();
 
             //-- Price here
             //-- Date here
             //-- Expire date here
 
-
         }
-
     }
 }

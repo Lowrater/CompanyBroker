@@ -25,8 +25,9 @@ namespace CompanyBroker_API_Helper.Processers
                 //-- If it's successfull, we can do something with the returned data.
                 if (response.IsSuccessStatusCode)
                 {
+                    var result = await response.Content.ReadAsAsync<ObservableCollection<CompanyModel>>();
                     //-- Returns the results
-                    return await response.Content.ReadAsAsync<ObservableCollection<CompanyModel>>();
+                    return result;
                 }
                 else
                 {

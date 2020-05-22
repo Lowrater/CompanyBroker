@@ -1,5 +1,4 @@
-﻿using CompanyBroker.Addons.Extensions;
-using CompanyBroker.Interfaces;
+﻿using CompanyBroker.Interfaces;
 using CompanyBroker.Model;
 using CompanyBroker_API_Helper.Models;
 using System;
@@ -14,20 +13,7 @@ namespace CompanyBroker.Services
     public class ContentService : IContentService
     {
         /// <summary>
-        /// Removes the element of the list and returns it
-        /// </summary>
-        /// <param name="list"></param>
-        /// <param name="item"></param>
-        /// <returns></returns>
-        public void RemoveSelectedListIndex(ObservableCollection<string> list, string item)
-        {
-            list.Remove(item);
-            //return list;
-        }
-
-
-        /// <summary>
-        /// Removes the element of the list and returns it
+        /// Removes the element of the list
         /// </summary>
         /// <param name="list"></param>
         /// <param name="item"></param>

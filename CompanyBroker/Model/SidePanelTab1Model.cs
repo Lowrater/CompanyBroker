@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CompanyBroker_API_Helper.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,16 +12,16 @@ namespace CompanyBroker.Model
     public class SidePanelTab1Model
     {
         //-- Company list
-        private ObservableCollection<string> __companyList = new ObservableCollection<string>();
-        public ref ObservableCollection<string>  _companyList => ref __companyList;
+        private ObservableCollection<CompanyModel> __companyList = new ObservableCollection<CompanyModel>();
+        public ref ObservableCollection<CompanyModel> _companyList => ref __companyList;
 
         //-- resource list
         private ObservableCollection<string> __productTypeList = new ObservableCollection<string>();
         public ref ObservableCollection<string> _productTypeList => ref __productTypeList;
 
         //- Choices of companys to filter with
-        private ObservableCollection<string> __companyChoicesList = new ObservableCollection<string>();
-        public ref ObservableCollection<string> _companyChoicesList => ref __companyChoicesList;
+        private ObservableCollection<CompanyModel> __companyChoicesList = new ObservableCollection<CompanyModel>();
+        public ref ObservableCollection<CompanyModel> _companyChoicesList => ref __companyChoicesList;
 
         //-- choices of resource to choose from
         private ObservableCollection<string> __productTypeChoicesList = new ObservableCollection<string>();
@@ -35,13 +36,22 @@ namespace CompanyBroker.Model
         private ObservableCollection<string> __productNameList = new ObservableCollection<string>();
         public ref ObservableCollection<string> _productNameList => ref __productNameList;
 
+
+        //-- companies
+        private CompanyModel __selectedCompany;
+        public ref CompanyModel _selectedCompany => ref __selectedCompany;
+
+        private CompanyModel __selectedCompanyChoices;
+        public ref CompanyModel _selectedCompanyChoices => ref __selectedCompanyChoices;
         
 
+        //-- Prices
 
+        private decimal __lowestPrice;
+        public ref decimal _lowestPrice => ref __lowestPrice;
 
-        //-- Item choosen from the company list
-        private string __selectedCompanyListItem;
-        public ref string _selectedCompanyListItem => ref __selectedCompanyListItem;
+        private decimal __higestPrice;
+        public ref decimal _higestPrice => ref __higestPrice;
 
         //-- Item choosen from the company list
         private string __selectedProductListItem;

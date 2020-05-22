@@ -141,8 +141,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Addons\CustomElements\Custom_button.cs" />
-    <Compile Include="Addons\Extensions\StringExtensions.cs" />
     <Compile Include="Interfaces\IViewService.cs" />
     <Compile Include="Model\BrokerOverviewModel.cs" />
     <Compile Include="Model\CreateAccountModel.cs" />
@@ -271,6 +269,9 @@
       <Project>{3ad3c577-4324-4670-9991-de57a9b97bd7}</Project>
       <Name>CompanyBroker_API_Helper</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Addons\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

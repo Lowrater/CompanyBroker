@@ -9,10 +9,12 @@ namespace CompanyBroker_API_Helper.Models
 {
     public class CollectionFilterModel
     {
-        public ObservableCollection<string> CompanyChoices { get; set; }
-        public ObservableCollection<string> ProductTypeChoices { get; set; }
-        public ObservableCollection<string> ProductNameChoices { get; set; }
+        public int[] CompanyChoices { get; set; }
+        public string[] ProductTypeChoices { get; set; }
+        public string[] ProductNameChoices { get; set; }
 
         public string SearchWord { get; set; }
+        public decimal LowestPrice {get; set;}
+        public decimal HigestPrice { get; set; }
     }
 }
