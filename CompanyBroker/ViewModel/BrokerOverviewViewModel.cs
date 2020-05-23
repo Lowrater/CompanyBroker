@@ -74,7 +74,7 @@ namespace CompanyBroker.ViewModel
                 //-- Sets the searchWord
                 _dataservice.FilterCollection.SearchWord = SearchField;
                 MainRersourceList = await new ResourcesProcesser().GetResourcesByListFilters(_dataservice.FilterCollection);
-                SearchField = "";
+                _dataservice.FilterCollection.SearchWord = string.Empty;
             }
             else if (_dataservice.FilterCollection == null && !string.IsNullOrEmpty(SearchField))
             {

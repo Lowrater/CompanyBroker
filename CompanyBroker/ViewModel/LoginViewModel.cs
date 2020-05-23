@@ -91,6 +91,8 @@ namespace CompanyBroker.ViewModel
 
                         //-- Sets the active state to true
                         _dataService.isConnected = true;
+                        //-- Sets the username
+                        _dataService.username = UserName;
                         //-- Opens MainWindow via. new viewService interface
                         _viewService.CreateWindow(new MainWindow());
                         //-- Closes LoginWindow

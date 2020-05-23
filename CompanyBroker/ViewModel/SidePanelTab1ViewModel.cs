@@ -198,6 +198,8 @@ namespace CompanyBroker.ViewModel
             set
             {
                 Set(ref sidePanelTab1Model._partnersOnly, value);
+                //-- Sets the collection list
+                SetListCollection();
             }
         }
 
@@ -211,6 +213,8 @@ namespace CompanyBroker.ViewModel
             set
             {
                 Set(ref sidePanelTab1Model._bulkBuy, value);
+                //-- Sets the collection list
+                SetListCollection();
             }
         }
 
@@ -220,7 +224,12 @@ namespace CompanyBroker.ViewModel
         public decimal LowestPrice
         {
             get => sidePanelTab1Model._lowestPrice;
-            set => Set(ref sidePanelTab1Model._lowestPrice, value);
+            set
+            {
+                Set(ref sidePanelTab1Model._lowestPrice, value);
+                //-- Sets the collection list
+                SetListCollection();
+            }
         }
 
         /// <summary>
@@ -229,7 +238,12 @@ namespace CompanyBroker.ViewModel
         public decimal HigestPrice
         {
             get => sidePanelTab1Model._higestPrice;
-            set => Set(ref sidePanelTab1Model._higestPrice, value);
+            set
+            {
+                Set(ref sidePanelTab1Model._higestPrice, value);
+                //-- Sets the collection list
+                SetListCollection();
+            }
         }
 
         //--------------------------------------------------------------------- Check boxes - END
@@ -245,23 +259,6 @@ namespace CompanyBroker.ViewModel
                 Set(ref sidePanelTab1Model._removeListItem, value);
                 ////-- Removes the element at the index selected
                 ProductTypeChoicesList.Remove(value);
-                //-- Sets the collection list
-                SetListCollection();
-
-            }
-        }
-
-        /// <summary>
-        /// Used to remove an selected index on SelectedIndex on ProductTypeChoicesList
-        /// </summary>
-        public string RemoveCompanyChoicesIndex
-        {
-            get => sidePanelTab1Model._removeListItem;
-            set
-            {
-                Set(ref sidePanelTab1Model._removeListItem, value);
-                ////-- Removes the element at the index selected
-                //_contentService.RemoveSelectedListIndex(CompanyChoicesList, value);
                 //-- Sets the collection list
                 SetListCollection();
 
@@ -326,8 +323,10 @@ namespace CompanyBroker.ViewModel
                 CompanyChoices = CompanyChoicesList.Select(c => c.Id).ToArray(),
                 ProductTypeChoices = ProductTypeChoicesList.ToArray(),
                 ProductNameChoices = ProductNameChoicesList.ToArray(),
-                LowestPrice = LowestPrice,
-                HigestPrice = HigestPrice
+                LowestPriceChoice = LowestPrice,
+                HigestPriceChoice = HigestPrice,
+                BulkChoice = BulkBuy,
+                Partners_OnlyChoice = PartnersOnly
             };
 
         }
@@ -343,10 +342,9 @@ namespace CompanyBroker.ViewModel
             ProductNameChoicesList = new ObservableCollection<string>();
             CompanyChoicesList = new ObservableCollection<CompanyModel>();
             ProductTypeChoicesList = new ObservableCollection<string>();
-
-            //-- Price here
+            HigestPrice = 0;
+            LowestPrice = 0;
             //-- Date here
-            //-- Expire date here
 
         }
     }

@@ -8,3 +8,4 @@ I:\Visual studio projects\CompanyBroker\CompanyBroker_API_Helper\bin\Debug\Syste
 I:\Visual studio projects\CompanyBroker\CompanyBroker_API_Helper\obj\Debug\CompanyBroker_API_Helper.csproj.CopyComplete
 I:\Visual studio projects\CompanyBroker\CompanyBroker_API_Helper\obj\Debug\CompanyBroker_API_Helper.dll
 I:\Visual studio projects\CompanyBroker\CompanyBroker_API_Helper\obj\Debug\CompanyBroker_API_Helper.pdb
+I:\Visual studio projects\CompanyBroker\CompanyBroker_API_Helper\obj\Debug\CompanyBroker_API_Helper.csprojAssemblyReference.cache

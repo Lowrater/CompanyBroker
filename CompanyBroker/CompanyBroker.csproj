@@ -173,6 +173,9 @@
     <Compile Include="View\Usercontrols\TimeControl.xaml.cs">
       <DependentUpon>TimeControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Windows\AccountWindow.xaml.cs">
+      <DependentUpon>AccountWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Windows\CreateAccountWindow.xaml.cs">
       <DependentUpon>CreateAccountWindow.xaml</DependentUpon>
     </Compile>
@@ -196,6 +199,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Usercontrols\TimeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\AccountWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

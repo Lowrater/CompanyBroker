@@ -62,6 +62,28 @@ namespace CompanyBroker_API_Helper
             //-- returns the state
             return state;
         }
+
+        /// <summary>
+        /// Fetches an account based on username
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task<AccountModel> FetchAccountByName(string userName)
+        {
+            string url = $"http://localhost:50133/api/Account?userName="+userName;
+
+            using (HttpResponseMessage response = await APIHelper.ApiClient.GetAsync(url))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadAsAsync<AccountModel>();
+                }
+                else
+                {
+                    return new AccountModel();
+                }
+            }
+        }
     
     }
 }

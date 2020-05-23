@@ -12,9 +12,11 @@ namespace CompanyBroker_API_Helper.Models
         public int[] CompanyChoices { get; set; }
         public string[] ProductTypeChoices { get; set; }
         public string[] ProductNameChoices { get; set; }
-
         public string SearchWord { get; set; }
-        public decimal LowestPrice {get; set;}
-        public decimal HigestPrice { get; set; }
+        public bool Partners_OnlyChoice { get; set; }
+        public bool BulkChoice { get; set; }
+        public decimal LowestPriceChoice {get; set;}
+        public decimal HigestPriceChoice { get; set; }
+
     }
 }

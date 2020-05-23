@@ -29,7 +29,11 @@
 
             <!-- Grid content -->
             <!-- Search field -->
-            <TextBox Grid.Column="0" Grid.ColumnSpan="3" TextAlignment="Left" VerticalContentAlignment="Center" Text="{Binding SearchField, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Column="0" Grid.ColumnSpan="3" TextAlignment="Left" VerticalContentAlignment="Center" Text="{Binding SearchField, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox.InputBindings>
+                    <KeyBinding Command="{Binding ExecuteQueryCommand}" Key="Return"></KeyBinding>
+                </TextBox.InputBindings>
+            </TextBox>
             <!-- Search button -->
             <Button Grid.Column="3" Command="{Binding ExecuteQueryCommand}">Search</Button>
         </Grid>
@@ -43,6 +47,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <Button Width="50" Background="LightGreen">Buy</Button>
                                 <Button Width="50" Background="LightYellow">Favorit</Button>
+                                <Button Width="50" Background="LightBlue">Info</Button>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
