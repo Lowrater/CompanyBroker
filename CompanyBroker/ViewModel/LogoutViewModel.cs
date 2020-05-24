@@ -4,6 +4,7 @@ using CompanyBroker.Interfaces;
 using CompanyBroker.View.Windows;
 using System.Windows;
 using System.Windows.Input;
+using System.Linq;
 
 namespace CompanyBroker.ViewModel
 {
@@ -11,6 +12,7 @@ namespace CompanyBroker.ViewModel
     {
         //------------------------------------------------------------------------------------------------UI Commands
         public ICommand LogoutCommand => new RelayCommand(LogOut);
+        public ICommand AccountCommand => new RelayCommand(OpenAccountWindow);
 
         //------------------------------------------------------------------------------------------------ Interfaces
         private IDataService _dataService;
@@ -28,6 +30,15 @@ namespace CompanyBroker.ViewModel
         }
 
         //------------------------------------------------------------------------------------------------ Methods
+
+        /// <summary>
+        /// Creates an new instance of the AccountWindow
+        /// </summary>
+        public void OpenAccountWindow()
+        {
+           _viewService.CreateWindow(new AccountWindow());
+        }
+
         /// <summary>
         /// Logouts out, reset MsSQLUserInfo and returns to login window.
         /// </summary>
@@ -40,14 +51,8 @@ namespace CompanyBroker.ViewModel
             _viewService.CreateWindow(new LoginWindow());
 
             //-- Closes the Main window application window.
-            foreach (Window window in Application.Current.Windows)
-            {
-                if(window.Title.Equals("MainWindow"))
-                {
-                    //-- Closes the window
-                    window.Close();
-                }                        
-            }
+            _viewService.CloseWindow("TheMainWindow");
+
         }
     }
 }

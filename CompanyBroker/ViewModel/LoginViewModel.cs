@@ -96,7 +96,7 @@ namespace CompanyBroker.ViewModel
                         //-- Opens MainWindow via. new viewService interface
                         _viewService.CreateWindow(new MainWindow());
                         //-- Closes LoginWindow
-                        _viewService.CloseWindow("LoginWindow");
+                        _viewService.CloseWindow("TheLoginWindow");
                     }
                     else
                     {

@@ -16,7 +16,7 @@
         </Grid.ColumnDefinitions>
         
         <!-- content -->
-        <Button Grid.Column="0">Account</Button>
+        <Button Grid.Column="0" Command="{Binding AccountCommand}">Account</Button>
         <Button Grid.Column="1">Settings</Button>
         <Button Grid.Column="2" Command="{Binding LogoutCommand}">Logout</Button>
     </Grid>

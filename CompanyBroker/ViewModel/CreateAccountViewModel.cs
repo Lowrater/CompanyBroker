@@ -179,7 +179,7 @@ namespace CompanyBroker.ViewModel
                             MessageBox.Show($"Account {AccountName} created for {CompanyName}!", "Company broker  message", MessageBoxButton.OK, MessageBoxImage.Error);
 
                             //-- Closes the CreateAccountWindow window
-                            _viewService.CloseWindow("CreateAccountWindow");
+                            _viewService.CloseWindow("TheCreateAccountWindow");
                         }
                         else
                         {
@@ -203,7 +203,7 @@ namespace CompanyBroker.ViewModel
                         MessageBox.Show($"Account {AccountName} created!", "Company broker  message", MessageBoxButton.OK, MessageBoxImage.Error);
 
                         //-- Closes the CreateAccountWindow window
-                        _viewService.CloseWindow("CreateAccountWindow");
+                        _viewService.CloseWindow("TheCreateAccountWindow");
                     }
                     else
                     {

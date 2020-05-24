@@ -3,11 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CompanyBroker.View.Windows"
+        xmlns:Controls="clr-namespace:CompanyBroker.View.Usercontrols.AccountControls"
         mc:Ignorable="d"
-        Title="AccountWindow" Height="450" Width="450" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        x:Name="TheAccountWindow"
+        Title="CompanyBroker : Account" Height="450" Width="450" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
+        <!-- Grid definitions -->
         <Grid.ColumnDefinitions>
+            <ColumnDefinition ></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
@@ -16,7 +19,129 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
-            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="35"></RowDefinition>
         </Grid.RowDefinitions>
+        
+        <!-- Grid content -->
+        <!-- Top Label -->
+        <Label Grid.Row="0" Grid.Column="2"  HorizontalAlignment="Center" Content="{Binding CompanyName}"></Label>
+        
+        <!-- Account picture and name-->
+        <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="25"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Ellipse Grid.Column="0" Grid.Row="0" >
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="/Resources/Images/man_picture.jpg"></ImageBrush>
+                </Ellipse.Fill>
+            </Ellipse>
+            <!-- Content -->
+
+            <Label Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Center" FontSize="10" Content="{Binding AccountName}"></Label>
+        </Grid>
+
+        <!-- Grid account options -->
+        <Grid Grid.Row="2" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            
+            <!-- Content -->
+            <Button Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Width="120" Command="{Binding ChangePasswordCommand}">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+                Change password
+            </Button>
+            <Button Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Width="120" Command="{Binding ChangeUserNameCommand}">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+                Change username
+            </Button>
+            <Button Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Width="120" Command="{Binding EditCompanyCommand}">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+                Edit company
+            </Button>
+            <Button Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" Width="120" Command="{Binding CloseFirmCommand}">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+                Close firm
+            </Button>
+        </Grid>
+
+        <!-- Company informations -->
+        <Grid Grid.Row="3" Grid.Column="0" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="55"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <!-- content -->
+            <Label Grid.Row="0" Grid.Column="0">Total listings</Label>
+            <Label Grid.Row="1" Grid.Column="0">Sold listings</Label>
+            <Label Grid.Row="2" Grid.Column="0">Inactive listings</Label>
+            <Label Grid.Row="3" Grid.Column="0">Active users</Label>
+            <Label Grid.Row="4" Grid.Column="0">Inactive users</Label>
+            <Label Grid.Row="5" Grid.Column="0">Balance</Label>
+        </Grid>
+        
+        <!-- Main Taps grid right -->
+        <TabControl Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="3">
+            <TabItem Header="Firm listings">
+                <Controls:FirmListingControl></Controls:FirmListingControl>
+            </TabItem>
+            <TabItem Header="Accounts">
+                <Controls:FirmAccountsControl></Controls:FirmAccountsControl>
+            </TabItem>
+            <TabItem Header="Favorits">
+                <Controls:FirmFavoritsControl></Controls:FirmFavoritsControl>
+            </TabItem>
+            <TabItem Header="Partners">
+                <Controls:FirmPartnersControl></Controls:FirmPartnersControl>
+            </TabItem>
+        </TabControl>
+        
+        <!-- Button Close window -->
+        <Button Grid.Column="2" Grid.Row="4" VerticalAlignment="Center" Width="120" Command="{Binding CloseWindowCommand}">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+            Close
+        </Button>
+
     </Grid>
 </Window>

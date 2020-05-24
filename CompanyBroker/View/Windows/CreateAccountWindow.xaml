@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         DataContext="{Binding CreateAccount, Source={StaticResource Locator}}"
         mc:Ignorable="d"
-        Title="CreateAccountWindow" Height="380" Width="450" WindowStartupLocation="CenterScreen">
+        x:Name="TheCreateAccountWindow"
+        Title="Company broker: Account creation" Height="380" Width="450" WindowStartupLocation="CenterScreen">
     <Grid>
         <!-- Grid definitions -->
         <Grid.ColumnDefinitions>
@@ -28,7 +29,7 @@
         
         <!-- Grid content -->
         <!-- Label - Row 0, colum 0 -->
-        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center">Company broker, Account creation</Label>
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center">Account creation</Label>
          <!-- Left Labels  colum 0-->
          <!-- Labels -->
         <Label Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">New company?</Label>

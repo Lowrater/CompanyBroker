@@ -158,6 +158,18 @@
     <Compile Include="ViewModel\SidePanelTab1ViewModel.cs" />
     <Compile Include="ViewModel\SidePanelViewModel.cs" />
     <Compile Include="ViewModel\TimeViewModel.cs" />
+    <Compile Include="View\Usercontrols\AccountControls\FirmAccountsControl.xaml.cs">
+      <DependentUpon>FirmAccountsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Usercontrols\AccountControls\FirmFavoritsControl.xaml.cs">
+      <DependentUpon>FirmFavoritsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Usercontrols\AccountControls\FirmListingControl.xaml.cs">
+      <DependentUpon>FirmListingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Usercontrols\AccountControls\FirmPartnersControl.xaml.cs">
+      <DependentUpon>FirmPartnersControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Usercontrols\BrokerOverviewControl.xaml.cs">
       <DependentUpon>BrokerOverviewControl.xaml</DependentUpon>
     </Compile>
@@ -182,6 +194,22 @@
     <Compile Include="View\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\Usercontrols\AccountControls\FirmAccountsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Usercontrols\AccountControls\FirmFavoritsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Usercontrols\AccountControls\FirmListingControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Usercontrols\AccountControls\FirmPartnersControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Usercontrols\BrokerOverviewControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -279,6 +307,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Addons\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\man_picture.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

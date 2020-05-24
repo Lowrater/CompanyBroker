@@ -17,22 +17,29 @@ namespace CompanyBroker.Services
         /// Every ViewModel attached will be applyed when shown.
         /// </summary>
         /// <param name="window"></param>
-        public void CreateWindow(Window window)
+        public void CreateWindow(Window theWindow)
         {
-            window.Show();
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (!window.Name.Equals(theWindow.Name))
+                {
+                    //-- Displays the window
+                    theWindow.Show();
+                }
+            }
         }
 
         /// <summary>
         /// Closes all windows with the following window title name.
         /// </summary>
         /// <param name="windowTitle"></param>
-        public void CloseWindow(string windowTitle)
+        public void CloseWindow(string windowName)
         {
             //-- Closes the CreateAccountWindow window
             foreach (Window window in Application.Current.Windows)
             {
                 //-- Searches for a window with the following CreateAccountWindow to remove it
-                if (window.Title.Equals(windowTitle))
+                if (window.Name.Equals(windowName))
                 {
                     window.Close();
                 }

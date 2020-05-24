@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CompanyBroker"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="250" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        x:Name="TheLoginWindow"
+        Title="CompanyBroker : Login" Height="250" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
         DataContext="{Binding Login, Source={StaticResource Locator}}">
     <!-- 1. Grid laout (START) -->
     <Grid>
