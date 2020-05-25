@@ -1,6 +1,7 @@
 ﻿using CompanyBroker_API_Helper.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -81,6 +82,28 @@ namespace CompanyBroker_API_Helper
                 else
                 {
                     return new AccountModel();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns an list 
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <returns></returns>
+        public async Task<ObservableCollection<AccountModel>> FetchAccountsByCompanyId(int companyId)
+        {
+            string url = $"http://localhost:50133/api/Account?companyId="+ companyId;
+
+            using (HttpResponseMessage response = await APIHelper.ApiClient.GetAsync(url))
+            {
+                if(response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadAsAsync<ObservableCollection<AccountModel>>();
+                }
+                else
+                {
+                    return new ObservableCollection<AccountModel>();
                 }
             }
         }

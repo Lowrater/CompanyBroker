@@ -4,17 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CompanyBroker.View.Usercontrols.AccountControls"
+             DataContext="{Binding FirmListing, Source={StaticResource Locator}}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <!-- Datagrid containing a table -->
-        <DataGrid ItemsSource="{Binding MainRersourceList}" CanUserAddRows="False" CanUserResizeColumns="False" IsReadOnly="True">
+        <DataGrid ItemsSource="{Binding MainListingList}" CanUserAddRows="False" CanUserResizeColumns="False" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTemplateColumn CanUserResize="False" CanUserReorder="False">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Width="50" Background="LightBlue" Command="{Binding EditListingCommand}">Edit</Button>
+                                <Button Width="50" Background="LightGreen" Command="{Binding EditListingCommand}">Edit</Button>
                                 <Button Width="50" Background="Red" Command="{Binding RemoveListingCommand}">Remove</Button>
                             </StackPanel>
                         </DataTemplate>

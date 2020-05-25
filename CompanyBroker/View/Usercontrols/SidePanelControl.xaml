@@ -19,7 +19,7 @@
         <!-- Grid content -->
         <TabControl>
             <!--  panel 1-->
-            <TabItem Header="Filter panel 1">
+            <TabItem Header="Filter panel">
                 <!-- Reference to SidePanelControls for SidePanelTab1-->
                 <userControls:SidePanelTab1></userControls:SidePanelTab1>
             </TabItem>

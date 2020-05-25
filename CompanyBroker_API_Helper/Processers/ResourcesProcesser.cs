@@ -82,6 +82,27 @@ namespace CompanyBroker_API_Helper.Processers
             }
         }
 
+        /// <summary>
+        /// Fetches all resources for the specific company
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <returns></returns>
+        public async Task<ObservableCollection<ResourcesModel>> GetAllResourcesByCompanyId(int companyId)
+        {
+            var url = $"http://localhost:50133/api/GetResourcesByCompanyId?companyId=" + companyId;
+
+            using (HttpResponseMessage response = await APIHelper.ApiClient.GetAsync(url))
+            {
+                if(response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadAsAsync<ObservableCollection<ResourcesModel>>();
+                }
+                else
+                {
+                    return new ObservableCollection<ResourcesModel>();
+                }
+            }
+        }
 
         /// <summary>
         /// Fetches all product types

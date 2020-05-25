@@ -18,6 +18,7 @@ using GalaSoft.MvvmLight.Ioc;
 using CompanyBroker.Interfaces;
 using CompanyBroker.Services;
 using System;
+using CompanyBroker.ViewModel.AccountControl;
 
 namespace CompanyBroker.ViewModel
 {
@@ -49,7 +50,11 @@ namespace CompanyBroker.ViewModel
             SimpleIoc.Default.Register<SidePanelTab1ViewModel>();
             SimpleIoc.Default.Register<CreateAccountViewModel>();
             SimpleIoc.Default.Register<BrokerOverviewViewModel>();
-
+            SimpleIoc.Default.Register<AccountViewModel>();
+            SimpleIoc.Default.Register<FirmAccountsViewModel>();
+            SimpleIoc.Default.Register<FirmFavoritsViewModel>();
+            SimpleIoc.Default.Register<FirmListingViewModel>();
+            SimpleIoc.Default.Register<FirmPartnersViewModel>();
         }
 
         //-- ViewModel definitions (made public to all XML's)
@@ -61,6 +66,13 @@ namespace CompanyBroker.ViewModel
         public SidePanelTab1ViewModel SidePanelTab1 => ServiceLocator.Current.GetInstance<SidePanelTab1ViewModel>(Guid.NewGuid().ToString());
         public CreateAccountViewModel CreateAccount => ServiceLocator.Current.GetInstance<CreateAccountViewModel>(Guid.NewGuid().ToString());
         public BrokerOverviewViewModel BrokerOverview => ServiceLocator.Current.GetInstance<BrokerOverviewViewModel>(Guid.NewGuid().ToString());
+        public AccountViewModel Account => ServiceLocator.Current.GetInstance<AccountViewModel>(Guid.NewGuid().ToString());
+        public FirmAccountsViewModel FirmAccount => ServiceLocator.Current.GetInstance<FirmAccountsViewModel>(Guid.NewGuid().ToString());
+        public FirmFavoritsViewModel FirmFavorit => ServiceLocator.Current.GetInstance<FirmFavoritsViewModel>(Guid.NewGuid().ToString());
+        public FirmListingViewModel FirmListing => ServiceLocator.Current.GetInstance<FirmListingViewModel>(Guid.NewGuid().ToString());
+        public FirmPartnersViewModel FirmPartners => ServiceLocator.Current.GetInstance<FirmPartnersViewModel>(Guid.NewGuid().ToString());
+
+
 
         public static void Cleanup()
         {

@@ -17,7 +17,7 @@ namespace CompanyBroker.Model
 
 
 
-        private ObservableCollection<ResourcesModel> __mainRersourceList;
+        private ObservableCollection<ResourcesModel> __mainRersourceList = new ObservableCollection<ResourcesModel>();
         public ref ObservableCollection<ResourcesModel> _mainRersourceList => ref __mainRersourceList;
     }
 }

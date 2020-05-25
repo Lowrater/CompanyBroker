@@ -5,14 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Controls="clr-namespace:CompanyBroker.View.Usercontrols.AccountControls"
         mc:Ignorable="d"
+        DataContext="{Binding Account, Source={StaticResource Locator}}"
         x:Name="TheAccountWindow"
-        Title="CompanyBroker : Account" Height="450" Width="450" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="CompanyBroker : Account" Height="450" Width="650" MinWidth="400" WindowStartupLocation="CenterScreen" >
     <Grid>
         <!-- Grid definitions -->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition ></ColumnDefinition>
+            <ColumnDefinition Width="150"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
+
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"></RowDefinition>
@@ -24,7 +26,7 @@
         
         <!-- Grid content -->
         <!-- Top Label -->
-        <Label Grid.Row="0" Grid.Column="2"  HorizontalAlignment="Center" Content="{Binding CompanyName}"></Label>
+        <Label Grid.Row="0" Grid.Column="2"  HorizontalAlignment="Center" Content="{Binding CompanyName}" FontSize="15"></Label>
         
         <!-- Account picture and name-->
         <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="2">
@@ -67,13 +69,13 @@
                 </Button.Resources>
                 Change password
             </Button>
-            <Button Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Width="120" Command="{Binding ChangeUserNameCommand}">
+            <Button Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Width="120" Command="{Binding ChangePictureCommand}">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="10"/>
                     </Style>
                 </Button.Resources>
-                Change username
+                Change Picture
             </Button>
             <Button Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Width="120" Command="{Binding EditCompanyCommand}">
                 <Button.Resources>
@@ -109,12 +111,20 @@
             </Grid.ColumnDefinitions>
             
             <!-- content -->
+            <!-- Lables -->
             <Label Grid.Row="0" Grid.Column="0">Total listings</Label>
             <Label Grid.Row="1" Grid.Column="0">Sold listings</Label>
             <Label Grid.Row="2" Grid.Column="0">Inactive listings</Label>
             <Label Grid.Row="3" Grid.Column="0">Active users</Label>
             <Label Grid.Row="4" Grid.Column="0">Inactive users</Label>
             <Label Grid.Row="5" Grid.Column="0">Balance</Label>
+            <!-- Numbers -->
+            <Label Grid.Row="0" Grid.Column="1" Content="{Binding TotalListings}"></Label>
+            <Label Grid.Row="1" Grid.Column="1" Content="{Binding SoldListings}"></Label>
+            <Label Grid.Row="2" Grid.Column="1" Content="{Binding InActiveListings}"></Label>
+            <Label Grid.Row="3" Grid.Column="1" Content="{Binding ActiveUsers}"></Label>
+            <Label Grid.Row="4" Grid.Column="1" Content="{Binding InActiveUsers}"></Label>
+            <Label Grid.Row="5" Grid.Column="1" Content="{Binding CompanyBalance}"></Label>
         </Grid>
         
         <!-- Main Taps grid right -->
@@ -142,6 +152,5 @@
             </Button.Resources>
             Close
         </Button>
-
     </Grid>
 </Window>

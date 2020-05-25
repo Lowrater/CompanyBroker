@@ -25,9 +25,8 @@ namespace CompanyBroker_API_Helper.Processers
                 //-- If it's successfull, we can do something with the returned data.
                 if (response.IsSuccessStatusCode)
                 {
-                    var result = await response.Content.ReadAsAsync<ObservableCollection<CompanyModel>>();
                     //-- Returns the results
-                    return result;
+                    return await response.Content.ReadAsAsync<ObservableCollection<CompanyModel>>();
                 }
                 else
                 {
@@ -42,7 +41,7 @@ namespace CompanyBroker_API_Helper.Processers
         /// </summary>
         /// <param name="personId"></param>
         /// <returns></returns>
-        public async Task<CompanyModel> GetCompany(int companyId)
+        public async Task<CompanyModel> GetCompanyById(int companyId)
         {
             //-- Sets new Url
             string url = $"http://localhost:50133/api/Companies/" + $"{companyId}";
@@ -82,28 +81,20 @@ namespace CompanyBroker_API_Helper.Processers
             //-- Sets new Url
             string url = $"http://localhost:50133/api/Companies?companyName="+$"{companyName}";
 
-            //-- Checks wether or not the number is zero, if not then we return the whole list
-            if (!string.IsNullOrEmpty(companyName))
+            //-- Opens up a new Http request from the ApiClient created with the url path.
+            using (HttpResponseMessage response = await APIHelper.ApiClient.GetAsync(url))
             {
-                //-- Opens up a new Http request from the ApiClient created with the url path.
-                using (HttpResponseMessage response = await APIHelper.ApiClient.GetAsync(url))
+                //-- If it's successfull, we can do something with the returned data.
+                if (response.IsSuccessStatusCode)
                 {
-                    //-- If it's successfull, we can do something with the returned data.
-                    if (response.IsSuccessStatusCode)
-                    {
-                        //-- Awaits the response of the content requested in async, but it must convert into a CompanyModel
-                        //-- Here it will match it's content, to the properties stored in the CompanyModel object.
-                        return await response.Content.ReadAsAsync<CompanyModel>();
-                    }
-                    else
-                    {
-                        return new CompanyModel();
-                    }
+                    //-- Awaits the response of the content requested in async, but it must convert into a CompanyModel
+                    //-- Here it will match it's content, to the properties stored in the CompanyModel object.
+                    return await response.Content.ReadAsAsync<CompanyModel>();
                 }
-            }
-            else
-            {
-                return new CompanyModel();
+                else
+                {
+                    return new CompanyModel();
+                }
             }
         }
 

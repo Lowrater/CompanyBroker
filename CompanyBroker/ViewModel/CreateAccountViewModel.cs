@@ -42,7 +42,8 @@ namespace CompanyBroker.ViewModel
         }
         //---------------------------------- Properties
 
-        private bool accountCreations { get; set; }
+        //private bool accountCreations { get; set; }
+
         /// <summary>
         /// Sets the states wheter or not the user creates a new business to the system or creates an account to an existing company
         /// </summary>
@@ -112,19 +113,15 @@ namespace CompanyBroker.ViewModel
             {
                 //-- Fetches all the company data
                 var list = await new CompanyProcesser().GetAllCompanies();
-                //-- Add an empty to have the correct choosing of index
-                companyList.Add("");
-
                 //-- loops through the list and adds only the name of the data.
                 foreach (CompanyModel company in list)
                 {
                     companyList.Add(company.Name);
                 }
-
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.ToString().Substring(0,252), "Company broker message", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(e.ToString().Substring(0, 252), "Company broker message", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             //-- returns the list
