@@ -1,5 +1,6 @@
 ﻿using CompanyBroker.Interfaces;
 using CompanyBroker.Model.AccountModels;
+using CompanyBroker.View.Windows;
 using CompanyBroker_API_Helper;
 using CompanyBroker_API_Helper.Models;
 using CompanyBroker_API_Helper.Processers;
@@ -21,12 +22,14 @@ namespace CompanyBroker.ViewModel.AccountControl
         private FirmListingModel firmListingModel = new FirmListingModel();
         //-------------------------------------- Interfaces
         private IDataService _dataService;
+        private IViewService _viewService;
         //-------------------------------------- ICommands
-        public ICommand AddListingCommand => new RelayCommand(async () => await AddListing());
+        public ICommand AddListingCommand => new RelayCommand(AddListing);
         //-------------------------------------- Constructor
-        public FirmListingViewModel(IDataService __dataService)
+        public FirmListingViewModel(IDataService __dataService, IViewService __viewService)
         {
             this._dataService = __dataService;
+            this._viewService = __viewService;
 
             //-- Sets the list content
             new Action(async () => await FetchList())();
@@ -40,9 +43,12 @@ namespace CompanyBroker.ViewModel.AccountControl
         }
 
         //-------------------------------------- Methods
-        public async Task AddListing()
+        /// <summary>
+        /// Opens the CompanyAddListingWindow
+        /// </summary>
+        public void AddListing()
         {
-
+            _viewService.CreateWindow(new CompanyAddListingWindow());
         }
 
         /// <summary>

@@ -6,7 +6,7 @@
         DataContext="{Binding CreateAccount, Source={StaticResource Locator}}"
         mc:Ignorable="d"
         x:Name="TheCreateAccountWindow"
-        Title="Company broker: Account creation" Height="380" Width="450" WindowStartupLocation="CenterScreen">
+        Title="Company broker: Account creation" Height="380" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <!-- Grid definitions -->
         <Grid.ColumnDefinitions>

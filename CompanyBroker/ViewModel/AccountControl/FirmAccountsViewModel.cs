@@ -21,7 +21,7 @@ namespace CompanyBroker.ViewModel.AccountControl
         //-------------------------------------- Interfaces
         private IDataService _dataService;
         //-------------------------------------- ICommands
-        public ICommand AddListingCommand => new RelayCommand(async () => await AddListing());
+        public ICommand AddAccountCommand => new RelayCommand(AddAccount);
         //-------------------------------------- Constructor
         public FirmAccountsViewModel(IDataService __dataService)
         {
@@ -39,7 +39,7 @@ namespace CompanyBroker.ViewModel.AccountControl
         }
 
         //-------------------------------------- Methods
-        public async Task AddListing()
+        public void AddAccount()
         {
 
         }

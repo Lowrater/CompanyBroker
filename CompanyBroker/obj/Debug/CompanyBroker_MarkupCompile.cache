@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 I:\Visual studio projects\CompanyBroker\CompanyBroker\App.xaml
-131073313794
+14647709296
 
-49748432483
+50-1320852329
 141806260050
-View\Usercontrols\AccountControls\FirmAccountsControl.xaml;View\Usercontrols\AccountControls\FirmFavoritsControl.xaml;View\Usercontrols\AccountControls\FirmListingControl.xaml;View\Usercontrols\AccountControls\FirmPartnersControl.xaml;View\Usercontrols\BrokerOverviewControl.xaml;View\Usercontrols\LogoutControl.xaml;View\Usercontrols\SidePanelControl.xaml;View\Usercontrols\SidePanelControls\SidePanelTab1.xaml;View\Usercontrols\TimeControl.xaml;View\Windows\AccountWindow.xaml;View\Windows\CreateAccountWindow.xaml;View\Windows\LoginWindow.xaml;View\Windows\MainWindow.xaml;
+View\Usercontrols\AccountControls\FirmAccountsControl.xaml;View\Usercontrols\AccountControls\FirmFavoritsControl.xaml;View\Usercontrols\AccountControls\FirmListingControl.xaml;View\Usercontrols\AccountControls\FirmPartnersControl.xaml;View\Usercontrols\BrokerOverviewControl.xaml;View\Usercontrols\LogoutControl.xaml;View\Usercontrols\SidePanelControl.xaml;View\Usercontrols\SidePanelControls\SidePanelTab1.xaml;View\Usercontrols\TimeControl.xaml;View\Windows\AccountWindow.xaml;View\Windows\CompanyAddListingWindow.xaml;View\Windows\CreateAccountWindow.xaml;View\Windows\LoginWindow.xaml;View\Windows\MainWindow.xaml;
 
 False
 
