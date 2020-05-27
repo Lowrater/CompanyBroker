@@ -25,5 +25,9 @@ namespace CompanyBroker.Model.AccountModels
         private bool __productActive;
         public ref bool _productActive => ref __productActive;
 
+        private string __productDescription;
+        public ref string _productDescription => ref __productDescription;
+        
+
     }
 }

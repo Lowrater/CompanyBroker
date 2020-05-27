@@ -12,6 +12,8 @@ namespace CompanyBroker_API_Helper.Processers
 {
     public class ResourcesProcesser
     {
+        #region CompanyResources Tabel
+        //-------------------------------------------------- To fetch, put or update an product
         /// <summary>
         /// Fetches all resources
         /// </summary>
@@ -174,6 +176,79 @@ namespace CompanyBroker_API_Helper.Processers
             }
         }
 
+        #endregion
 
+
+
+        #region ResourcesDescription Table
+        //-------------------------------------------------- To fetch, put or update an product description
+        /// <summary>
+        /// Adds a new product description to the database
+        /// </summary>
+        /// <param name="description"></param>
+        /// <returns></returns>
+        public async Task<bool> AddProductDescription(ResourceDescriptionModel description)
+        {
+            var url = $"http://localhost:50133/api/ResourceDescription";
+
+            using (HttpResponseMessage response = await APIHelper.ApiClient.PostAsJsonAsync(url, description)) 
+            {
+                if(response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Adds a new product description to the database
+        /// </summary>
+        /// <param name="description"></param>
+        /// <returns></returns>
+        public async Task<bool> UpdateProductDescription(ResourceDescriptionModel description)
+        {
+            var url = $"http://localhost:50133/api/ResourceDescription";
+
+            using (HttpResponseMessage response = await APIHelper.ApiClient.PutAsJsonAsync(url, description))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the description of the object
+        /// </summary>
+        /// <param name="description"></param>
+        /// <returns></returns>
+        public async Task<ResourceDescriptionModel> GetResourceDescription(int resourceId)
+        {
+            var url = $"http://localhost:50133/api/ResourceDescription?resourceId="+ resourceId;
+
+            using (HttpResponseMessage response = await APIHelper.ApiClient.GetAsync(url))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadAsAsync<ResourceDescriptionModel>();
+                }
+                else
+                {
+                    return new ResourceDescriptionModel();
+                }
+            }
+        }
+
+
+        #endregion
     }
 }

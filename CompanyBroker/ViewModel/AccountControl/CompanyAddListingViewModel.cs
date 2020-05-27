@@ -65,6 +65,11 @@ namespace CompanyBroker.ViewModel.AccountControl
             get => companyAddListingModel._productActive;
             set => Set(ref companyAddListingModel._productActive, value);
         }
+        public string ProductDescription
+        {
+            get => companyAddListingModel._productDescription;
+            set => Set(ref companyAddListingModel._productDescription, value);
+        }
         #endregion
 
         #region Methods
@@ -93,9 +98,16 @@ namespace CompanyBroker.ViewModel.AccountControl
                 ProductType = ProductType
             };
 
+            var des = new ResourceDescriptionModel
+            {
+                Description = ProductDescription,
+                ResourceId = await new ResourcesProcesser().get
+            };
+
             try
             {
                 var addListing = await new ResourcesProcesser().AddNewResources(resource);
+                addListing = await new ResourcesProcesser().AddProductDescription(des);
 
                 if(addListing != false)
                 {
