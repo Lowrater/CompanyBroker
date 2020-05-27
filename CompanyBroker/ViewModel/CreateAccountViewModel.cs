@@ -17,17 +17,21 @@ namespace CompanyBroker.ViewModel
 {
     public class CreateAccountViewModel : ViewModelBase
     {
-        //---------------------------------- Models
+        #region Models
         private CreateAccountModel createAccountModel = new CreateAccountModel();
-        //---------------------------------- Interfaces
+        #endregion
+
+        #region Interfaces
         private IAppConfigService _appConfigService;
         private IDataService _dataService;
         private IViewService _viewService;
+        #endregion
 
-        //---------------------------------- ICommands
+        #region ICommands
         public ICommand CreateCommand => new RelayCommand<PasswordBox>(async (PasswordBox) => await CreateAccount(PasswordBox.Password));
+        #endregion
 
-        //---------------------------------- Constructor
+        #region Constructor
         public CreateAccountViewModel(IDataService __dataService, IAppConfigService __appConfigService, IViewService __viewService)
         {
             this._dataService = __dataService;
@@ -40,10 +44,9 @@ namespace CompanyBroker.ViewModel
             //-- Sets the default value to true
             CompanyDropDownBool = true;
         }
-        //---------------------------------- Properties
+        #endregion
 
-        //private bool accountCreations { get; set; }
-
+        #region Properties
         /// <summary>
         /// Sets the states wheter or not the user creates a new business to the system or creates an account to an existing company
         /// </summary>
@@ -100,7 +103,11 @@ namespace CompanyBroker.ViewModel
             set => Set(ref createAccountModel._companyList, value);
         }
 
-        //---------------------------------- Methods
+        #endregion
+
+
+        #region Methods
+
         /// <summary>
         /// Sets the companyList through the WebAPI
         /// </summary>
@@ -233,5 +240,7 @@ namespace CompanyBroker.ViewModel
                 CompanyNameBool = false;
             }
         }
+
+        #endregion
     }
 }

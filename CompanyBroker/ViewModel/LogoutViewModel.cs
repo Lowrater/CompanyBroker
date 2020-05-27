@@ -10,16 +10,21 @@ namespace CompanyBroker.ViewModel
 {
     public class LogoutViewModel : ViewModelBase
     {
-        //------------------------------------------------------------------------------------------------UI Commands
-        public ICommand LogoutCommand => new RelayCommand(LogOut);
-        public ICommand AccountCommand => new RelayCommand(OpenAccountWindow);
+        #region Models
+        #endregion
 
-        //------------------------------------------------------------------------------------------------ Interfaces
+        #region Interfaces
         private IDataService _dataService;
         private IViewService _viewService;
+        #endregion
 
+        #region ICommands
+        public ICommand AccountCommand => new RelayCommand(OpenAccountWindow);
+        public ICommand LogoutCommand => new RelayCommand(LogOut);
 
-        //------------------------------------------------------------------------------------------------ Constructor
+        #endregion
+
+        #region Constructor
         /// <summary>
         /// COnstructor
         /// </summary>
@@ -28,8 +33,12 @@ namespace CompanyBroker.ViewModel
             this._dataService = __dataService;
             this._viewService = __viewService;
         }
+        #endregion
 
-        //------------------------------------------------------------------------------------------------ Methods
+        #region Properties
+        #endregion
+
+        #region Methods
 
         /// <summary>
         /// Creates an new instance of the AccountWindow
@@ -54,5 +63,7 @@ namespace CompanyBroker.ViewModel
             _viewService.CloseWindow("TheMainWindow");
 
         }
+        #endregion
+
     }
 }

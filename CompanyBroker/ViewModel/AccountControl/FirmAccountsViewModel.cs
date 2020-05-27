@@ -14,15 +14,22 @@ using System.Windows.Input;
 
 namespace CompanyBroker.ViewModel.AccountControl
 {
+
     public class FirmAccountsViewModel : ViewModelBase
     {
-        //-------------------------------------- Models
+        #region Models     
         private FirmAccountsModel firmListingModel = new FirmAccountsModel();
-        //-------------------------------------- Interfaces
+        #endregion
+
+        #region Interfaces    
         private IDataService _dataService;
-        //-------------------------------------- ICommands
+        #endregion
+
+        #region ICommands
         public ICommand AddAccountCommand => new RelayCommand(AddAccount);
-        //-------------------------------------- Constructor
+        #endregion
+
+        #region Constructor
         public FirmAccountsViewModel(IDataService __dataService)
         {
             this._dataService = __dataService;
@@ -30,15 +37,20 @@ namespace CompanyBroker.ViewModel.AccountControl
             //-- Sets the list content
             new Action(async () => await FetchList())();
         }
+        #endregion
 
-        //-------------------------------------- Properties
+        #region Properties      
         public ObservableCollection<AccountModel> MainAccountsList
         {
             get => firmListingModel._mainAccountsList;
             set => Set(ref firmListingModel._mainAccountsList, value);
         }
+        #endregion
 
-        //-------------------------------------- Methods
+        #region Methods
+        /// <summary>
+        /// Adds a new account to the system
+        /// </summary>
         public void AddAccount()
         {
 
@@ -50,9 +62,10 @@ namespace CompanyBroker.ViewModel.AccountControl
         /// <returns></returns>
         public async Task FetchList()
         {
-            AccountModel accountDetails = await new AccountProcessor().FetchAccountByName(_dataService.username);
-
-            MainAccountsList = await new AccountProcessor().FetchAccountsByCompanyId(accountDetails.CompanyId);
+            MainAccountsList = await new AccountProcessor().FetchAccountsByCompanyId(_dataService.account.CompanyId);
         }
+
+        #endregion
+
     }
 }

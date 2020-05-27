@@ -16,19 +16,24 @@ namespace CompanyBroker.ViewModel
 {
     public class AccountViewModel : ViewModelBase
     {
-        //----------------------------------------- Models
+        #region Models
         private AccountVModel accountVModel = new AccountVModel();
-        //----------------------------------------- Interfaces
+        #endregion
+
+        #region Interfaces
         private IViewService _viewService;
         private IDataService _dataService;
-        //----------------------------------------- ICommands
+        #endregion
+
+        #region ICommands
         public ICommand CloseWindowCommand => new RelayCommand(CloseWindow);
         public ICommand ChangePasswordCommand => new RelayCommand(ChangePassword);
         public ICommand ChangePictureCommand => new RelayCommand(ChangePicture);
         public ICommand EditCompanyCommand => new RelayCommand(EditCompany);
         public ICommand CloseFirmCommand => new RelayCommand(CloseFirm);
-        
-        //----------------------------------------- Constructor
+        #endregion
+
+        #region Constructor
         public AccountViewModel(IViewService __viewService, IDataService __dataService)
         {
             //-- Dependency injections (Constructor injection)
@@ -38,7 +43,11 @@ namespace CompanyBroker.ViewModel
             //-- Sets the account informations
             new Action(async () => await SetAccountInformations())();
         }
-        //----------------------------------------- properties
+        #endregion
+
+
+        #region Properties
+
         public string CompanyName 
         { 
             get => accountVModel._companyName; 
@@ -87,8 +96,10 @@ namespace CompanyBroker.ViewModel
             set => Set(ref accountVModel._companyBalance, value);
         }
 
+        #endregion
 
-        //----------------------------------------- Methods
+        #region Methods
+
 
         /// <summary>
         /// Closes the window
@@ -99,14 +110,13 @@ namespace CompanyBroker.ViewModel
         }
 
         /// <summary>
-        /// Sets the informations
+        /// Sets the informations based on the account logged in
         /// </summary>
         public async Task SetAccountInformations()
         {
-            AccountModel accountDetails = await new AccountProcessor().FetchAccountByName(_dataService.username);
-            CompanyModel companyDetails = await new CompanyProcesser().GetCompanyById(accountDetails.CompanyId);
+            CompanyModel companyDetails = await new CompanyProcesser().GetCompanyById(_dataService.account.CompanyId);
             
-            AccountName = _dataService.username;
+            AccountName = _dataService.account.Username;
             CompanyName = companyDetails.Name;
             CompanyBalance = companyDetails.Balance;
         }
@@ -130,6 +140,6 @@ namespace CompanyBroker.ViewModel
         {
 
         }
-
+        #endregion
     }
 }

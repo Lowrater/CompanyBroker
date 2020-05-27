@@ -14,20 +14,31 @@ using CompanyBroker_API_Helper.Models;
 
 namespace CompanyBroker.ViewModel
 {
+
     public class LoginViewModel : ViewModelBase
     {
-        //------------------------------------------------------------------------------------------------ Models
+        #region Models
         private LoginModel loginModel = new LoginModel();
 
-        //------------------------------------------------------------------------------------------------ Interfaces
+        #endregion
+
+        #region Interfaces
         /// <summary>
         /// For constructor injection for the Service
         /// </summary>
         private IDataService _dataService;
         private IViewService _viewService;
         private IAppConfigService _appConfigService;
+        #endregion
 
-        //------------------------------------------------------------------------------------------------ Constructor
+
+        #region ICommands
+        public ICommand LoginCommand => new RelayCommand<PasswordBox>(async (PasswordBox) => await Login(PasswordBox.Password));
+        public ICommand ExitCommand => new RelayCommand(Exit);
+        public ICommand CreateCommand => new RelayCommand(CreateAccount);
+        #endregion
+
+        #region Constructor
         /// <summary>
         /// Constructor
         /// </summary>
@@ -37,13 +48,12 @@ namespace CompanyBroker.ViewModel
             this._viewService = viewService;
             this._appConfigService = appConfigService;
         }
+        #endregion
 
-        //------------------------------------------------------------------------------------------------ ICommands
-        public ICommand LoginCommand => new RelayCommand<PasswordBox>(async (PasswordBox) => await Login(PasswordBox.Password));
-        public ICommand ExitCommand => new RelayCommand(Exit);
-        public ICommand CreateCommand => new RelayCommand(CreateAccount);
 
-        //------------------------------------------------------------------------------------------------  Properties
+
+
+        #region Properties
         /// <summary>
         /// UserName for login screen
         /// Stores the value in loginModel and in the DataService MsSQLUserInfo
@@ -57,8 +67,11 @@ namespace CompanyBroker.ViewModel
             }
         }
 
+        #endregion
 
-        //------------------------------------------------------------------------------------------------ Methods
+
+        #region Methods
+
         /// <summary>
         /// Login function, which takes the Password field as parameter, and verifys login informations
         /// </summary>
@@ -92,7 +105,7 @@ namespace CompanyBroker.ViewModel
                         //-- Sets the active state to true
                         _dataService.isConnected = true;
                         //-- Sets the username
-                        _dataService.username = UserName;
+                        _dataService.account = await new AccountProcessor().FetchAccountByName(UserName);
                         //-- Opens MainWindow via. new viewService interface
                         _viewService.CreateWindow(new MainWindow());
                         //-- Closes LoginWindow
@@ -152,6 +165,6 @@ namespace CompanyBroker.ViewModel
             //-- Opens CreateAccountWindow via. new viewService interface
             _viewService.CreateWindow(new CreateAccountWindow());
         }
-
+        #endregion
     }
 }

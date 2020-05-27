@@ -14,28 +14,34 @@ namespace CompanyBroker.ViewModel
     /// Used for BrokerOverviewControl, SearchBarControl
     /// Uses filters from SidePanelTab1
     /// </summary>
+    /// 
     public class BrokerOverviewViewModel : ViewModelBase
     {
-        //---------------------------------------------------------------- Model
+        #region Models
         private BrokerOverviewModel brokerOverviewModel = new BrokerOverviewModel();
+        #endregion
 
-        //---------------------------------------------------------------- Interfaces
+        #region Interfaces
         private IDataService _dataservice;
         private IAppConfigService _appConfigService;
         private IContentService _contentService;
+        #endregion
 
-        //---------------------------------------------------------------- ICommands
+        #region ICommands
         public ICommand ExecuteQueryCommand => new RelayCommand(async () => await FillTable());
+        #endregion
 
-        //---------------------------------------------------------------- Constructor
+        #region Constructor
         public BrokerOverviewViewModel(IDataService __dataservice, IAppConfigService __appConfigService, IContentService __contentService)
         {
             this._dataservice = __dataservice;
             this._appConfigService = __appConfigService;
             this._contentService = __contentService;
         }
+        #endregion
 
-        //---------------------------------------------------------------- Properties
+        #region Properties
+
         /// <summary>
         /// The main list (table) which contains all the resources
         /// </summary>
@@ -53,8 +59,9 @@ namespace CompanyBroker.ViewModel
                 Set(ref brokerOverviewModel._searchField, value);
             }
         }
+        #endregion
 
-        //---------------------------------------------------------------- Methods
+        #region Methods
         /// <summary>
         /// Fills the table for the user, depending on the filters provided from the user in the SidePanelTab1ViewModel
         /// </summary>
@@ -81,6 +88,8 @@ namespace CompanyBroker.ViewModel
                 MainRersourceList = await new ResourcesProcesser().GetResourcesBySearch(SearchField);
             }
         }
+        #endregion
+
     }
-    
+
 }

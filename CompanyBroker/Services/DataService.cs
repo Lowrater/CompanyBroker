@@ -18,7 +18,7 @@ namespace CompanyBroker.Services
         public bool isConnected { get; set; }
         public string time { get; set; }
 
-        public string username { get; set; }
+        public AccountModel account {get; set;}
 
     }
 }

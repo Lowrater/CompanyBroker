@@ -41,7 +41,7 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <!-- content -->
-            <Button Grid.Column="0" Content="Refresh">
+            <Button Grid.Column="0" Content="Refresh" Command="{Binding RefreshListingCommand}">
             </Button>
             <Button Grid.Column="1" Content="Add new item" Command="{Binding AddListingCommand}">
             </Button>

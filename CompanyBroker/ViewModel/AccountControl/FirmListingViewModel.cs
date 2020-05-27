@@ -18,14 +18,22 @@ namespace CompanyBroker.ViewModel.AccountControl
 {
     public class FirmListingViewModel : ViewModelBase
     {
-        //-------------------------------------- Models
+
+        #region Models     
         private FirmListingModel firmListingModel = new FirmListingModel();
-        //-------------------------------------- Interfaces
+        #endregion
+
+        #region Interfaces
         private IDataService _dataService;
         private IViewService _viewService;
-        //-------------------------------------- ICommands
+        #endregion
+
+        #region ICommands
         public ICommand AddListingCommand => new RelayCommand(AddListing);
-        //-------------------------------------- Constructor
+        public ICommand RefreshListingCommand => new RelayCommand(async () => await FetchList());
+        #endregion
+
+        #region Constructor
         public FirmListingViewModel(IDataService __dataService, IViewService __viewService)
         {
             this._dataService = __dataService;
@@ -34,15 +42,18 @@ namespace CompanyBroker.ViewModel.AccountControl
             //-- Sets the list content
             new Action(async () => await FetchList())();
         }
+        #endregion
 
-        //-------------------------------------- Properties
+        #region Properties
         public ObservableCollection<ResourcesModel> MainListingList
         {
             get => firmListingModel._mainListingList;
             set => Set(ref firmListingModel._mainListingList, value);
         }
+        #endregion
 
-        //-------------------------------------- Methods
+
+        #region Methods
         /// <summary>
         /// Opens the CompanyAddListingWindow
         /// </summary>
@@ -57,11 +68,9 @@ namespace CompanyBroker.ViewModel.AccountControl
         /// <returns></returns>
         public async Task FetchList()
         {
-            AccountModel accountDetails = await new AccountProcessor().FetchAccountByName(_dataService.username);
-
-            MainListingList = await new ResourcesProcesser().GetAllResourcesByCompanyId(accountDetails.CompanyId);
+            MainListingList = await new ResourcesProcesser().GetAllResourcesByCompanyId(_dataService.account.CompanyId);
         }
 
-
+        #endregion
     }
 }

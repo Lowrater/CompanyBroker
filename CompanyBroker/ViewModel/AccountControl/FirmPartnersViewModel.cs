@@ -8,5 +8,17 @@ namespace CompanyBroker.ViewModel.AccountControl
 {
    public class FirmPartnersViewModel
     {
+        #region Models
+        #endregion
+        #region Interfaces
+        #endregion
+        #region ICommands
+        #endregion
+        #region Constructor
+        #endregion
+        #region Properties
+        #endregion
+        #region Methods
+        #endregion
     }
 }

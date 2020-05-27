@@ -18,6 +18,6 @@ namespace CompanyBroker.Interfaces
         CollectionFilterModel FilterCollection { get; set; }
         bool isConnected { get; set; }
         string time { get; set; }
-        string username { get; set; }
+        AccountModel account { get; set; }
     }
 }

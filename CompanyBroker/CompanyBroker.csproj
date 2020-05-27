@@ -142,6 +142,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Interfaces\IViewService.cs" />
+    <Compile Include="Model\AccountModels\CompanyAddListingModel.cs" />
     <Compile Include="Model\AccountModels\FirmAccountsModel.cs" />
     <Compile Include="Model\AccountModels\FirmFavoritsModel.cs" />
     <Compile Include="Model\AccountModels\FirmListingModel.cs" />
@@ -157,6 +158,7 @@
     <Compile Include="Services\ContentService.cs" />
     <Compile Include="Interfaces\IContentService.cs" />
     <Compile Include="Services\ViewService.cs" />
+    <Compile Include="ViewModel\AccountControl\CompanyAddListingViewModel.cs" />
     <Compile Include="ViewModel\AccountControl\FirmAccountsViewModel.cs" />
     <Compile Include="ViewModel\AccountControl\FirmFavoritsViewModel.cs" />
     <Compile Include="ViewModel\AccountControl\FirmListingViewModel.cs" />

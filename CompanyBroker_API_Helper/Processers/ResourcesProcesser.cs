@@ -36,6 +36,30 @@ namespace CompanyBroker_API_Helper.Processers
             }
         }
 
+        /// <summary>
+        /// Adds a new resource to the database
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> AddNewResources(ResourcesModel resources)
+        {
+            //-- URL path to the resources 
+            var url = $"http://localhost:50133/api/Resources";
+            //-- Sends an requests to fetch the data
+            using (HttpResponseMessage response = await APIHelper.ApiClient.PostAsJsonAsync(url, resources))
+            {
+                //-- verifys the response
+                if (response.IsSuccessStatusCode)
+                {
+                    //-- returns the content
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
 
         /// <summary>
         /// returns list of resources based on a searched word

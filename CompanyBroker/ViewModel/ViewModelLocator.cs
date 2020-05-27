@@ -55,6 +55,7 @@ namespace CompanyBroker.ViewModel
             SimpleIoc.Default.Register<FirmFavoritsViewModel>();
             SimpleIoc.Default.Register<FirmListingViewModel>();
             SimpleIoc.Default.Register<FirmPartnersViewModel>();
+            SimpleIoc.Default.Register<CompanyAddListingViewModel>();
         }
 
         //-- ViewModel definitions (made public to all XML's)
@@ -72,6 +73,7 @@ namespace CompanyBroker.ViewModel
         public FirmListingViewModel FirmListing => ServiceLocator.Current.GetInstance<FirmListingViewModel>(Guid.NewGuid().ToString());
         public FirmPartnersViewModel FirmPartners => ServiceLocator.Current.GetInstance<FirmPartnersViewModel>(Guid.NewGuid().ToString());
 
+        public CompanyAddListingViewModel CompanyAddListing => ServiceLocator.Current.GetInstance<CompanyAddListingViewModel>(Guid.NewGuid().ToString());
 
 
         public static void Cleanup()

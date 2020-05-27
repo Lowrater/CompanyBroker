@@ -9,14 +9,23 @@ using System.Threading.Tasks;
 
 namespace CompanyBroker.ViewModel
 {
-   public class TimeViewModel : ViewModelBase
+
+    public class TimeViewModel : ViewModelBase
     {
+        #region Model
         //-- Models
         private TimeModel timeModel = new TimeModel();
+        #endregion
 
+        #region Interfaces
         //-- Interfaces
         private IDataService _dataService;
+        #endregion
 
+        #region Icommands
+        #endregion
+
+        #region Construcor
         /// <summary>
         /// Constructor
         /// </summary>
@@ -32,7 +41,8 @@ namespace CompanyBroker.ViewModel
             //--- Sets the date every secod as long as we are connected.
             new Action(async () => await SetTime())();
         }
-
+        #endregion
+        #region Properties
         //-- properties to the view 
         /// <summary>
         /// Time date
@@ -42,6 +52,9 @@ namespace CompanyBroker.ViewModel
             get => timeModel._time;
             set => Set(ref timeModel._time, value);
         }
+        #endregion
+
+        #region Methods
 
         /// <summary>
         /// Sets the date every 10 seconds as long as the user is connected.
@@ -58,5 +71,6 @@ namespace CompanyBroker.ViewModel
                 currentDateTime = await Task.FromResult<string>(DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString());
             }
         }
+        #endregion
     }
 }

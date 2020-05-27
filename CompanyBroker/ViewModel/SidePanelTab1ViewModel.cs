@@ -14,21 +14,25 @@ using System.Windows.Input;
 
 namespace CompanyBroker.ViewModel
 {
+
     public class SidePanelTab1ViewModel : ViewModelBase
     {
-        //-------------------------------------------------------------------------- Models
+        #region Model
         private SidePanelTab1Model sidePanelTab1Model = new SidePanelTab1Model();
+        #endregion
 
-        //-------------------------------------------------------------------------- Interfaces
+        #region Interfaces
         private IDataService _dataservice;
         private IAppConfigService _appConfigService;
         private IContentService _contentService;
+        #endregion
 
-
-        //-------------------------------------------------------------------------- Icommands
+        #region Icommands
         public ICommand ResetComand => new RelayCommand(ResetSidePanel);
 
-        //-------------------------------------------------------------------------- Construcor
+        #endregion
+
+        #region Construcor
         public SidePanelTab1ViewModel(IDataService __dataservice, IAppConfigService __appConfigService, IContentService __contentService)
         {
             this._dataservice = __dataservice;
@@ -41,9 +45,12 @@ namespace CompanyBroker.ViewModel
             //-- Fetches the ResourceList on startup by async incase the task takes time, to not lock the user
             new Action(async () => ProductTypeList = await FetchProductTypeList())();
         }
+        #endregion
 
 
-        ////-------------------------------------------------------------------------- Properties
+
+        #region Properties
+
         //// Company List
         ///// <summary>
         ///// List containing all company names
@@ -283,6 +290,10 @@ namespace CompanyBroker.ViewModel
             }
         }
 
+        #endregion
+
+        #region Methods
+
         //---------------------------------------------------------------- Methods
 
         /// <summary>
@@ -345,7 +356,7 @@ namespace CompanyBroker.ViewModel
             HigestPrice = 0;
             LowestPrice = 0;
             //-- Date here
-
         }
+        #endregion
     }
 }
