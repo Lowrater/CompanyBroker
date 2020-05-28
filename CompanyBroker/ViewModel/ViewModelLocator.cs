@@ -19,6 +19,7 @@ using CompanyBroker.Interfaces;
 using CompanyBroker.Services;
 using System;
 using CompanyBroker.ViewModel.AccountControl;
+using CompanyBroker.ViewModel.Informations;
 
 namespace CompanyBroker.ViewModel
 {
@@ -56,6 +57,8 @@ namespace CompanyBroker.ViewModel
             SimpleIoc.Default.Register<FirmListingViewModel>();
             SimpleIoc.Default.Register<FirmPartnersViewModel>();
             SimpleIoc.Default.Register<CompanyAddListingViewModel>();
+            SimpleIoc.Default.Register<ResourceInfoViewModel>();
+            SimpleIoc.Default.Register<AccountInfoViewModel>();
         }
 
         //-- ViewModel definitions (made public to all XML's)
@@ -72,8 +75,9 @@ namespace CompanyBroker.ViewModel
         public FirmFavoritsViewModel FirmFavorit => ServiceLocator.Current.GetInstance<FirmFavoritsViewModel>(Guid.NewGuid().ToString());
         public FirmListingViewModel FirmListing => ServiceLocator.Current.GetInstance<FirmListingViewModel>(Guid.NewGuid().ToString());
         public FirmPartnersViewModel FirmPartners => ServiceLocator.Current.GetInstance<FirmPartnersViewModel>(Guid.NewGuid().ToString());
-
         public CompanyAddListingViewModel CompanyAddListing => ServiceLocator.Current.GetInstance<CompanyAddListingViewModel>(Guid.NewGuid().ToString());
+        public ResourceInfoViewModel ResourceInfo => ServiceLocator.Current.GetInstance<ResourceInfoViewModel>(Guid.NewGuid().ToString());
+        public AccountInfoViewModel AccountInfo => ServiceLocator.Current.GetInstance<AccountInfoViewModel>(Guid.NewGuid().ToString());
 
 
         public static void Cleanup()

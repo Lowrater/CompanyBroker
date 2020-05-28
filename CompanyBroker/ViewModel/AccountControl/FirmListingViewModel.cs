@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace CompanyBroker.ViewModel.AccountControl
@@ -68,7 +69,18 @@ namespace CompanyBroker.ViewModel.AccountControl
         /// <returns></returns>
         public async Task FetchList()
         {
-            MainListingList = await new ResourcesProcesser().GetAllResourcesByCompanyId(_dataService.account.CompanyId);
+            try
+            {
+                MainListingList = await new ResourcesProcesser().GetAllResourcesByCompanyId(_dataService.account.CompanyId);
+            }
+            catch (Exception e)
+            {
+                //-- Messages 
+                MessageBox.Show(e.ToString().Substring(0, 252),
+                                "CompanyBroker: resource error creation",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Information);
+            }
         }
 
         #endregion

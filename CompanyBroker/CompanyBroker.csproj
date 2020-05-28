@@ -150,6 +150,8 @@
     <Compile Include="Model\AccountVModel.cs" />
     <Compile Include="Model\BrokerOverviewModel.cs" />
     <Compile Include="Model\CreateAccountModel.cs" />
+    <Compile Include="Model\Informations\AccountInfoModel.cs" />
+    <Compile Include="Model\Informations\ResourceInfoModel.cs" />
     <Compile Include="Model\LogoutModel.cs" />
     <Compile Include="Model\SidePanelTab1Model.cs" />
     <Compile Include="Model\TimeModel.cs" />
@@ -166,6 +168,8 @@
     <Compile Include="ViewModel\AccountViewModel.cs" />
     <Compile Include="ViewModel\BrokerOverviewViewModel.cs" />
     <Compile Include="ViewModel\CreateAccountViewModel.cs" />
+    <Compile Include="ViewModel\Informations\AccountInfoViewModel.cs" />
+    <Compile Include="ViewModel\Informations\ResourceInfoViewModel.cs" />
     <Compile Include="ViewModel\LogoutViewModel.cs" />
     <Compile Include="ViewModel\SidePanelTab1ViewModel.cs" />
     <Compile Include="ViewModel\SidePanelViewModel.cs" />
@@ -205,6 +209,12 @@
     </Compile>
     <Compile Include="View\Windows\CreateAccountWindow.xaml.cs">
       <DependentUpon>CreateAccountWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\Informations\AccountInfoWindow.xaml.cs">
+      <DependentUpon>AccountInfoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\Informations\ResourceInfoWindow.xaml.cs">
+      <DependentUpon>ResourceInfoWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -254,6 +264,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Windows\CreateAccountWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\Informations\AccountInfoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\Informations\ResourceInfoWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

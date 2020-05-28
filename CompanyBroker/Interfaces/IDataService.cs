@@ -19,5 +19,6 @@ namespace CompanyBroker.Interfaces
         bool isConnected { get; set; }
         string time { get; set; }
         AccountModel account { get; set; }
+        ResourcesModel ResourceSelection { get; set; }
     }
 }

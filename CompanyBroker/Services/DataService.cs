@@ -20,5 +20,8 @@ namespace CompanyBroker.Services
 
         public AccountModel account {get; set;}
 
+        public ResourcesModel ResourceSelection { get; set; }
+
+
     }
 }

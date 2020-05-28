@@ -89,3 +89,7 @@ I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\CompanyBroker.ex
 I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\CompanyBroker.pdb
 I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\View\Windows\CompanyAddListingWindow.g.cs
 I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\View\Windows\CompanyAddListingWindow.baml
+I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\View\Windows\Informations\AccountInfoWindow.g.cs
+I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\View\Windows\Informations\ResourceInfoWindow.g.cs
+I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\View\Windows\Informations\AccountInfoWindow.baml
+I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\View\Windows\Informations\ResourceInfoWindow.baml

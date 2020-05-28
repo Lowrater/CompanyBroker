@@ -39,15 +39,15 @@
         </Grid>
         
         <!-- Datagrid containing a table -->
-        <DataGrid Grid.Row="1" ItemsSource="{Binding MainRersourceList}" CanUserAddRows="False" CanUserResizeColumns="False" IsReadOnly="True">
+        <DataGrid Grid.Row="1" ItemsSource="{Binding MainRersourceList}" CanUserAddRows="False" CanUserResizeColumns="False" IsReadOnly="True" SelectedItem="{Binding ResourceSelection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.Columns>
                 <DataGridTemplateColumn CanUserResize="False" CanUserReorder="False">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal"  DataContext="{Binding BrokerOverview, Source={StaticResource Locator}}">
                                 <Button Width="50" Background="LightGreen">Buy</Button>
                                 <Button Width="50" Background="LightYellow">Favorit</Button>
-                                <Button Width="50" Background="LightBlue">Info</Button>
+                                <Button Width="50" Background="LightBlue" Command="{Binding OpenResourceInfoWindowCommand}">Info</Button>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

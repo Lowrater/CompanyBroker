@@ -1,10 +1,4 @@
 ﻿using CompanyBroker.Interfaces;
-using CompanyBroker.View.Windows;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace CompanyBroker.Services
@@ -19,14 +13,25 @@ namespace CompanyBroker.Services
         /// <param name="window"></param>
         public void CreateWindow(Window theWindow)
         {
+            var windowExist = false;
             foreach (Window window in Application.Current.Windows)
             {
-                if (!window.Name.Equals(theWindow.Name))
+                if (window.Name.Equals(theWindow.Name) && window.IsVisible)
                 {
-                    //-- Displays the window
-                    theWindow.Show();
+                    windowExist = true;
+                    window.Focus();
                 }
             }
+
+            if (windowExist)
+            {
+                theWindow.Close();
+            }
+            else
+            {
+                theWindow.Show();
+            }
+
         }
 
         /// <summary>

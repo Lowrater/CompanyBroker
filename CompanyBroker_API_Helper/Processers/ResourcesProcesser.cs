@@ -62,6 +62,31 @@ namespace CompanyBroker_API_Helper.Processers
             }
         }
 
+        /// <summary>
+        /// Fetches an product based on CompanyId and productName
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ResourcesModel> GetResourceByCompanyIdAndName(int companyId, string ProductName)
+        {
+            //-- URL path to the resources 
+            var url = $"http://localhost:50133/api/Resources?companyId="+companyId+"&productName="+ProductName;
+            //-- Sends an requests to fetch the data
+            using (HttpResponseMessage response = await APIHelper.ApiClient.GetAsync(url))
+            {
+                //-- verifys the response
+                if (response.IsSuccessStatusCode)
+                {
+                    //-- returns the content
+                    return await response.Content.ReadAsAsync<ResourcesModel>();
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+        
+
 
         /// <summary>
         /// returns list of resources based on a searched word
@@ -243,7 +268,7 @@ namespace CompanyBroker_API_Helper.Processers
                 }
                 else
                 {
-                    return new ResourceDescriptionModel();
+                    return null;
                 }
             }
         }

@@ -40,14 +40,11 @@ namespace CompanyBroker.ViewModel
             this._contentService = __contentService;
 
             //-- Fetches the companyList on startup by async incase the task takes time, to not lock the user
-            //new Action(async () => CompanyList = await FetchCompanyList())();
             new Action(async () => Companies = await FetchCompaniesList())();
             //-- Fetches the ResourceList on startup by async incase the task takes time, to not lock the user
             new Action(async () => ProductTypeList = await FetchProductTypeList())();
         }
         #endregion
-
-
 
         #region Properties
 

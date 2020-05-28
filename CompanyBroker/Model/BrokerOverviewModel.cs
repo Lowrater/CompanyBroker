@@ -15,7 +15,8 @@ namespace CompanyBroker.Model
         public ref string _searchField => ref __searchField;
 
 
-
+        private ResourcesModel __resourceSelection;
+        public ref ResourcesModel _resourceSelection => ref __resourceSelection;
 
         private ObservableCollection<ResourcesModel> __mainRersourceList = new ObservableCollection<ResourcesModel>();
         public ref ObservableCollection<ResourcesModel> _mainRersourceList => ref __mainRersourceList;

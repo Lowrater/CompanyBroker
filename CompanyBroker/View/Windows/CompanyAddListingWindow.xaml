@@ -6,7 +6,7 @@
         mc:Ignorable="d"
         DataContext="{Binding CompanyAddListing, Source={StaticResource Locator}}"
         x:Name="AddListingWndow"
-        Title="CompanyBroker : Add listing" Height="500" Width="350" ResizeMode="NoResize">
+        Title="CompanyBroker : Add listing" Height="500" Width="350" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <!-- grid definitions -->
         <Grid.ColumnDefinitions>
@@ -58,7 +58,7 @@
                 </CheckBox.LayoutTransform>
             </CheckBox>
             <!-- Description text-->
-            <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding ProductDescription}">
+            <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding ProductDescription}" TextWrapping="Wrap">
                 
             </TextBox>
             <!-- Button -->
