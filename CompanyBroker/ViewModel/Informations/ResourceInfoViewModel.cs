@@ -84,11 +84,22 @@ namespace CompanyBroker.ViewModel.Informations
                 var Resource = await new ResourcesProcesser().GetResourceByCompanyIdAndName(_dataservice.ResourceSelection.CompanyId, _dataservice.ResourceSelection.ProductName);
                 var ResourceDescription = await new ResourcesProcesser().GetResourceDescription(_dataservice.ResourceSelection.ResourceId);
 
-                CompanyName = Company.Name;
-                ProductName = Resource.ProductName;
-                ProductType = Resource.ProductType;
-                ProductPrice = Resource.Price;
-                ProductDescription = ResourceDescription.Description;
+                if(Company != null)
+                {
+                    CompanyName = Company.Name;
+                }
+
+                if (Resource != null)
+                {
+                    ProductName = Resource.ProductName;
+                    ProductType = Resource.ProductType;
+                    ProductPrice = Resource.Price;
+                }
+
+                if(ResourceDescription != null)
+                {
+                    ProductDescription = ResourceDescription.Description;
+                }
 
             }
             catch (Exception e)

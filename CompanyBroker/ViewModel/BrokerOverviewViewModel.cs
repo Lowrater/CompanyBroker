@@ -33,6 +33,7 @@ namespace CompanyBroker.ViewModel
         #region ICommands
         public ICommand ExecuteQueryCommand => new RelayCommand(async () => await FillTable());
         public ICommand OpenResourceInfoWindowCommand => new RelayCommand(OpenResourceInfoWindow);
+        public ICommand BuyResourceCommand => new RelayCommand(BuyResource);
         #endregion
 
         #region Constructor
@@ -75,6 +76,7 @@ namespace CompanyBroker.ViewModel
             set
             {
                 Set(ref brokerOverviewModel._resourceSelection, value);
+                //-- Sets the value in the dataService for ResourceInfoViewModel to display
                 _dataservice.ResourceSelection = value;
             }
         }
@@ -127,6 +129,69 @@ namespace CompanyBroker.ViewModel
             }
 
         }
+
+        /// <summary>
+        /// Method to buy selected resource
+        /// </summary>
+        public async Task BuyResource()
+        {
+            try
+            {
+                //-- fetches the resource selected for the logged in account company
+                var resourceCheck = await new ResourcesProcesser().GetResourceByCompanyIdAndName(_dataservice.account.CompanyId, ResourceSelection.ProductName);
+                //-- If we don't have the resource, then make a copy of it, and blank it's informations
+                if(resourceCheck == null)
+                {
+                    //-- Copys the selected resource
+                    var resource = this.ResourceSelection;
+                    //-- changes the informations
+                    resource.CompanyId = _dataservice.account.CompanyId;
+                    resource.Active = false;
+                    resource.Amount = 1;
+                    resource.ResourceId = new int();
+
+                    //-- Adds the resource to the database
+                    var wishedResource = await new ResourcesProcesser().AddNewResources(resource);
+
+                    //------------- Maybe do this in the API with one method (Purchase resource) ?
+                    //-- Decrease the companyBalance of the purcher
+                    //-- Increase the companyBalance of the seller
+                    //-- Decrease the company resource amount of the seller
+
+                    if(wishedResource != false)
+                    {
+                        //-- Messages 
+                        MessageBox.Show($"Resource {resource.ProductName} bought!",
+                                        "CompanyBroker: resource error creation",
+                                        MessageBoxButton.OK,
+                                        MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        //-- Messages 
+                        MessageBox.Show($"Could not purchase {resource.ProductName}",
+                                        "CompanyBroker: resource error creation",
+                                        MessageBoxButton.OK,
+                                        MessageBoxImage.Information);
+                    }
+                }
+                else if(resourceCheck != null)
+                {
+                    //-- If we have it, increase the amount, and degrease the selected company resource of this resource
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                //-- Messages 
+                MessageBox.Show(e.ToString().Substring(0, 252),
+                                "CompanyBroker: resource error creation",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Information);
+            }
+        }
+
         #endregion
 
     }
