@@ -11,6 +11,8 @@ namespace CompanyBroker_API_Helper.Processers
     /// </summary>
     public class CompanyProcesser
     {
+
+        #region Get methods
         /// <summary>
         /// Returns all companies without balance informations
         /// </summary>
@@ -98,6 +100,10 @@ namespace CompanyBroker_API_Helper.Processers
             }
         }
 
+        #endregion
+
+        #region POST Methods
+
         /// <summary>
         /// Creates an new company
         /// </summary>
@@ -122,5 +128,35 @@ namespace CompanyBroker_API_Helper.Processers
             //-- returns the state
             return state;
         }
+
+        #endregion
+
+
+
+        #region Put methods
+        /// <summary>
+        /// Updates the Company balance by increaseing or decreaseing an amount
+        /// </summary>
+        /// <param name="companyBalanceModel"></param>
+        /// <returns></returns>
+        public async Task<bool> ChangeCompanyBalance(CompanyBalanceModel companyBalanceModel)
+        {
+            string url = $"http://localhost:50133/api/Companies";
+
+            using (HttpResponseMessage response = await APIHelper.ApiClient.PutAsJsonAsync(url, companyBalanceModel))
+            {
+                if(response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+
+        #endregion
     }
 }

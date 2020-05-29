@@ -201,6 +201,29 @@ namespace CompanyBroker_API_Helper.Processers
             }
         }
 
+
+        /// <summary>
+        /// Changes the resource amount by increasing or decreasing
+        /// </summary>
+        /// <param name="resourceAmountChangeModel"></param>
+        /// <returns></returns>
+        public async Task<bool> ChangeCompanyResourceAmount(ResourceAmountChangeModel resourceAmountChangeModel)
+        {
+            var url = $"http://localhost:50133/api/GetAllProductNamesByTypes";
+
+            using (HttpResponseMessage response = await APIHelper.ApiClient.PutAsJsonAsync(url, resourceAmountChangeModel))
+            {
+                if(response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
         #endregion
 
 

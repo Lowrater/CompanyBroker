@@ -45,7 +45,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal"  DataContext="{Binding BrokerOverview, Source={StaticResource Locator}}">
-                                <Button Width="50" Background="LightGreen">Buy</Button>
+                                <Button Width="50" Background="LightGreen" Command="{Binding BuyResourceCommand}">Buy</Button>
                                 <Button Width="50" Background="LightYellow">Favorit</Button>
                                 <Button Width="50" Background="LightBlue" Command="{Binding OpenResourceInfoWindowCommand}">Info</Button>
                             </StackPanel>
