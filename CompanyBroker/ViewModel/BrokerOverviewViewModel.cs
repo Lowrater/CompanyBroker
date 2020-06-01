@@ -33,7 +33,7 @@ namespace CompanyBroker.ViewModel
         #region ICommands
         public ICommand ExecuteQueryCommand => new RelayCommand(async () => await FillTable());
         public ICommand OpenResourceInfoWindowCommand => new RelayCommand(OpenResourceInfoWindow);
-        public ICommand BuyResourceCommand => new RelayCommand(async () => await BuyResource());
+        public ICommand BuyResourceCommand => new RelayCommand<ResourcesModel>(async (rm) => await BuyResource(rm));
         #endregion
 
         #region Constructor
@@ -68,9 +68,9 @@ namespace CompanyBroker.ViewModel
         }
 
         /// <summary>
-        /// Selection of an row
+        /// Selection of an row type of ResourceModel
         /// </summary>
-        public ResourcesModel ResourceSelection
+        public ResourcesModel ResourceRowSelection
         {
             get => brokerOverviewModel._resourceSelection;
             set
@@ -132,56 +132,52 @@ namespace CompanyBroker.ViewModel
         /// <summary>
         /// Method to buy selected resource
         /// </summary>
-        public async Task BuyResource()
+        /// <param name="SelectedResource"></param>
+        /// <returns></returns>
+        public async Task BuyResource(ResourcesModel SelectedResource)
         {
             try
             { 
-                if(ResourceSelection.CompanyId != _dataservice.account.CompanyId)
+                if(SelectedResource.CompanyId != _dataservice.account.CompanyId)
                 {
                     //-- fetches the resource selected for the logged in account company
-                    var resourceCheck = await new ResourcesProcesser().GetResourceByCompanyIdAndName(_dataservice.account.CompanyId, ResourceSelection.ProductName);
+                    var resourceCheck = await new ResourcesProcesser().GetResourceByCompanyIdAndName(_dataservice.account.CompanyId, SelectedResource.ProductName);
 
                     //-- If we don't have the resource, then make a copy of it, and blank it's informations
                     if (resourceCheck == null)
                     {
                         //-- Copys the selected resource
-                        var resource = this.ResourceSelection;
+                        var NewResource = SelectedResource;
                         //-- changes the informations
-                        resource.CompanyId = _dataservice.account.CompanyId;
-                        resource.Active = false;
-                        resource.Amount = 1;
-                        resource.ResourceId = new int();
+                        NewResource.CompanyId = _dataservice.account.CompanyId;
+                        NewResource.Active = false;
+                        NewResource.Amount = 1;
+                        NewResource.ResourceId = new int();
 
                         //-- Changes the balance
-                        var balanceCheck = await ChangeCompanyBalance();
+                        var balanceCheck = await ChangeCompanyBalance(SelectedResource, _dataservice.account);
 
                         if (balanceCheck != false)
                         {
                             //-- Adds the resource to the database
-                            var boughtResource = await new ResourcesProcesser().AddNewResources(resource);
+                            var boughtResource = await new ResourcesProcesser().AddNewResources(NewResource);
 
                             if (boughtResource != false)
                             {
-                                //- New amountChangeModel
-                                var changeResourced = new ResourceAmountChangeModel
+                                //- New amountChangeModel for the seller
+                                var changedSellerResourceAmount = new ResourceAmountChangeModel
                                 {
-                                    companyResource = ResourceSelection,
+                                    companyResource = SelectedResource,
                                     increase = false
                                 };
 
                                 //- decreases the for the resource count
-                                var ChangedresourceAmount = await new ResourcesProcesser().ChangeCompanyResourceAmount(changeResourced);
-
-                                if (ChangedresourceAmount != false)
-                                {
-                                    //-- Update the table
-                                    await FillTable();
-                                }
+                                var ChangedresourceAmount = await new ResourcesProcesser().ChangeCompanyResourceAmount(changedSellerResourceAmount);
                             }
                             else
                             {
                                 //-- Messages 
-                                MessageBox.Show($"Could not purchase {resource.ProductName}",
+                                MessageBox.Show($"Could not purchase {SelectedResource.ProductName}",
                                                 "CompanyBroker: resource error creation",
                                                 MessageBoxButton.OK,
                                                 MessageBoxImage.Information);
@@ -193,19 +189,13 @@ namespace CompanyBroker.ViewModel
                         //-- If we have it, increase the amount, and degrease the selected company resource of this resource
                         //-- Decrease the companyBalance of the purcher
                         //-- Increase the companyBalance of the seller
-                        var balanceCheck = await ChangeCompanyBalance();
+                        var balanceCheck = await ChangeCompanyBalance(SelectedResource, _dataservice.account);
 
                         if (balanceCheck != false)
                         {
                             //-- Decrease the company resource amount of the seller
                             //- decreases the for the resource count
-                            var ChangedresourceAmount = await ChangeCompanyResourceAmount(resourceCheck, ResourceSelection);
-
-                            if (ChangedresourceAmount != false)
-                            {
-                                //-- Update the table
-                                await FillTable();
-                            }
+                            var ChangedresourceAmount = await ChangeCompanyResourceAmount(resourceCheck, SelectedResource);
                         }
                     }
                 }
@@ -219,28 +209,33 @@ namespace CompanyBroker.ViewModel
                                 MessageBoxButton.OK,
                                 MessageBoxImage.Information);
             }
+            finally
+            {
+                //-- Update the table
+                await FillTable();
+            }
         }
 
         /// <summary>
         /// Changes the company Balance
         /// </summary>
         /// <returns></returns>
-        private async Task<bool> ChangeCompanyBalance()
+        private async Task<bool> ChangeCompanyBalance(ResourcesModel sellerResourcesModel, AccountModel BuyerAccountModel)
         {
             //-- Object of balance model. Decrease the values of the buyer
             var deCreaseBuyer = new CompanyBalanceModel
             {
-                companyId = _dataservice.account.CompanyId,
+                companyId = BuyerAccountModel.CompanyId,
                 increase = false,
-                priceAmount = ResourceSelection.Price
+                priceAmount = sellerResourcesModel.Price
             };
 
             //- Object of balance model. Incease the values of the seller
             var inCreaseSeller = new CompanyBalanceModel
             {
-                companyId = ResourceSelection.CompanyId,
+                companyId = sellerResourcesModel.CompanyId,
                 increase = true,
-                priceAmount = ResourceSelection.Price
+                priceAmount = sellerResourcesModel.Price
             };
 
             try

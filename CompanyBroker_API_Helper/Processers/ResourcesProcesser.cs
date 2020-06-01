@@ -209,7 +209,7 @@ namespace CompanyBroker_API_Helper.Processers
         /// <returns></returns>
         public async Task<bool> ChangeCompanyResourceAmount(ResourceAmountChangeModel resourceAmountChangeModel)
         {
-            var url = $"http://localhost:50133/api/GetAllProductNamesByTypes";
+            var url = $"http://localhost:50133/api/Resources";
 
             using (HttpResponseMessage response = await APIHelper.ApiClient.PutAsJsonAsync(url, resourceAmountChangeModel))
             {
