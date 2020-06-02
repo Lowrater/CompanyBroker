@@ -213,6 +213,9 @@
     <Compile Include="View\Windows\Informations\AccountInfoWindow.xaml.cs">
       <DependentUpon>AccountInfoWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Windows\Informations\EditResourceInfoWindow.xaml.cs">
+      <DependentUpon>EditResourceInfoWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Windows\Informations\ResourceInfoWindow.xaml.cs">
       <DependentUpon>ResourceInfoWindow.xaml</DependentUpon>
     </Compile>
@@ -270,6 +273,10 @@
     <Page Include="View\Windows\Informations\AccountInfoWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\Informations\EditResourceInfoWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Windows\Informations\ResourceInfoWindow.xaml">
       <SubType>Designer</SubType>

@@ -15,14 +15,14 @@
         </Grid.RowDefinitions>
         
         <!-- Datagrid containing a table -->
-        <DataGrid Grid.Row="0" ItemsSource="{Binding MainListingList}" CanUserAddRows="False" CanUserResizeColumns="False" IsReadOnly="True">
+        <DataGrid x:Name="FirmListingGrid" Grid.Row="0" ItemsSource="{Binding MainListingList}" CanUserAddRows="False" CanUserResizeColumns="False" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTemplateColumn CanUserResize="False" CanUserReorder="False">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" DataContext="{Binding FirmListing, Source={StaticResource Locator}}">
                                 <Button Width="50" Background="LightGreen" Command="{Binding EditListingCommand}">Edit</Button>
-                                <Button Width="50" Background="LightSalmon" Command="{Binding RemoveListingCommand}">Remove</Button>
+                                <Button Width="50" Background="LightSalmon" Command="{Binding RemoveListingCommand}" CommandParameter="{Binding SelectedItem, ElementName=FirmListingGrid}">Remove</Button>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

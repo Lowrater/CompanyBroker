@@ -100,35 +100,48 @@ namespace CompanyBroker.ViewModel.AccountControl
 
             try
             {
-                //-- Adds the new resource
-                var addListing = await new ResourcesProcesser().AddNewResources(resource);
-
-                //- verifys the result
-                if (addListing != false)
+                //-- Checks if the company has the resource already
+                var checkListing = await new ResourcesProcesser().GetResourceByCompanyIdAndName(resource.CompanyId, resource.ProductName);
+                //-- control check
+                if(checkListing == null)
                 {
+                    //-- Adds the new resource
+                    var addListing = await new ResourcesProcesser().AddNewResources(resource);
 
-                    //-- Fetches the new resource
-                    var newResource = await new ResourcesProcesser().GetResourceByCompanyIdAndName(_dataservice.account.CompanyId, ProductName);
-
-                    if(newResource != null)
+                    //- verifys the result
+                    if (addListing != false)
                     {
-                        //-- Creates an new resource description
-                        var des = new ResourceDescriptionModel
+                        //-- Fetches the new resource, to use the new resourceId
+                        var newResource = await new ResourcesProcesser().GetResourceByCompanyIdAndName(resource.CompanyId, resource.ProductName);
+                        //-- Checks if the result 
+                        if (newResource != null)
                         {
-                            Description = ProductDescription,
-                            ResourceId = newResource.ResourceId
-                        };
+                            //-- Creates an new resource description
+                            var des = new ResourceDescriptionModel
+                            {
+                                Description = ProductDescription,
+                                ResourceId = newResource.ResourceId
+                            };
 
-                        //-- Adds the descripion to the product
-                        addListing = await new ResourcesProcesser().AddProductDescription(des);
+                            //-- Adds the descripion to the product
+                            addListing = await new ResourcesProcesser().AddProductDescription(des);
 
-                        if (addListing != false)
-                        {
-                            //-- Messages
-                            MessageBox.Show($"Resource {ProductName} successfully created",
-                                            "CompanyBroker: resource  creation",
-                                            MessageBoxButton.OK,
-                                            MessageBoxImage.Information);
+                            if (addListing != false)
+                            {
+                                //-- Messages
+                                MessageBox.Show($"Resource {ProductName} successfully created",
+                                                "CompanyBroker: resource  creation",
+                                                MessageBoxButton.OK,
+                                                MessageBoxImage.Information);
+                            }
+                            else
+                            {
+                                //-- Messages
+                                MessageBox.Show($"Resource {ProductName} successfully created, but description failed",
+                                                "CompanyBroker: resource  creation",
+                                                MessageBoxButton.OK,
+                                                MessageBoxImage.Information);
+                            }
                         }
                         else
                         {
@@ -142,8 +155,8 @@ namespace CompanyBroker.ViewModel.AccountControl
                     else
                     {
                         //-- Messages
-                        MessageBox.Show($"Resource {ProductName} successfully created, but description failed",
-                                        "CompanyBroker: resource  creation",
+                        MessageBox.Show($"Resource {ProductName} failed to be created",
+                                        "CompanyBroker: resource error creation",
                                         MessageBoxButton.OK,
                                         MessageBoxImage.Information);
                     }
@@ -151,8 +164,8 @@ namespace CompanyBroker.ViewModel.AccountControl
                 else
                 {
                     //-- Messages
-                    MessageBox.Show($"Resource {ProductName} failed to be created",
-                                    "CompanyBroker: resource error creation",
+                    MessageBox.Show($"Resource {ProductName} already exists",
+                                    "CompanyBroker: resource information creation",
                                     MessageBoxButton.OK,
                                     MessageBoxImage.Information);
                 }

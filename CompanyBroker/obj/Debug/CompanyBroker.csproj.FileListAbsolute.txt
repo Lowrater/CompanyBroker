@@ -93,3 +93,5 @@ I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\View\Windows\Inf
 I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\View\Windows\Informations\ResourceInfoWindow.g.cs
 I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\View\Windows\Informations\AccountInfoWindow.baml
 I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\View\Windows\Informations\ResourceInfoWindow.baml
+I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\View\Windows\Informations\EditResourceInfoWindow.baml
+I:\Visual studio projects\CompanyBroker\CompanyBroker\obj\Debug\View\Windows\Informations\EditResourceInfoWindow.g.cs

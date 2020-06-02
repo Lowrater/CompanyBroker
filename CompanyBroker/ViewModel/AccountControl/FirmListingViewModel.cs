@@ -32,6 +32,7 @@ namespace CompanyBroker.ViewModel.AccountControl
         #region ICommands
         public ICommand AddListingCommand => new RelayCommand(AddListing);
         public ICommand RefreshListingCommand => new RelayCommand(async () => await FetchList());
+        public ICommand RemoveListingCommand => new RelayCommand<ResourcesModel>(async (r) => await DeleteProduct(r));
         #endregion
 
         #region Constructor
@@ -80,6 +81,52 @@ namespace CompanyBroker.ViewModel.AccountControl
                                 "CompanyBroker: resource error creation",
                                 MessageBoxButton.OK,
                                 MessageBoxImage.Information);
+            }
+        }
+
+
+        /// <summary>
+        /// Deletes selectedItem from the datagrid binding
+        /// </summary>
+        /// <param name="resourcesModel"></param>
+        /// <returns></returns>
+        public async Task DeleteProduct(ResourcesModel resourcesModel)
+        {
+            try
+            {
+                //-- Fetches the resource selected
+                var resourceCheck = await new ResourcesProcesser().GetResourceByCompanyIdAndName(resourcesModel.CompanyId, resourcesModel.ProductName);
+                //-- Checks the resource
+                if(resourceCheck != null)
+                {
+                    var isReourceDeleted = await new ResourcesProcesser().DeleteProduct(resourcesModel.CompanyId, resourcesModel.ProductName, resourcesModel.ResourceId);
+
+                    if(isReourceDeleted != false)
+                    {
+                        //-- Resource deleted
+                    }
+                    else
+                    {
+                        //-- Messages 
+                        MessageBox.Show("Resource could not be deleted",
+                                        "CompanyBroker: resource delete error",
+                                        MessageBoxButton.OK,
+                                        MessageBoxImage.Information);
+                    }
+                }
+
+            }
+            catch (Exception e)
+            {
+                //-- Messages 
+                MessageBox.Show(e.ToString().Substring(0, 252),
+                                "CompanyBroker: resource delete error",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Information);
+            }
+            finally
+            {
+                await FetchList();
             }
         }
 

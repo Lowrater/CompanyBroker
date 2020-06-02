@@ -1,0 +1,88 @@
+﻿<Window x:Class="CompanyBroker.View.Windows.Informations.EditResourceInfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        DataContext="{Binding EditResourceInfo, Source={StaticResource Locator}}"
+        x:Name="EditResourceInfo"
+        Title="Company broker : Edit resource informations" Height="500" Width="350"  ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <!-- Grid definitions -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <!-- Content -->
+        <!-- Text -->
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+            Resource information
+        </TextBlock>
+
+        <!-- The resource content -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            
+            <!-- Content -->
+            <Label Grid.Row="1" Content="Product name"></Label>
+            <Label Grid.Row="2" Content="Product type"></Label>
+            <Label Grid.Row="3" Content="Product price"></Label>
+            <Label Grid.Row="4" Content="Active"></Label>
+
+            <Label Grid.Row="5" Content="Description" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Label>
+
+            <!-- textblocks etc -->
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ProductName}"></TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding ProductType}"></TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding ProductPrice}"></TextBlock>
+            <CheckBox Grid.Row="4" Grid.Column="1"></CheckBox>
+            <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding ProductDescription}" TextWrapping="Wrap"></TextBlock>
+        </Grid>
+        
+        
+        <!-- Button -->
+        <Grid Grid.Row="2" >
+            <!-- Definitions -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <!-- buttons -->
+            <Button Grid.Column="1" Width="120" Command="{Binding SaveResourceEditCommand}">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+                Save
+            </Button>
+            <Button Grid.Column="0" Width="120" Command="{Binding DeleteResourceCommand}">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+                Delete
+            </Button>
+        </Grid>
+        
+
+
+
+    </Grid>
+</Window>

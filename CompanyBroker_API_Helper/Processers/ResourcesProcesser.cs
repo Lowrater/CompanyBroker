@@ -13,7 +13,7 @@ namespace CompanyBroker_API_Helper.Processers
     public class ResourcesProcesser
     {
         #region CompanyResources Tabel
-        //-------------------------------------------------- To fetch, put or update an product
+        //-------------------------------------------------- To fetch, update or delete an product
         /// <summary>
         /// Fetches all resources
         /// </summary>
@@ -212,6 +212,29 @@ namespace CompanyBroker_API_Helper.Processers
             var url = $"http://localhost:50133/api/Resources";
 
             using (HttpResponseMessage response = await APIHelper.ApiClient.PutAsJsonAsync(url, resourceAmountChangeModel))
+            {
+                if(response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deletes an product for the company based on companyId, productname and resourceId
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <param name="productName"></param>
+        /// <param name="resourceId"></param>
+        /// <returns></returns>
+        public async Task<bool> DeleteProduct(int companyId, string productName, int resourceId)
+        {
+            var url = $"http://localhost:50133/api/Resources?companyId="+companyId+"&productName="+productName+"&resourceId="+resourceId;
+            using (HttpResponseMessage response = await APIHelper.ApiClient.DeleteAsync(url))
             {
                 if(response.IsSuccessStatusCode)
                 {
