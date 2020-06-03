@@ -133,6 +133,8 @@ namespace CompanyBroker.ViewModel.Informations
         /// <returns></returns>
         private async Task SaveChanges()
         {
+            bool updateDescription = false;
+            //-- Changes the values of the resource
             var updatedResource = Resource;
             updatedResource.Active = ProductIsActive;
             updatedResource.Amount = ProductAmount;
@@ -142,20 +144,45 @@ namespace CompanyBroker.ViewModel.Informations
 
             try
             {
+                //-- updates the default informations
                 var resourceCheck = await new ResourcesProcesser().UpdateResourceInformations(updatedResource);
 
-                if (resourceCheck != true)
+                //-- Checks if the resource description has been edited
+                if(!string.IsNullOrEmpty(ProductDescription))
                 {
-                    //-- Messages 
-                    MessageBox.Show($"Could not update product informations for {ProductName}",
-                                    "CompanyBroker: resource error creation",
-                                    MessageBoxButton.OK,
-                                    MessageBoxImage.Information);
+                    //-- trys to update the description
+                    updateDescription = await new ResourcesProcesser().UpdateProductDescription(ProductDescription, updatedResource.ResourceId);
+                    //-- if the description fails, then it's because it doesn't exist. Trying to create it.
+                    if (updateDescription == false)
+                    {
+                        updateDescription = await new ResourcesProcesser().AddProductDescription(ProductDescription, updatedResource.ResourceId);
+                    }
+                }
+                
+
+                if (resourceCheck != false)
+                {
+                    if(resourceCheck == updateDescription)
+                    {
+                        //-- Messages 
+                        MessageBox.Show($"Product updated successful!",
+                                        "CompanyBroker: resource error creation",
+                                        MessageBoxButton.OK,
+                                        MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        //-- Messages 
+                        MessageBox.Show($"Product updated without description successful!",
+                                        "CompanyBroker: resource error creation",
+                                        MessageBoxButton.OK,
+                                        MessageBoxImage.Information);
+                    }
                 }
                 else
                 {
                     //-- Messages 
-                    MessageBox.Show($"Product updated successful!",
+                    MessageBox.Show($"Could not update product informations for {ProductName}",
                                     "CompanyBroker: resource error creation",
                                     MessageBoxButton.OK,
                                     MessageBoxImage.Information);

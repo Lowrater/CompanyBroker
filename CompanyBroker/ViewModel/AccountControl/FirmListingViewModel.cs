@@ -101,20 +101,32 @@ namespace CompanyBroker.ViewModel.AccountControl
                 //-- Checks the resource
                 if(resourceCheck != null)
                 {
-                    var isReourceDeleted = await new ResourcesProcesser().DeleteProduct(resourcesModel.CompanyId, resourcesModel.ProductName, resourcesModel.ResourceId);
+                    if (MessageBox.Show("Are you sure you want to delete this product?", "CompanyBroker: resource delete message",
+                                       MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+                    {
+                        var isReourceDeleted = await new ResourcesProcesser().DeleteProduct(resourcesModel.CompanyId, resourcesModel.ProductName, resourcesModel.ResourceId);
 
-                    if(isReourceDeleted != false)
-                    {
-                        //-- Resource deleted
+                        if (isReourceDeleted != false)
+                        {
+                            //-- Resource deleted
+                        }
+                        else
+                        {
+                            //-- Messages 
+                            MessageBox.Show("Resource could not be deleted",
+                                            "CompanyBroker: resource delete error",
+                                            MessageBoxButton.OK,
+                                            MessageBoxImage.Information);
+                        }
                     }
-                    else
-                    {
-                        //-- Messages 
-                        MessageBox.Show("Resource could not be deleted",
-                                        "CompanyBroker: resource delete error",
-                                        MessageBoxButton.OK,
-                                        MessageBoxImage.Information);
-                    }
+                }
+                else
+                {
+                    //-- Messages 
+                    MessageBox.Show("Resource could not be deleted",
+                                    "CompanyBroker: resource delete error",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Information);
                 }
 
             }

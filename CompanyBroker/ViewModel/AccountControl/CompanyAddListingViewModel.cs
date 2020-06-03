@@ -116,15 +116,8 @@ namespace CompanyBroker.ViewModel.AccountControl
                         //-- Checks if the result 
                         if (newResource != null)
                         {
-                            //-- Creates an new resource description
-                            var des = new ResourceDescriptionModel
-                            {
-                                Description = ProductDescription,
-                                ResourceId = newResource.ResourceId
-                            };
-
                             //-- Adds the descripion to the product
-                            addListing = await new ResourcesProcesser().AddProductDescription(des);
+                            addListing = await new ResourcesProcesser().AddProductDescription(ProductDescription, newResource.ResourceId);
 
                             if (addListing != false)
                             {
