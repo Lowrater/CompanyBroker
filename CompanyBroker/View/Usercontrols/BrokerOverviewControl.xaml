@@ -39,7 +39,7 @@
         </Grid>
         
         <!-- Datagrid containing a table -->
-        <DataGrid x:Name="ResourceList" Grid.Row="1" ItemsSource="{Binding MainRersourceList}" CanUserAddRows="False" CanUserResizeColumns="False" IsReadOnly="True" SelectedItem="{Binding ResourceRowSelection, Mode=OneWayToSource}" >
+        <DataGrid x:Name="ResourceList" Grid.Row="1" ItemsSource="{Binding MainRersourceList}" CanUserAddRows="False" CanUserResizeColumns="False" IsReadOnly="True" SelectedItem="{Binding ResourceRowSelection, Mode=OneWayToSource}" IsSynchronizedWithCurrentItem="True">
             <DataGrid.Columns>
                 <DataGridTemplateColumn CanUserResize="False" CanUserReorder="False">
                     <DataGridTemplateColumn.CellTemplate>

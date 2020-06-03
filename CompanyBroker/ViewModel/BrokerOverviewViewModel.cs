@@ -132,22 +132,22 @@ namespace CompanyBroker.ViewModel
         /// <summary>
         /// Method to buy selected resource
         /// </summary>
-        /// <param name="SelectedResource"></param>
+        /// <param name="selectedSellerResource"></param>
         /// <returns></returns>
-        public async Task BuyResource(ResourcesModel SelectedResource)
+        public async Task BuyResource(ResourcesModel selectedSellerResource)
         {
             try
             { 
-                if(SelectedResource.CompanyId != _dataservice.account.CompanyId)
+                if(selectedSellerResource.CompanyId != _dataservice.account.CompanyId)
                 {
                     //-- fetches the resource selected for the logged in account company
-                    var resourceCheck = await new ResourcesProcesser().GetResourceByCompanyIdAndName(_dataservice.account.CompanyId, SelectedResource.ProductName);
+                    var buyerResourceCheck = await new ResourcesProcesser().GetResourceByCompanyIdAndName(_dataservice.account.CompanyId, selectedSellerResource.ProductName);
 
                     //-- If we don't have the resource, then make a copy of it, and blank it's informations
-                    if (resourceCheck == null)
+                    if (buyerResourceCheck == null)
                     {
                         //-- Copys the selected resource
-                        var NewResource = SelectedResource;
+                        var NewResource = selectedSellerResource;
                         //-- changes the informations
                         NewResource.CompanyId = _dataservice.account.CompanyId;
                         NewResource.Active = false;
@@ -155,7 +155,7 @@ namespace CompanyBroker.ViewModel
                         NewResource.ResourceId = new int();
 
                         //-- Changes the balance
-                        var balanceCheck = await ChangeCompanyBalance(SelectedResource, _dataservice.account);
+                        var balanceCheck = await ChangeCompanyBalance(selectedSellerResource, _dataservice.account.CompanyId);
 
                         if (balanceCheck != false)
                         {
@@ -165,30 +165,39 @@ namespace CompanyBroker.ViewModel
                             if (boughtResource != false)
                             {
                                 //- decreases the for the resource count
-                                var ChangedresourceAmount = await new ResourcesProcesser().ChangeCompanyResourceAmount(SelectedResource.CompanyId, SelectedResource.ResourceId, false);
+                                var ChangedresourceAmount = await new ResourcesProcesser().ChangeCompanyResourceAmount(selectedSellerResource.CompanyId, selectedSellerResource.ResourceId, false);
                             }
                             else
                             {
                                 //-- Messages 
-                                MessageBox.Show($"Could not purchase {SelectedResource.ProductName}",
+                                MessageBox.Show($"Could not purchase {selectedSellerResource.ProductName}",
                                                 "CompanyBroker: resource error creation",
                                                 MessageBoxButton.OK,
                                                 MessageBoxImage.Information);
                             }
                         }
                     }
-                    else if (resourceCheck != null)
+                    else if (buyerResourceCheck != null)
                     {
                         //-- If we have it, increase the amount, and degrease the selected company resource of this resource
                         //-- Decrease the companyBalance of the purcher
                         //-- Increase the companyBalance of the seller
-                        var balanceCheck = await ChangeCompanyBalance(SelectedResource, _dataservice.account);
+                        var balanceCheck = await ChangeCompanyBalance(selectedSellerResource, _dataservice.account.CompanyId);
 
                         if (balanceCheck != false)
                         {
-                            //-- Decrease the company resource amount of the seller
-                            //- decreases the for the resource count
-                            var ChangedresourceAmount = await ChangeCompanyResourceAmount(_dataservice.account.CompanyId, SelectedResource.CompanyId, true, false, SelectedResource.ResourceId, resourceCheck.ResourceId);
+                              // Changes the resource amounts based on seller and buyer
+                            var ChangedresourceSeller = await new ResourcesProcesser().ChangeCompanyResourceAmount(selectedSellerResource.CompanyId, selectedSellerResource.ResourceId, false);
+                            var ChangedresourceBuyer = await new ResourcesProcesser().ChangeCompanyResourceAmount(_dataservice.account.CompanyId, buyerResourceCheck.ResourceId, true);
+
+                            if(ChangedresourceSeller != ChangedresourceBuyer)
+                            {
+                                //-- Messages 
+                                MessageBox.Show($"Error in balance checks",
+                                                "CompanyBroker: resource error purchase",
+                                                MessageBoxButton.OK,
+                                                MessageBoxImage.Information);
+                            }
                         }
                     }
                 }
@@ -213,12 +222,12 @@ namespace CompanyBroker.ViewModel
         /// Changes the company Balance
         /// </summary>
         /// <returns></returns>
-        private async Task<bool> ChangeCompanyBalance(ResourcesModel sellerResourcesModel, AccountModel BuyerAccountModel)
+        private async Task<bool> ChangeCompanyBalance(ResourcesModel sellerResourcesModel, int buyerCompanyId)
         {
             try
             {
                 //-- Decrease the companyBalance of the purcher
-                var DecreaseBuyerBalance = await new CompanyProcesser().ChangeCompanyBalance(BuyerAccountModel.CompanyId, false, sellerResourcesModel.Price);
+                var DecreaseBuyerBalance = await new CompanyProcesser().ChangeCompanyBalance(buyerCompanyId, false, sellerResourcesModel.Price);
 
                 //-- Verifys if the user has the money and can buy the resource
                 if(DecreaseBuyerBalance != false)
@@ -248,50 +257,6 @@ namespace CompanyBroker.ViewModel
 
 
 
-        /// <summary>
-        /// Changes the resource amounts based on seller and buyer
-        /// </summary>
-        /// <param name="buyerCompanyId"></param>
-        /// <param name="sellerCompanyId"></param>
-        /// <param name="buyerIncrement"></param>
-        /// <param name="sellerIncrement"></param>
-        /// <param name="sellerResourceId"></param>
-        /// <param name="buyerResourceId"></param>
-        /// <returns></returns>
-        private async Task<bool> ChangeCompanyResourceAmount(int buyerCompanyId, int sellerCompanyId, bool buyerIncrement, bool sellerIncrement, int sellerResourceId, int buyerResourceId)
-        {
-            try
-            {
-                //-- Decrease the company resource amount of the buyer
-
-                var ChangedresourceSeller = await new ResourcesProcesser().ChangeCompanyResourceAmount(sellerCompanyId, sellerResourceId, sellerIncrement);
-
-                //-- Check if the seller could release their stock first
-                if (ChangedresourceSeller != false)
-                {
-                    //-- Increase the company resource amount of the buyer
-
-                    //- increase the for the resource count
-                    var ChangedresourceBuyer = await new ResourcesProcesser().ChangeCompanyResourceAmount(buyerCompanyId, buyerResourceId, buyerIncrement);
-
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-  
-            }
-            catch (Exception e)
-            {
-                //-- Messages 
-                MessageBox.Show(e.ToString().Substring(0, 252),
-                                "CompanyBroker: resource error creation",
-                                MessageBoxButton.OK,
-                                MessageBoxImage.Information);
-                return false;
-            }
-        }
 
         #endregion
 
