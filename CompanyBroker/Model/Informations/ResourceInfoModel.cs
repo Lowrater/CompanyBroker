@@ -23,5 +23,8 @@ namespace CompanyBroker.Model.Informations
 
         private string __productDescription;
         public ref string _productDescription => ref __productDescription;
+
+        private int __resourceId;
+        public ref int _resourceId => ref __resourceId;
     }
 }

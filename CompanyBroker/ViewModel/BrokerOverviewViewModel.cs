@@ -164,15 +164,8 @@ namespace CompanyBroker.ViewModel
 
                             if (boughtResource != false)
                             {
-                                //- New amountChangeModel for the seller
-                                var changedSellerResourceAmount = new ResourceAmountChangeModel
-                                {
-                                    companyResource = SelectedResource,
-                                    increase = false
-                                };
-
                                 //- decreases the for the resource count
-                                var ChangedresourceAmount = await new ResourcesProcesser().ChangeCompanyResourceAmount(changedSellerResourceAmount);
+                                var ChangedresourceAmount = await new ResourcesProcesser().ChangeCompanyResourceAmount(SelectedResource.CompanyId, SelectedResource.ResourceId, false);
                             }
                             else
                             {
@@ -195,7 +188,7 @@ namespace CompanyBroker.ViewModel
                         {
                             //-- Decrease the company resource amount of the seller
                             //- decreases the for the resource count
-                            var ChangedresourceAmount = await ChangeCompanyResourceAmount(resourceCheck, SelectedResource);
+                            var ChangedresourceAmount = await ChangeCompanyResourceAmount(_dataservice.account.CompanyId, SelectedResource.CompanyId, true, false, SelectedResource.ResourceId, resourceCheck.ResourceId);
                         }
                     }
                 }
@@ -222,32 +215,16 @@ namespace CompanyBroker.ViewModel
         /// <returns></returns>
         private async Task<bool> ChangeCompanyBalance(ResourcesModel sellerResourcesModel, AccountModel BuyerAccountModel)
         {
-            //-- Object of balance model. Decrease the values of the buyer
-            var deCreaseBuyer = new CompanyBalanceModel
-            {
-                companyId = BuyerAccountModel.CompanyId,
-                increase = false,
-                priceAmount = sellerResourcesModel.Price
-            };
-
-            //- Object of balance model. Incease the values of the seller
-            var inCreaseSeller = new CompanyBalanceModel
-            {
-                companyId = sellerResourcesModel.CompanyId,
-                increase = true,
-                priceAmount = sellerResourcesModel.Price
-            };
-
             try
             {
                 //-- Decrease the companyBalance of the purcher
-                var DecreaseBuyerBalance = await new CompanyProcesser().ChangeCompanyBalance(deCreaseBuyer);
+                var DecreaseBuyerBalance = await new CompanyProcesser().ChangeCompanyBalance(BuyerAccountModel.CompanyId, false, sellerResourcesModel.Price);
 
                 //-- Verifys if the user has the money and can buy the resource
                 if(DecreaseBuyerBalance != false)
                 {
                     //-- Increase the companyBalance of the seller
-                    var IncreaseSellerBalance = await new CompanyProcesser().ChangeCompanyBalance(inCreaseSeller);
+                    var IncreaseSellerBalance = await new CompanyProcesser().ChangeCompanyBalance(sellerResourcesModel.CompanyId, true, sellerResourcesModel.Price);
                     return true;
                 }
                 else
@@ -269,51 +246,41 @@ namespace CompanyBroker.ViewModel
 
 
 
+
+
         /// <summary>
         /// Changes the resource amounts based on seller and buyer
         /// </summary>
-        /// <param name="BuyerResource"></param>
-        /// <param name="SellerResource"></param>
+        /// <param name="buyerCompanyId"></param>
+        /// <param name="sellerCompanyId"></param>
+        /// <param name="buyerIncrement"></param>
+        /// <param name="sellerIncrement"></param>
+        /// <param name="sellerResourceId"></param>
+        /// <param name="buyerResourceId"></param>
         /// <returns></returns>
-        private async Task<bool> ChangeCompanyResourceAmount(ResourcesModel BuyerResource, ResourcesModel SellerResource)
+        private async Task<bool> ChangeCompanyResourceAmount(int buyerCompanyId, int sellerCompanyId, bool buyerIncrement, bool sellerIncrement, int sellerResourceId, int buyerResourceId)
         {
             try
             {
-                if (BuyerResource != null && SellerResource != null)
+                //-- Decrease the company resource amount of the buyer
+
+                var ChangedresourceSeller = await new ResourcesProcesser().ChangeCompanyResourceAmount(sellerCompanyId, sellerResourceId, sellerIncrement);
+
+                //-- Check if the seller could release their stock first
+                if (ChangedresourceSeller != false)
                 {
-                    //-- Decrease the company resource amount of the buyer
-                    var changeSeller = new ResourceAmountChangeModel
-                    {
-                        companyResource = SellerResource,
-                        increase = false
-                    };
+                    //-- Increase the company resource amount of the buyer
 
-                    var ChangedresourceSeller = await new ResourcesProcesser().ChangeCompanyResourceAmount(changeSeller);
+                    //- increase the for the resource count
+                    var ChangedresourceBuyer = await new ResourcesProcesser().ChangeCompanyResourceAmount(buyerCompanyId, buyerResourceId, buyerIncrement);
 
-                    //-- Check if the seller could release their stock first
-                    if (ChangedresourceSeller != false)
-                    {
-                        //-- Increase the company resource amount of the buyer
-                        var changeBuyer = new ResourceAmountChangeModel
-                        {
-                            companyResource = BuyerResource,
-                            increase = true
-                        };
-
-                        //- increase the for the resource count
-                        var ChangedresourceBuyer = await new ResourcesProcesser().ChangeCompanyResourceAmount(changeBuyer);
-
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    return true;
                 }
                 else
                 {
                     return false;
                 }
+  
             }
             catch (Exception e)
             {

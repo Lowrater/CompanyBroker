@@ -38,6 +38,7 @@
             </Grid.RowDefinitions>
             
             <!-- Content -->
+            <Label Grid.Row="0" Content="Resource Id"></Label>
             <Label Grid.Row="1" Content="Product name"></Label>
             <Label Grid.Row="2" Content="Product type"></Label>
             <Label Grid.Row="3" Content="Product price"></Label>
@@ -46,6 +47,7 @@
             <Label Grid.Row="5" Content="Description" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Label>
 
             <!-- textblocks etc -->
+            <Label Grid.Row="0" Grid.Column="1" Content="{Binding ResourceId}"></Label>
             <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ProductName}"></TextBlock>
             <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding ProductType}"></TextBlock>
             <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding ProductPrice}"></TextBlock>
@@ -63,7 +65,15 @@
             </Grid.ColumnDefinitions>
 
             <!-- buttons -->
-            <Button Grid.Column="1" Width="120" Command="{Binding SaveResourceEditCommand}">
+            <Button Grid.Column="1" Width="120" Command="{Binding CloseWindowCommand}">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+                Close
+            </Button>
+            <Button Grid.Column="0" Width="120" Command="{Binding SaveChangesCommand}">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="10"/>
@@ -71,14 +81,7 @@
                 </Button.Resources>
                 Save
             </Button>
-            <Button Grid.Column="0" Width="120" Command="{Binding DeleteResourceCommand}">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-                Delete
-            </Button>
+
         </Grid>
         
 

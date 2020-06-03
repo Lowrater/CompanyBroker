@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace CompanyBroker_API_Helper.Models
 {
-   public class ResourceAmountChangeModel
+   public class ResourceChangeAmountModel
     {
-
-        public ResourcesModel companyResource { get; set; }
-        public bool increase { get; set; }
+        public bool IncreaseAmount { get; set; }
+        public int companyId { get; set; }
+        public int resourceId { get; set; }
     }
 }

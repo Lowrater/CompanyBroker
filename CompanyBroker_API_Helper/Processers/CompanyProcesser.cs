@@ -139,11 +139,19 @@ namespace CompanyBroker_API_Helper.Processers
         /// </summary>
         /// <param name="companyBalanceModel"></param>
         /// <returns></returns>
-        public async Task<bool> ChangeCompanyBalance(CompanyBalanceModel companyBalanceModel)
+        public async Task<bool> ChangeCompanyBalance(int companyId, bool increaseBalance, decimal price)
         {
             string url = $"http://localhost:50133/api/Companies";
 
-            using (HttpResponseMessage response = await APIHelper.ApiClient.PutAsJsonAsync(url, companyBalanceModel))
+            //-- Object of balance model. Decrease the values of the buyer
+            var CompanyBalance = new CompanyBalanceModel
+            {
+                companyId = companyId,
+                increase = increaseBalance,
+                priceAmount = price
+            };
+
+            using (HttpResponseMessage response = await APIHelper.ApiClient.PutAsJsonAsync(url, CompanyBalance))
             {
                 if(response.IsSuccessStatusCode)
                 {

@@ -1,6 +1,7 @@
 ﻿using CompanyBroker.Interfaces;
 using CompanyBroker.Model.AccountModels;
 using CompanyBroker.View.Windows;
+using CompanyBroker.View.Windows.Informations;
 using CompanyBroker_API_Helper;
 using CompanyBroker_API_Helper.Models;
 using CompanyBroker_API_Helper.Processers;
@@ -31,6 +32,7 @@ namespace CompanyBroker.ViewModel.AccountControl
 
         #region ICommands
         public ICommand AddListingCommand => new RelayCommand(AddListing);
+        public ICommand EditListingCommand => new RelayCommand<ResourcesModel>((r) => EditListing(r));
         public ICommand RefreshListingCommand => new RelayCommand(async () => await FetchList());
         public ICommand RemoveListingCommand => new RelayCommand<ResourcesModel>(async (r) => await DeleteProduct(r));
         #endregion
@@ -128,6 +130,17 @@ namespace CompanyBroker.ViewModel.AccountControl
             {
                 await FetchList();
             }
+        }
+
+
+        /// <summary>
+        /// Opens window of EditResourceInfoWindow for listing
+        /// </summary>
+        /// <param name="resourcesModel"></param>
+        /// <returns></returns>
+        public void EditListing(ResourcesModel resourcesModel)
+        {
+            _viewService.CreateWindow(new EditResourceInfoWindow());
         }
 
         #endregion

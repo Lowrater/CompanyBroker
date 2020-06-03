@@ -55,7 +55,7 @@
     <Compile Include="Models\CreateAccountAPIModel.cs" />
     <Compile Include="Models\CreateCompanyAPIModel.cs" />
     <Compile Include="Models\LoginAPIModel.cs" />
-    <Compile Include="Models\ResourceAmountChangeModel.cs" />
+    <Compile Include="Models\ResourceChangeAmountModel.cs" />
     <Compile Include="Models\ResourceDescriptionModel.cs" />
     <Compile Include="Models\ResourcesModel.cs" />
     <Compile Include="Processers\AccountProcesser.cs" />

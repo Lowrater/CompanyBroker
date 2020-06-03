@@ -169,6 +169,7 @@
     <Compile Include="ViewModel\BrokerOverviewViewModel.cs" />
     <Compile Include="ViewModel\CreateAccountViewModel.cs" />
     <Compile Include="ViewModel\Informations\AccountInfoViewModel.cs" />
+    <Compile Include="ViewModel\Informations\EditResourceInfoViewModel.cs" />
     <Compile Include="ViewModel\Informations\ResourceInfoViewModel.cs" />
     <Compile Include="ViewModel\LogoutViewModel.cs" />
     <Compile Include="ViewModel\SidePanelTab1ViewModel.cs" />
