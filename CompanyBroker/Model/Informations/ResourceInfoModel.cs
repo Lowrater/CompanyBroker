@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CompanyBroker_API_Helper.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,6 @@ namespace CompanyBroker.Model.Informations
     {
         private string __companyName;
         public ref string _companyName => ref __companyName;
-
         
         private string __productName;
         public ref string _productName => ref __productName;
@@ -26,5 +26,13 @@ namespace CompanyBroker.Model.Informations
 
         private int __resourceId;
         public ref int _resourceId => ref __resourceId;
+
+        private bool __productIsActive;
+        public ref bool _productIsActive => ref __productIsActive;
+
+        private int __productAmount;
+        public ref int _productAmount => ref __productAmount;
+        
+
     }
 }

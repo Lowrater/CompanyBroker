@@ -72,7 +72,19 @@ namespace CompanyBroker.ViewModel.Informations
             set => Set(ref resourceInfoModel._resourceId, value);
         }
 
-        public ResourcesModel Resource { get; set; }
+        public int ProductAmount
+        {
+            get => resourceInfoModel._productAmount;
+            set => Set(ref resourceInfoModel._productAmount, value);
+        }
+
+        public bool ProductIsActive
+        {
+            get => resourceInfoModel._productIsActive;
+            set => Set(ref resourceInfoModel._productIsActive, value);
+        }
+
+        private ResourcesModel Resource { get; set; }
         #endregion
 
 
@@ -94,6 +106,9 @@ namespace CompanyBroker.ViewModel.Informations
                     ProductType = Resource.ProductType;
                     ProductPrice = Resource.Price;
                     ResourceId = Resource.ResourceId;
+                    ProductAmount = Resource.Amount;
+                    ProductIsActive = Resource.Active;
+
                 }
 
                 if (ResourceDescription != null)
@@ -118,6 +133,42 @@ namespace CompanyBroker.ViewModel.Informations
         /// <returns></returns>
         private async Task SaveChanges()
         {
+            var updatedResource = Resource;
+            updatedResource.Active = ProductIsActive;
+            updatedResource.Amount = ProductAmount;
+            updatedResource.Price = ProductPrice;
+            updatedResource.ProductName = ProductName;
+            updatedResource.ProductType = ProductType;
+
+            try
+            {
+                var resourceCheck = await new ResourcesProcesser().UpdateResourceInformations(updatedResource);
+
+                if (resourceCheck != true)
+                {
+                    //-- Messages 
+                    MessageBox.Show($"Could not update product informations for {ProductName}",
+                                    "CompanyBroker: resource error creation",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Information);
+                }
+                else
+                {
+                    //-- Messages 
+                    MessageBox.Show($"Product updated successful!",
+                                    "CompanyBroker: resource error creation",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Information);
+                }
+            }
+            catch (Exception e)
+            {
+                //-- Messages 
+                MessageBox.Show(e.ToString().Substring(0, 252),
+                                "CompanyBroker: resource error creation",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Information);
+            }
 
         }
 
@@ -126,7 +177,7 @@ namespace CompanyBroker.ViewModel.Informations
         /// </summary>
         public void CloseWindow()
         {
-            _viewService.CloseWindow("ResourceInfo");
+            _viewService.CloseWindow("EditResourceInfo");
         }
         #endregion
     }

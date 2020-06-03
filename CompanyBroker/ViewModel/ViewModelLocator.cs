@@ -59,6 +59,8 @@ namespace CompanyBroker.ViewModel
             SimpleIoc.Default.Register<CompanyAddListingViewModel>();
             SimpleIoc.Default.Register<ResourceInfoViewModel>();
             SimpleIoc.Default.Register<AccountInfoViewModel>();
+            SimpleIoc.Default.Register<EditResourceInfoViewModel>();
+
         }
 
         //-- ViewModel definitions (made public to all XML's)
@@ -78,7 +80,7 @@ namespace CompanyBroker.ViewModel
         public CompanyAddListingViewModel CompanyAddListing => ServiceLocator.Current.GetInstance<CompanyAddListingViewModel>(Guid.NewGuid().ToString());
         public ResourceInfoViewModel ResourceInfo => ServiceLocator.Current.GetInstance<ResourceInfoViewModel>(Guid.NewGuid().ToString());
         public AccountInfoViewModel AccountInfo => ServiceLocator.Current.GetInstance<AccountInfoViewModel>(Guid.NewGuid().ToString());
-
+        public EditResourceInfoViewModel EditResourceInfo => ServiceLocator.Current.GetInstance<EditResourceInfoViewModel>(Guid.NewGuid().ToString());
 
         public static void Cleanup()
         {

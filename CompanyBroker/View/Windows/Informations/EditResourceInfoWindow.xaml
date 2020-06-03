@@ -12,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="30"></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
             <RowDefinition Height="20"></RowDefinition>
             <RowDefinition Height="10"></RowDefinition>
         </Grid.RowDefinitions>
@@ -48,16 +49,16 @@
 
             <!-- textblocks etc -->
             <Label Grid.Row="0" Grid.Column="1" Content="{Binding ResourceId}"></Label>
-            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ProductName}"></TextBlock>
-            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding ProductType}"></TextBlock>
-            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding ProductPrice}"></TextBlock>
-            <CheckBox Grid.Row="4" Grid.Column="1"></CheckBox>
-            <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding ProductDescription}" TextWrapping="Wrap"></TextBlock>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ProductName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ProductType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ProductPrice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <CheckBox Grid.Row="4" Grid.Column="1" IsChecked="{Binding ProductIsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></CheckBox>
+            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding ProductDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap"></TextBox>
         </Grid>
         
         
         <!-- Button -->
-        <Grid Grid.Row="2" >
+        <Grid Grid.Row="3" >
             <!-- Definitions -->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>

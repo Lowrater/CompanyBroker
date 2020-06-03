@@ -1,5 +1,6 @@
 ﻿using CompanyBroker.Interfaces;
 using CompanyBroker.Model.Informations;
+using CompanyBroker_API_Helper.Models;
 using CompanyBroker_API_Helper.Processers;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -69,6 +70,7 @@ namespace CompanyBroker.ViewModel.Informations
             get => resourceInfoModel._productDescription;
             set => Set(ref resourceInfoModel._productDescription, value);
         }
+
         #endregion
 
         #region Methods

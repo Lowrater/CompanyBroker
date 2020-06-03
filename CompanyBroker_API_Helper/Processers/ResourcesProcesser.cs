@@ -203,13 +203,36 @@ namespace CompanyBroker_API_Helper.Processers
 
 
         /// <summary>
+        /// Updates an specific product
+        /// </summary>
+        /// <param name="resourcesModel"></param>
+        /// <returns></returns>
+        public async Task<bool> UpdateResourceInformations(ResourcesModel resourcesModel)
+        {
+            var url = $"http://localhost:50133/api/Resources";
+
+            using (HttpResponseMessage response = await APIHelper.ApiClient.PutAsJsonAsync(url, resourcesModel))
+            {
+                if(response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+
+        /// <summary>
         /// Changes the resource amount by increasing or decreasing
         /// </summary>
         /// <param name="resourceAmountChangeModel"></param>
         /// <returns></returns>
         public async Task<bool> ChangeCompanyResourceAmount(int companyId, int resourceId, bool increaseAmount)
         {
-            var url = $"http://localhost:50133/api/Resources";
+            var url = $"http://localhost:50133/api/ChangeCompanyResourceAmount";
 
             var resourceChange = new ResourceChangeAmountModel()
             {

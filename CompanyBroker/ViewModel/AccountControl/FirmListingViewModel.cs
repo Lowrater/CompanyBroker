@@ -140,6 +140,9 @@ namespace CompanyBroker.ViewModel.AccountControl
         /// <returns></returns>
         public void EditListing(ResourcesModel resourcesModel)
         {
+            //-- Sets the resourceSelection
+            _dataService.ResourceSelection = resourcesModel;
+            //-- Opens the resource edit window
             _viewService.CreateWindow(new EditResourceInfoWindow());
         }
 
