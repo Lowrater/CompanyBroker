@@ -10,5 +10,7 @@ namespace CompanyBroker_API_Helper.Models
     {
         public int ResourceId { get; set; }
         public string Description { get; set; }
+        public int CompanyId { get; set; }
+
     }
 }

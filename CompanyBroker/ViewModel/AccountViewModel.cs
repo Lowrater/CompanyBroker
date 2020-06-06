@@ -114,11 +114,14 @@ namespace CompanyBroker.ViewModel
         /// </summary>
         public async Task SetAccountInformations()
         {
-            CompanyModel companyDetails = await new CompanyProcesser().GetCompanyById(_dataService.account.CompanyId);
+            var resources = await new ResourcesProcesser().GetAllResourcesByCompanyId(_dataService.account.CompanyId);
+            var companyDetails = await new CompanyProcesser().GetCompanyById(_dataService.account.CompanyId);
             
             AccountName = _dataService.account.Username;
             CompanyName = companyDetails.Name;
             CompanyBalance = companyDetails.Balance;
+            TotalListings = resources.Count();
+            InActiveListings = resources.Where(r => r.Active == false).Count();
         }
 
         public void ChangePassword()

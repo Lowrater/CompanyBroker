@@ -288,14 +288,15 @@ namespace CompanyBroker_API_Helper.Processers
         /// </summary>
         /// <param name="description"></param>
         /// <returns></returns>
-        public async Task<bool> AddProductDescription(string description, int resourceId)
+        public async Task<bool> AddProductDescription(string description, int resourceId, int companyId)
         {
             var url = $"http://localhost:50133/api/ResourceDescription";
 
             var resDescr = new ResourceDescriptionModel()
             {
                 Description = description,
-                ResourceId = resourceId
+                ResourceId = resourceId,
+                CompanyId = companyId
             };
 
             using (HttpResponseMessage response = await APIHelper.ApiClient.PostAsJsonAsync(url, resDescr)) 
@@ -316,14 +317,15 @@ namespace CompanyBroker_API_Helper.Processers
         /// </summary>
         /// <param name="description"></param>
         /// <returns></returns>
-        public async Task<bool> UpdateProductDescription(string description, int resourceId)
+        public async Task<bool> UpdateProductDescription(string description, int resourceId, int companyId)
         {
             var url = $"http://localhost:50133/api/ResourceDescription";
 
             var resdesc = new ResourceDescriptionModel()
             {
                 Description = description,
-                ResourceId = resourceId
+                ResourceId = resourceId,
+                CompanyId = companyId
             };
 
             using (HttpResponseMessage response = await APIHelper.ApiClient.PutAsJsonAsync(url, resdesc))

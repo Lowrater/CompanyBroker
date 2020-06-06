@@ -164,7 +164,7 @@ namespace CompanyBroker.ViewModel
 
                             if (boughtResource != false)
                             {
-                                //- decreases the for the resource count
+                                //- decreases the sellers resource count
                                 var ChangedresourceAmount = await new ResourcesProcesser().ChangeCompanyResourceAmount(selectedSellerResource.CompanyId, selectedSellerResource.ResourceId, false);
                             }
                             else

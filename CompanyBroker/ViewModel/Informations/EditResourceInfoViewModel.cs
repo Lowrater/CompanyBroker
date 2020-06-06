@@ -151,11 +151,11 @@ namespace CompanyBroker.ViewModel.Informations
                 if(!string.IsNullOrEmpty(ProductDescription))
                 {
                     //-- trys to update the description
-                    updateDescription = await new ResourcesProcesser().UpdateProductDescription(ProductDescription, updatedResource.ResourceId);
+                    updateDescription = await new ResourcesProcesser().UpdateProductDescription(ProductDescription, updatedResource.ResourceId, updatedResource.CompanyId);
                     //-- if the description fails, then it's because it doesn't exist. Trying to create it.
                     if (updateDescription == false)
                     {
-                        updateDescription = await new ResourcesProcesser().AddProductDescription(ProductDescription, updatedResource.ResourceId);
+                        updateDescription = await new ResourcesProcesser().AddProductDescription(ProductDescription, updatedResource.ResourceId, updatedResource.ResourceId);
                     }
                 }
                 

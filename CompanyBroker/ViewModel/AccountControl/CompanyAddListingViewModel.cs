@@ -117,7 +117,7 @@ namespace CompanyBroker.ViewModel.AccountControl
                         if (newResource != null)
                         {
                             //-- Adds the descripion to the product
-                            addListing = await new ResourcesProcesser().AddProductDescription(ProductDescription, newResource.ResourceId);
+                            addListing = await new ResourcesProcesser().AddProductDescription(ProductDescription, newResource.ResourceId, newResource.CompanyId);
 
                             if (addListing != false)
                             {
