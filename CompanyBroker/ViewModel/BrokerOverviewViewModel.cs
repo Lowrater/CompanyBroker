@@ -72,10 +72,8 @@ namespace CompanyBroker.ViewModel
         /// </summary>
         public ResourcesModel ResourceRowSelection
         {
-            get => brokerOverviewModel._resourceSelection;
             set
             {
-                Set(ref brokerOverviewModel._resourceSelection, value);
                 //-- Sets the value in the dataService for ResourceInfoViewModel to display
                 _dataservice.ResourceSelection = value;
             }

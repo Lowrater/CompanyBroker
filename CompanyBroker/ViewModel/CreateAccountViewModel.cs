@@ -144,7 +144,7 @@ namespace CompanyBroker.ViewModel
             bool httpResultCreationResponse = false;
 
             //-- Creates the account
-            var account = new CreateAccountAPIModel
+            var account = new AccountAPIModel
             {
                 CompanyId = CompanyChoice,
                 Username = AccountName,

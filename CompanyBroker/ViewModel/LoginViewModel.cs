@@ -56,7 +56,7 @@ namespace CompanyBroker.ViewModel
         #region Properties
         /// <summary>
         /// UserName for login screen
-        /// Stores the value in loginModel and in the DataService MsSQLUserInfo
+        /// Stores the value in loginModel 
         /// </summary>
         public string UserName
         {
@@ -91,10 +91,10 @@ namespace CompanyBroker.ViewModel
                     };
 
                     //-- Verifys login 
-                    bool result = await new AccountProcessor().VerifyAccount(account);
+                    var result = await new AccountProcessor().VerifyAccount(account);
 
                     //-- verifys the results
-                    if(result != false)
+                    if(result != null)
                     {
                         //-- Messages the user that they are logged in
                         MessageBox.Show("Logged in!",
@@ -105,7 +105,7 @@ namespace CompanyBroker.ViewModel
                         //-- Sets the active state to true
                         _dataService.isConnected = true;
                         //-- Sets the username
-                        _dataService.account = await new AccountProcessor().FetchAccountByName(UserName);
+                        _dataService.account = result;
                         //-- Opens MainWindow via. new viewService interface
                         _viewService.CreateWindow(new MainWindow());
                         //-- Closes LoginWindow

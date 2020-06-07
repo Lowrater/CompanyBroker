@@ -19,7 +19,7 @@ namespace CompanyBroker_API_Helper
         /// </summary>
         /// <param name="createAccountAPIModel"></param>
         /// <returns></returns>
-        public async Task<bool> CreateAccount(CreateAccountAPIModel createAccountAPIModel)
+        public async Task<bool> CreateAccount(AccountAPIModel createAccountAPIModel)
         {
             //-- Bool state to return
             bool state = false;
@@ -44,10 +44,8 @@ namespace CompanyBroker_API_Helper
         /// </summary>
         /// <param name="loginModel"></param>
         /// <returns></returns>
-        public async Task<bool> VerifyAccount(LoginAPIModel loginModel)
+        public async Task<AccountModel> VerifyAccount(LoginAPIModel loginModel)
         {
-            //-- Bool state to return
-            bool state = false;
             //-- API controller url containing the method to add an account
             string url = $"http://localhost:50133/api/VerifyLogin";
             //-- Contacting the api with the model of an account
@@ -56,12 +54,13 @@ namespace CompanyBroker_API_Helper
                 //-- Checks if the response code of the post, is successfull
                 if (response.IsSuccessStatusCode)
                 {
-                    //-- sets the state
-                    state = true;
+                    return await response.Content.ReadAsAsync<AccountModel>();
+                }
+                else
+                {
+                    return null;
                 }
             }
-            //-- returns the state
-            return state;
         }
 
         /// <summary>
@@ -69,9 +68,9 @@ namespace CompanyBroker_API_Helper
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public async Task<AccountModel> FetchAccountByName(string userName)
+        public async Task<AccountModel> FetchAccountByName(string userName, int companyId)
         {
-            string url = $"http://localhost:50133/api/Account?userName="+userName;
+            string url = $"http://localhost:50133/api/Account?userName="+userName+"&companyId="+companyId;
 
             using (HttpResponseMessage response = await APIHelper.ApiClient.GetAsync(url))
             {
@@ -107,6 +106,48 @@ namespace CompanyBroker_API_Helper
                 }
             }
         }
-    
+
+        /// <summary>
+        /// Updates the account informations
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> UpdateAccountInformations(AccountAPIModel AccountAPIModel)
+        {
+            string url = $"http://localhost:50133/api/Account";
+
+            using (HttpResponseMessage response = await APIHelper.ApiClient.PutAsJsonAsync(url, AccountAPIModel))
+            {
+                if(response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deletes the user account
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> DeleteUserAccount(int companyId, string username)
+        {
+            string url = $"http://localhost:50133/api/Account?companyId="+companyId+"&username"+username;
+
+            using (HttpResponseMessage response = await APIHelper.ApiClient.DeleteAsync(url))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
     }
 }

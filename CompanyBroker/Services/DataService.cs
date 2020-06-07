@@ -18,10 +18,10 @@ namespace CompanyBroker.Services
         public bool isConnected { get; set; }
         public string time { get; set; }
 
-        public AccountModel account {get; set;}
+        public AccountModel account { get; set; }
 
         public ResourcesModel ResourceSelection { get; set; }
-
+        public AccountModel accountSelection {get; set; }
 
     }
 }

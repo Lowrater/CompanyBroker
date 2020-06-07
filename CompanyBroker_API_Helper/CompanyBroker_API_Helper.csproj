@@ -52,7 +52,7 @@
     <Compile Include="Models\CollectionFilterModel.cs" />
     <Compile Include="Models\CompanyBalanceModel.cs" />
     <Compile Include="Models\CompanyModel.cs" />
-    <Compile Include="Models\CreateAccountAPIModel.cs" />
+    <Compile Include="Models\AccountAPIModel.cs" />
     <Compile Include="Models\CreateCompanyAPIModel.cs" />
     <Compile Include="Models\LoginAPIModel.cs" />
     <Compile Include="Models\ResourceChangeAmountModel.cs" />

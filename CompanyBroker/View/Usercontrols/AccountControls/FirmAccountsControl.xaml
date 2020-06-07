@@ -16,12 +16,12 @@
         </Grid.RowDefinitions>
         
         <!-- Datagrid containing a table -->
-        <DataGrid Grid.Row="0" ItemsSource="{Binding MainAccountsList}" CanUserAddRows="False" CanUserResizeColumns="False" IsReadOnly="True">
+        <DataGrid Grid.Row="0" ItemsSource="{Binding MainAccountsList}" CanUserAddRows="False" CanUserResizeColumns="False" IsReadOnly="True" SelectedItem="{Binding accountSelection, Mode=OneWayToSource}">
             <DataGrid.Columns>
                 <DataGridTemplateColumn CanUserResize="False" CanUserReorder="False">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" DataContext="{Binding FirmAccount, Source={StaticResource Locator}}">
                                 <Button Width="50" Background="LightGreen" Command="{Binding EditAccountCommand}">Edit</Button>
                                 <Button Width="50" Background="LightSalmon" Command="{Binding RemoveAccountCommand}">Remove</Button>
                             </StackPanel>
@@ -42,9 +42,9 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <!-- content -->
-            <Button Grid.Column="0" Content="Refresh">
+            <Button Grid.Column="0" Content="Refresh" Command="{Binding fetchUserAccountsCommand}">
             </Button>
-            <Button Grid.Column="1" Content="Add new account">
+            <Button Grid.Column="1" Content="Add new account" Command="{Binding AddAccountCommand}">
             </Button>
   
         </Grid>

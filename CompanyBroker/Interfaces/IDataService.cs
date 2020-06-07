@@ -20,5 +20,6 @@ namespace CompanyBroker.Interfaces
         string time { get; set; }
         AccountModel account { get; set; }
         ResourcesModel ResourceSelection { get; set; }
+        AccountModel accountSelection { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CompanyBroker_API_Helper.Models
 {
-   public class CreateAccountAPIModel
+   public class AccountAPIModel
     {
         public int CompanyId { get; set; }
         public string Username { get; set; }
