@@ -14,7 +14,7 @@ namespace CompanyBroker_API_Helper.Models
         public string[] ProductNameChoices { get; set; }
         public string SearchWord { get; set; }
         public bool Partners_OnlyChoice { get; set; }
-        public bool BulkChoice { get; set; }
+        public bool ResourceActive { get; set; }
         public decimal LowestPriceChoice {get; set;}
         public decimal HigestPriceChoice { get; set; }
 

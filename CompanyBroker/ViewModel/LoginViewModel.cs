@@ -96,20 +96,31 @@ namespace CompanyBroker.ViewModel
                     //-- verifys the results
                     if(result != null)
                     {
-                        //-- Messages the user that they are logged in
-                        MessageBox.Show("Logged in!",
-                                        "Company Broker",
-                                        MessageBoxButton.OK,
-                                        MessageBoxImage.Information);
+                        if(result.Active != false)
+                        {
+                            //-- Messages the user that they are logged in
+                            MessageBox.Show("Logged in!",
+                                            "Company Broker",
+                                            MessageBoxButton.OK,
+                                            MessageBoxImage.Information);
 
-                        //-- Sets the active state to true
-                        _dataService.isConnected = true;
-                        //-- Sets the username
-                        _dataService.account = result;
-                        //-- Opens MainWindow via. new viewService interface
-                        _viewService.CreateWindow(new MainWindow());
-                        //-- Closes LoginWindow
-                        _viewService.CloseWindow("TheLoginWindow");
+                            //-- Sets the active state to true
+                            _dataService.isConnected = true;
+                            //-- Sets the username
+                            _dataService.account = result;
+                            //-- Opens MainWindow via. new viewService interface
+                            _viewService.CreateWindow(new MainWindow());
+                            //-- Closes LoginWindow
+                            _viewService.CloseWindow("TheLoginWindow");
+                        }
+                        else
+                        {
+                            MessageBox.Show($"{_appConfigService.MSG_AccountIsInActive}",
+                                                "Company broker : inactive account",
+                                                MessageBoxButton.OK,
+                                                MessageBoxImage.Warning);
+                        }
+
                     }
                     else
                     {

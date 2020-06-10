@@ -10,5 +10,7 @@
         string MSG_CannotConnectToServer { get; }
         string MSG_FieldsCannotBeEmpty { get; }
         string MSG_UknownUserName { get; }
+
+        string MSG_AccountIsInActive { get;  }
     }
 }

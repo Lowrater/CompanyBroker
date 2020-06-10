@@ -13,6 +13,9 @@ namespace CompanyBroker.Services
         public string MSG_CannotConnectToServer => ConfigurationManager.AppSettings["LoginWindow_CannotConnectToServerMSG"];
         public string MSG_FieldsCannotBeEmpty => ConfigurationManager.AppSettings["AllFields_FieldsCannotBeEmptyMSG"];
 
+        public string MSG_AccountIsInActive => ConfigurationManager.AppSettings["MSG_AccountIsInActive"];
+
+
         //----------------------- Headers
     }
 }

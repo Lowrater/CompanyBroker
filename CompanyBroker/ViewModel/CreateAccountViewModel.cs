@@ -43,6 +43,19 @@ namespace CompanyBroker.ViewModel
  
             //-- Sets the default value to true
             CompanyDropDownBool = true;
+
+            //-- if we are connected, use the current account company details
+            if(_dataService.isConnected == true)
+            {
+                CompanyDropDownBool = false;
+                CompanyNameBool = false;
+                IsLoggedIn = false;
+            }
+            else
+            {
+                IsLoggedIn = true;
+            }
+
         }
         #endregion
 
@@ -61,6 +74,11 @@ namespace CompanyBroker.ViewModel
             }
         }
 
+        public bool IsLoggedIn
+        {
+            get => createAccountModel._isLoggedIn;
+            set => Set(ref createAccountModel._isLoggedIn, value);
+        }
         public bool CompanyDropDownBool
         {
             get => createAccountModel._companyDropDownBool;
@@ -141,7 +159,7 @@ namespace CompanyBroker.ViewModel
         public async Task CreateAccount(string password)
         {
             //-- Result response of the request to create an account to the database
-            bool httpResultCreationResponse = false;
+            bool accountCheck = false;
 
             //-- Creates the account
             var account = new AccountAPIModel
@@ -154,7 +172,7 @@ namespace CompanyBroker.ViewModel
             };
 
             try
-            {
+            {              
                 if (NewCompanyBool.Equals(true))
                 {
                     if(!string.IsNullOrEmpty(CompanyName))
@@ -166,7 +184,7 @@ namespace CompanyBroker.ViewModel
                         };
 
                         //-- sends the company for creation
-                        httpResultCreationResponse = await new CompanyProcesser().CreateCompany(company);
+                        accountCheck = await new CompanyProcesser().CreateCompany(company);
 
                         //-- Fetches the company created by companyName
                         var companyObject = await new CompanyProcesser().GetCompany(company.CompanyName);
@@ -174,13 +192,13 @@ namespace CompanyBroker.ViewModel
                         account.CompanyId = companyObject.Id;
 
                         //-- Sends the account for creation
-                        httpResultCreationResponse = await new AccountProcessor().CreateAccount(account);
+                        accountCheck = await new AccountProcessor().CreateAccount(account);
 
                         //-- checks wheter or not it was successfull
-                        if (httpResultCreationResponse == true)
+                        if (accountCheck == true)
                         {
                             //-- Displays message
-                            MessageBox.Show($"Account {AccountName} created for {CompanyName}!", "Company broker  message", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show($"Account {AccountName} created for {CompanyName}!", "Company broker  message", MessageBoxButton.OK, MessageBoxImage.Information);
 
                             //-- Closes the CreateAccountWindow window
                             _viewService.CloseWindow("TheCreateAccountWindow");
@@ -188,7 +206,7 @@ namespace CompanyBroker.ViewModel
                         else
                         {
                             //-- Displays message
-                            MessageBox.Show($"Account {AccountName} and {CompanyName} not created! Please verify your connection, or contact the support team", "Company broker  message", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show($"Account {AccountName} and {CompanyName} not created! Please verify your connection, or contact the support team", "Company broker  message", MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
                     }
                     else
@@ -198,13 +216,19 @@ namespace CompanyBroker.ViewModel
                 }
                 else
                 {
-                    //-- Sends the account
-                    httpResultCreationResponse = await new AccountProcessor().CreateAccount(account);
+                    //-- Sets the current companyId if an account is logged in to create an account for an company
+                    if(_dataService.isConnected == true)
+                    {
+                        account.CompanyId = _dataService.account.CompanyId;
+                    }
 
-                    if (httpResultCreationResponse == true)
+                    //-- Sends the account
+                    accountCheck = await new AccountProcessor().CreateAccount(account);
+
+                    if (accountCheck == true)
                     {
                         //-- Displays message
-                        MessageBox.Show($"Account {AccountName} created!", "Company broker  message", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show($"Account {AccountName} created!", "Company broker  message", MessageBoxButton.OK, MessageBoxImage.Information);
 
                         //-- Closes the CreateAccountWindow window
                         _viewService.CloseWindow("TheCreateAccountWindow");

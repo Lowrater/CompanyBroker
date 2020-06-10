@@ -41,7 +41,7 @@
         
         <!-- Left Labels colum 1-->
         <!-- Top - If new company -->
-        <CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding NewCompanyBool}"></CheckBox>
+        <CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding NewCompanyBool}" IsEnabled="{Binding IsLoggedIn}"></CheckBox>
         <TextBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Text="{Binding CompanyName}" IsEnabled="{Binding CompanyNameBool}"></TextBox>
 
         <!-- The account itself -->

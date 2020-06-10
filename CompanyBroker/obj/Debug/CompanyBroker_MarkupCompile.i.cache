@@ -16,5 +16,5 @@ I:\Visual studio projects\CompanyBroker\CompanyBroker\App.xaml
 141806260050
 View\Usercontrols\AccountControls\FirmAccountsControl.xaml;View\Usercontrols\AccountControls\FirmFavoritsControl.xaml;View\Usercontrols\AccountControls\FirmListingControl.xaml;View\Usercontrols\AccountControls\FirmPartnersControl.xaml;View\Usercontrols\BrokerOverviewControl.xaml;View\Usercontrols\LogoutControl.xaml;View\Usercontrols\SidePanelControl.xaml;View\Usercontrols\SidePanelControls\SidePanelTab1.xaml;View\Usercontrols\TimeControl.xaml;View\Windows\AccountWindow.xaml;View\Windows\CompanyAddListingWindow.xaml;View\Windows\CreateAccountWindow.xaml;View\Windows\Informations\AccountInfoWindow.xaml;View\Windows\Informations\EditResourceInfoWindow.xaml;View\Windows\Informations\ResourceInfoWindow.xaml;View\Windows\LoginWindow.xaml;View\Windows\MainWindow.xaml;
 
-True
+False
 

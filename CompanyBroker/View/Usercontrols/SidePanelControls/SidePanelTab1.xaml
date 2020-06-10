@@ -174,7 +174,7 @@
             <!-- Column 0 -->
             <!-- Empty -->
             <!-- Column 1 -->
-            <CheckBox Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalContentAlignment="Left" IsChecked="{Binding BulkBuy}">Bulk</CheckBox>
+            <CheckBox Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalContentAlignment="Left" IsChecked="{Binding ResourceActive}">Is active</CheckBox>
         </Grid>
 
         <!-- Content for Row 11 -->

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Controls="clr-namespace:CompanyBroker.View.Usercontrols.AccountControls"
         mc:Ignorable="d"
-        DataContext="{Binding Account, Source={StaticResource Locator}}"
+                DataContext="{Binding Account, Source={StaticResource Locator}}"
         x:Name="TheAccountWindow"
         Title="CompanyBroker : Account" Height="500" MinHeight="500" Width="850" MinWidth="400" WindowStartupLocation="CenterScreen" >
     <Grid>

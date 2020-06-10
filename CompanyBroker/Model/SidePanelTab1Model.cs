@@ -69,8 +69,8 @@ namespace CompanyBroker.Model
         public ref bool _partnersOnly => ref __partnersOnly; 
 
         //-- bulk check box
-        private  bool __bulkBuy;
-        public ref bool _bulkBuy => ref __bulkBuy;
+        private  bool __resourceActive;
+        public ref bool _resourceActive => ref __resourceActive;
 
     }
 }

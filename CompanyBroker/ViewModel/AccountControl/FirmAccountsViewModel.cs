@@ -1,5 +1,6 @@
 ﻿using CompanyBroker.Interfaces;
 using CompanyBroker.Model.AccountModels;
+using CompanyBroker.View.Windows;
 using CompanyBroker.View.Windows.Informations;
 using CompanyBroker_API_Helper;
 using CompanyBroker_API_Helper.Models;
@@ -65,7 +66,7 @@ namespace CompanyBroker.ViewModel.AccountControl
         /// </summary>
         public void AddAccount()
         {
-            //viewService.CreateWindow();
+            _viewService.CreateWindow(new CreateAccountWindow());
         }
 
         /// <summary>
@@ -79,18 +80,23 @@ namespace CompanyBroker.ViewModel.AccountControl
                 //-- Checks if the account is the logged in one
                 if(accountModel.Username != _dataService.account.Username)
                 {
-                    //-- trys to delete the account
-                    var accountCheck = await new AccountProcessor().DeleteUserAccount(accountModel.CompanyId, accountModel.Username);
+                   if (MessageBox.Show("Are you sure you want to delete this account?", "CompanyBroker: account delete message",
+                                       MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+                        {
+                        //-- trys to delete the account
+                        var accountCheck = await new AccountProcessor().DeleteUserAccount(accountModel.CompanyId, accountModel.Username);
 
-                    //-- checks if the account was deleted
-                    if (accountCheck != false)
-                    {
-                        //-- Messages 
-                        MessageBox.Show("Successfully removed account",
-                                        "Company Broker : remove account",
-                                        MessageBoxButton.OK,
-                                        MessageBoxImage.Information);
+                        //-- checks if the account was deleted
+                        if (accountCheck != false)
+                        {
+                            //-- Messages 
+                            MessageBox.Show("Successfully removed account",
+                                            "Company Broker : remove account",
+                                            MessageBoxButton.OK,
+                                            MessageBoxImage.Information);
+                        }
                     }
+                   
                 }
             }
             catch (Exception e)

@@ -211,12 +211,12 @@ namespace CompanyBroker.ViewModel
         /// bool
         /// If we want to search for resources that can be bought in bulks
         /// </summary>
-        public bool BulkBuy
+        public bool ResourceActive
         {
-            get => sidePanelTab1Model._bulkBuy;
+            get => sidePanelTab1Model._resourceActive;
             set
             {
-                Set(ref sidePanelTab1Model._bulkBuy, value);
+                Set(ref sidePanelTab1Model._resourceActive, value);
                 //-- Sets the collection list
                 SetListCollection();
             }
@@ -333,7 +333,7 @@ namespace CompanyBroker.ViewModel
                 ProductNameChoices = ProductNameChoicesList.ToArray(),
                 LowestPriceChoice = LowestPrice,
                 HigestPriceChoice = HigestPrice,
-                BulkChoice = BulkBuy,
+                ResourceActive = ResourceActive,
                 Partners_OnlyChoice = PartnersOnly
             };
 
@@ -345,7 +345,7 @@ namespace CompanyBroker.ViewModel
         public void ResetSidePanel()
         {
             PartnersOnly = false;
-            BulkBuy = false;
+            ResourceActive = false;
             ProductNameList = new ObservableCollection<string>();
             ProductNameChoicesList = new ObservableCollection<string>();
             CompanyChoicesList = new ObservableCollection<CompanyModel>();

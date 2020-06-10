@@ -18,6 +18,8 @@ namespace CompanyBroker.Model
         private bool __companyNameBool;
         public ref bool _companyNameBool => ref __companyNameBool;
 
+        private bool __isLoggedIn;
+        public ref bool _isLoggedIn => ref __isLoggedIn;
         
 
         private string __companyName;
