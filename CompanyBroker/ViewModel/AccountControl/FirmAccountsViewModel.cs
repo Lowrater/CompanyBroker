@@ -90,7 +90,15 @@ namespace CompanyBroker.ViewModel.AccountControl
                         if (accountCheck != false)
                         {
                             //-- Messages 
-                            MessageBox.Show("Successfully removed account",
+                            MessageBox.Show($"Successfully removed account: {accountModel.Username}",
+                                            "Company Broker : remove account",
+                                            MessageBoxButton.OK,
+                                            MessageBoxImage.Information);
+                        }
+                        else
+                        {
+                            //-- Messages 
+                            MessageBox.Show($"failed to remove account: {accountModel.Username}",
                                             "Company Broker : remove account",
                                             MessageBoxButton.OK,
                                             MessageBoxImage.Information);

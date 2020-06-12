@@ -83,15 +83,8 @@ namespace CompanyBroker.ViewModel
             {
                 try
                 {
-                    //-- creates the new model of an login request
-                    var account = new LoginAPIModel
-                    {
-                        Username = UserName,
-                        Password = password
-                    };
-
                     //-- Verifys login 
-                    var result = await new AccountProcessor().VerifyAccount(account);
+                    var result = await new AccountProcessor().VerifyAccount(UserName, password);
 
                     //-- verifys the results
                     if(result != null)

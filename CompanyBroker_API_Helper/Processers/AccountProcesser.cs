@@ -1,9 +1,11 @@
 ﻿using CompanyBroker_API_Helper.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -44,12 +46,18 @@ namespace CompanyBroker_API_Helper
         /// </summary>
         /// <param name="loginModel"></param>
         /// <returns></returns>
-        public async Task<AccountModel> VerifyAccount(LoginAPIModel loginModel)
+        public async Task<AccountModel> VerifyAccount(string userName, string Password)
         {
+            //-- Password encoding 
+            var usernameConv = Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(userName));
+            var passwordConv = Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(Password));
+            //var message = JsonConvert.SerializeObject(new { UserName = loginModel.Username, Password = loginModel.Password });
+
             //-- API controller url containing the method to add an account
-            string url = $"http://localhost:50133/api/VerifyLogin";
-            //-- Contacting the api with the model of an account
-            using (HttpResponseMessage response = await APIHelper.ApiClient.PostAsJsonAsync(url, loginModel))
+            string url = $"http://localhost:50133/api/VerifyLogin?Username="+ usernameConv + "&Password=" + passwordConv;
+
+             //--Contacting the api with the model of an account
+            using (HttpResponseMessage response = await APIHelper.ApiClient.GetAsync(url))
             {
                 //-- Checks if the response code of the post, is successfull
                 if (response.IsSuccessStatusCode)
@@ -61,6 +69,8 @@ namespace CompanyBroker_API_Helper
                     return null;
                 }
             }
+
+
         }
 
         /// <summary>
@@ -134,7 +144,7 @@ namespace CompanyBroker_API_Helper
         /// <returns></returns>
         public async Task<bool> DeleteUserAccount(int companyId, string username)
         {
-            string url = $"http://localhost:50133/api/Account?companyId="+companyId+"&username"+username;
+            string url = $"http://localhost:50133/api/Account?companyId="+companyId+"&username="+username;
 
             using (HttpResponseMessage response = await APIHelper.ApiClient.DeleteAsync(url))
             {
