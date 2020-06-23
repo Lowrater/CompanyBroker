@@ -41,6 +41,7 @@ namespace CompanyBroker_API_Helper
             return state;
         }
 
+
         /// <summary>
         /// verifys the account agenst the database
         /// </summary>
@@ -49,14 +50,14 @@ namespace CompanyBroker_API_Helper
         public async Task<AccountModel> VerifyAccount(string userName, string Password)
         {
             //-- Password encoding 
-            var usernameConv = Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(userName));
-            var passwordConv = Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(Password));
-            //var message = JsonConvert.SerializeObject(new { UserName = loginModel.Username, Password = loginModel.Password });
+            //-- Converts the username and password to base 64 string, and converts that into an JSON format with serializeation.
+            var usernameConv = JsonConvert.SerializeObject(Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(userName)));
+            var passwordConv = JsonConvert.SerializeObject(Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(Password)));
 
             //-- API controller url containing the method to add an account
-            string url = $"http://localhost:50133/api/VerifyLogin?Username="+ usernameConv + "&Password=" + passwordConv;
+            string url = $"http://localhost:50133/api/VerifyLogin?Username=" + usernameConv + "&Password=" + passwordConv;
 
-             //--Contacting the api with the model of an account
+            //--Contacting the api with the model of an account
             using (HttpResponseMessage response = await APIHelper.ApiClient.GetAsync(url))
             {
                 //-- Checks if the response code of the post, is successfull
@@ -69,8 +70,6 @@ namespace CompanyBroker_API_Helper
                     return null;
                 }
             }
-
-
         }
 
         /// <summary>

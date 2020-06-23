@@ -110,7 +110,7 @@ namespace CompanyBroker_API_Helper.Processers
             }
         }
 
-
+        //-- Guide: https://anthonygiretti.com/2018/01/16/how-to-pass-in-uri-complex-objects-without-using-custom-modelbinders-or-serialize-them/ 
         /// <summary>
         /// Fetches all resources based on the collectionListModel lists
         /// </summary>
@@ -118,9 +118,34 @@ namespace CompanyBroker_API_Helper.Processers
         /// <returns></returns>
         public async Task<ObservableCollection<ResourcesModel>> GetResourcesByListFilters(CollectionFilterModel collectionFilterModel)
         {
-            var url = $"http://localhost:50133/api/GetResourcesByListFilters";
+            //-- Result Url = localhost:50133/api/GetResourcesByListFilters?CompanyChoices[0]=1&CompanyChoices[1]=2&ProductTypeChoices[0]=Martin
 
-            using (HttpResponseMessage response = await APIHelper.ApiClient.PostAsJsonAsync(url, collectionFilterModel))
+            string urlContent = "";
+
+            for (int i = 0; i < collectionFilterModel.CompanyChoices.Count(); i++)
+            {
+                urlContent += $"CompanyChoices[{i}]=" + collectionFilterModel.CompanyChoices[i].ToString() + "&";
+            }
+
+            for (int i = 0; i < collectionFilterModel.ProductTypeChoices.Count(); i++)
+            {
+                urlContent += $"ProductTypeChoices[{i}]=" + collectionFilterModel.ProductTypeChoices[i] + "&";
+            }
+
+            for (int i = 0; i < collectionFilterModel.ProductNameChoices.Count(); i++)
+            {
+                urlContent += $"ProductNameChoices[{i}]=" + collectionFilterModel.ProductNameChoices[i] + "&";
+            }
+
+            urlContent += $"SearchWord=" + collectionFilterModel.SearchWord + "&";
+            urlContent += $"LowestPriceChoice=" + collectionFilterModel.LowestPriceChoice.ToString() + "&";
+            urlContent += $"HigestPriceChoice=" + collectionFilterModel.HigestPriceChoice.ToString() + "&";
+            urlContent += $"ResourceActive=" + collectionFilterModel.ResourceActive.ToString() + "&";
+            urlContent += $"Partners_OnlyChoice=" + collectionFilterModel.Partners_OnlyChoice.ToString();
+
+            var url = $"http://localhost:50133/api/GetResourcesByListFilters?" + urlContent;
+
+             using (HttpResponseMessage response = await APIHelper.ApiClient.GetAsync(url))
             {
                 if (response.IsSuccessStatusCode)
                 {
@@ -132,6 +157,8 @@ namespace CompanyBroker_API_Helper.Processers
                 }
             }
         }
+
+
 
         /// <summary>
         /// Fetches all resources for the specific company
@@ -185,8 +212,6 @@ namespace CompanyBroker_API_Helper.Processers
         public async Task<ObservableCollection<string>> GetAllProductNamesByType(ObservableCollection<string> productTypeList)
         {
             var url = $"http://localhost:50133/api/GetAllProductNamesByTypes";
-
-            //HttpContent content =  new StringContent(JsonConvert.SerializeObject(productTypeList), Encoding.UTF8, "application/json");
 
             using (HttpResponseMessage response = await APIHelper.ApiClient.PostAsJsonAsync(url, productTypeList))
             {
